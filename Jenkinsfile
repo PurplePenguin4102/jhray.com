@@ -4,7 +4,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                dotnet -h
+                "dotnet -h".execute().text
             }
         }
         stage('Test') {
