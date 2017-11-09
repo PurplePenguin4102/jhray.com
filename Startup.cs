@@ -36,7 +36,7 @@ namespace TestSite
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-
+			
             app.UseStaticFiles();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
