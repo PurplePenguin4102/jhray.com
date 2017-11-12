@@ -4,3 +4,4 @@ dotnet: 2.0.0
 dist: artful
 script:
  - dotnet restore jhray.com.csproj
+ - dotnet build jhray.com.csproj
