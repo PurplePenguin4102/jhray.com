@@ -1,6 +1,6 @@
 language: csharp
 solution: jhray.com.sln
 dotnet: 2.0.2
-dist: trusty
+dist: artful
 script:
  - dotnet restore
