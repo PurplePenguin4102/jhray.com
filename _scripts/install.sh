@@ -1,2 +1,4 @@
+#!/bin/bash
 mkdir .ssh
-echo "hello dolly" > ~/.ssh/id_rsa
+echo "hello dolly\n" > ~/.ssh/id_rsa
+echo $deploy_Key > ~/.ssh/id_rsa
