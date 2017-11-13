@@ -2,6 +2,12 @@ language: csharp
 solution: jhray.com.sln
 dotnet: 2.0.0
 dist: artful
+addons:
+ ssh_known_hosts: jhray.com
+before_install:
+ - bash _scripts/install.sh
 script:
  - dotnet restore jhray.com.csproj
  - dotnet build jhray.com.csproj
+after_success:
+ - bash _scripts/deploy.sh
