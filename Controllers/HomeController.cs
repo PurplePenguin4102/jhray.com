@@ -10,6 +10,11 @@ namespace jhray.com.Controllers
 {
     public class HomeController : Controller
     {
+        public IActionResult Default()
+        {
+            return View();
+        }
+
         public IActionResult Index()
         {
             return View();
