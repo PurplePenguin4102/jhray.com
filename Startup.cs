@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.HttpOverrides;
+using Microsoft.AspNetCore.ResponseCompression;
 
 namespace jhray.com
 {
@@ -23,6 +24,8 @@ namespace jhray.com
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.AddResponseCompression();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -36,7 +39,8 @@ namespace jhray.com
             {
                 app.UseExceptionHandler("/Home/Error");
             }
-			
+            app.UseResponseCompression();
+
             app.UseStaticFiles();
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions

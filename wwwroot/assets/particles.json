@@ -8,7 +8,7 @@
       }
     },
     "color": {
-      "value": "#ffffff"
+      "value": ["#82b74b", "#405d27", "#c1946a"]
     },
     "shape": {
       "type": "circle",
