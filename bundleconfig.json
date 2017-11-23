@@ -20,5 +20,14 @@
     },
     // Optionally generate .map file
     "sourceMap": false
+  },
+  {
+    "outputFileName": "wwwroot/js/particles.min.js",
+    "inputFiles": [
+      "wwwroot/js/particles.js"
+    ],
+    "minify": {
+      "enabled": true
+    }
   }
 ]
