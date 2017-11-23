@@ -10,6 +10,16 @@
     padding-right: 15px;
 }
 
+#particles-js {
+    width: 100%;
+    height: 500px;
+    background-color: #3e4444;
+    background-image: url('');
+    background-size: cover;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
 /* Carousel */
 .carousel-caption p {
     font-size: 20px;
