@@ -1,5 +1,4 @@
 ﻿body {
-    padding-top: 50px;
     padding-bottom: 20px;
 }
 
@@ -20,6 +19,44 @@
     background-repeat: no-repeat;
     padding-left: -15px;
     padding-right: -15px;
+    -webkit-animation: color_change 10s 1 normal;
+    animation-fill-mode: forwards;
+}
+
+@keyframes color_change {
+    0% {
+        background-color: #3e4444;
+    }
+    10% {
+        background-color: #373d3d;
+    }
+    20% {
+        background-color: #313636;
+    }
+    30% {
+        background-color: #2b2f2f;
+    }
+    40% {
+        background-color: #252828;
+    }
+    50% {
+        background-color: #1f2222;
+    }
+    60% {
+        background-color: #181b1b;
+    }
+    70% {
+        background-color: #121414;
+    }
+    80% {
+        background-color: #0c0d0d;
+    }
+    90% {
+        background-color: #060606;
+    }
+    100% {
+        background-color: #000000;
+    }
 }
 
 /* Carousel */
