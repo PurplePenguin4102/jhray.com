@@ -50,6 +50,24 @@
     animation-fill-mode: forwards;
 }
 
+#position {
+    margin-top: 400px;
+    position: absolute;
+    min-width: 500px;
+    font-size: 120px;
+    width: 100%;
+    text-align: center;
+}
+
+#jhray {
+    color: aqua;
+    display: inline;
+}
+
+#com {
+    color: rebeccapurple;
+    display: inline;
+}
 #ARIGATO {
     top: 1000px;
     left: 0px;
