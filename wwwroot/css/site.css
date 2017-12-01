@@ -1,6 +1,7 @@
 ﻿body {
     margin:0px;
     padding:0px;
+
 }
 
 /* Wrapping element */
@@ -53,20 +54,23 @@
 #position {
     margin-top: 400px;
     position: absolute;
-    min-width: 500px;
     font-size: 120px;
-    width: 100%;
     text-align: center;
+    width: 100%;
 }
 
 #jhray {
     color: aqua;
     display: inline;
+    -webkit-animation: from_left 3s 1 normal;
+    animation-fill-mode: forwards;
 }
 
 #com {
-    color: rebeccapurple;
+    color: mediumpurple;
     display: inline;
+    -webkit-animation: from_right 3s 1 normal;
+    animation-fill-mode: forwards;
 }
 #ARIGATO {
     top: 1000px;
@@ -79,6 +83,28 @@
     background: linear-gradient(10deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) 90%), linear-gradient(345deg, rgba(255, 255, 255, 0), rgba(0, 0, 0, 1) 90%);
     filter: blur;
     margin-bottom: -21px;
+}
+
+@keyframes from_left {
+    0% {
+        margin-right: 30%;
+        color: transparent;
+    }
+    100% {
+        margin-right: 0%;
+        color: aqua;
+    }
+}
+
+@keyframes from_right {
+    0% {
+        margin-left: 30%;
+        color: transparent;
+    }
+    100% {
+        margin-left: 0%;
+        color: mediumpurple;
+    }
 }
 
 @keyframes color_change {
