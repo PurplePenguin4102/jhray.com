@@ -65,7 +65,13 @@
     -webkit-animation: from_left 3s 1 normal;
     animation-fill-mode: forwards;
 }
-
+#thought_leader {
+    position: absolute;
+    margin-top: 530px;
+    text-align: center;
+    font-size: 80px;
+    color: darkorange;
+}
 #com {
     color: mediumpurple;
     display: inline;
