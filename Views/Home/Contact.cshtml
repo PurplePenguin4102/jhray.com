@@ -1,23 +1,19 @@
 ﻿@{
     ViewData["Title"] = "Contact";
 }
-<div class="container body-content">
-    <h2>@ViewData["Title"]</h2>
-    <h3>@ViewData["Message"]</h3>
-
-    <address>
-        One Microsoft Way<br />
-        Redmond, WA 98052-6399<br />
-        <abbr title="Phone">P:</abbr>
-        425.555.0100
-    </address>
-
-    <address>
-        <strong>Support:</strong> <a href="mailto:Support@example.com">Support@example.com</a><br />
-        <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-    </address>
-    <hr />
-    <footer>
-        <p>&copy; 2017 - jhray.com</p>
-    </footer>
+<div style="background-image:url(/images/dgrey037.jpg); background-repeat:repeat repeat; height:100vh;">
+    <div class="container body-content" style="opacity:0.8; background-color:floralwhite">
+        <h2>@ViewData["Title"]</h2>
+        <h3 style="text-align:center;">@ViewData["Message"]</h3>
+        <img src="~/images/mindblown.jpg" style="position:center; width:100%; opacity:1;" />
+        <p>Talk to me if you feel like it</p>
+        <address>
+            <strong>Send a nice message:</strong> <a href="mailto:joseph.h.ray@gmail.com">gmail</a><br />
+            <strong>Send a mean message:</strong> <a href="mailto:joseph.h.ray@protonmail.com">protonmail</a>
+        </address>
+        <hr />
+        <footer>
+            <p>&copy; 2017 - jhray.com</p>
+        </footer>
+    </div>
 </div>

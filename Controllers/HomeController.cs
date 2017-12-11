@@ -29,7 +29,7 @@ namespace jhray.com.Controllers
 
         public IActionResult Contact()
         {
-            ViewData["Message"] = "Your contact page.";
+            ViewData["Message"] = "Contact your dreams.";
 
             return View();
         }
