@@ -94,6 +94,14 @@
     margin-bottom: -21px;
 }
 
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
 @keyframes from_left {
     0% {
         margin-right: 30%;
