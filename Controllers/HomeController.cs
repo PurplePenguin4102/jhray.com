@@ -20,6 +20,11 @@ namespace jhray.com.Controllers
             return View();
         }
 
+        public IActionResult ChilledESports()
+        {
+            return View();
+        }
+
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
