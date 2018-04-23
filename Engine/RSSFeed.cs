@@ -65,7 +65,7 @@ namespace jhray.com.Engine
 
         private int WritePodcastHeader(XmlWriter xml)
         {
-            xml.WriteElementString("pubDate", "Mon, 23 April 2018 00:00:00 AEST");
+            xml.WriteElementString("pubDate", "Mon, 23 Apr 2018 00:00:00 AEST");
             xml.WriteElementString("title", "Chilled E-Sports");
             xml.WriteElementString("itunes", "author", null, "Eugene and Joey");
             xml.WriteElementString("description", "Doing deep dives on the EU and NA Esports leagues of Heroes of the Storm. Discussing strategies and state-of-the-game ideas on how to get elite wins and dominate Silver & Gold leagues in all major Blizzard titles. Also talks about crypto currency, blockchain and technology from the point of view of engineering and comp sci.");
