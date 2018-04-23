@@ -51,7 +51,11 @@ namespace jhray.com
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
-                    name: "chilled",
+                    name: "chilledLong",
+                    template: "ChilledESports",
+                    defaults: new { controller = "Home", action = "ChilledESports" });
+                routes.MapRoute(
+                    name: "chilledShort",
                     template: "chilled",
                     defaults: new { controller = "Home", action = "ChilledESports" });
                 routes.MapRoute(
