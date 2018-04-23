@@ -37,7 +37,7 @@ namespace jhray.com.Engine
                     var meta = lines.ToDictionary(
                         lin => lin.Substring(0, lin.IndexOf(":")), 
                         lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
-                    xml.WriteStartElement("Item");
+                    xml.WriteStartElement("item");
                     xml.WriteElementString("title", meta["title"]);
                     xml.WriteElementString("description", meta["description"]);
                     xml.WriteElementString("itunes", "summary", null, meta["description"]);
