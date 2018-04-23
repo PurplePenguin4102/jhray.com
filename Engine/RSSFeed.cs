@@ -71,7 +71,7 @@ namespace jhray.com.Engine
             xml.WriteElementString("description", "Doing deep dives on the EU and NA Esports leagues of Heroes of the Storm. Discussing strategies and state-of-the-game ideas on how to get elite wins and dominate Silver & Gold leagues in all major Blizzard titles. Also talks about crypto currency, blockchain and technology from the point of view of engineering and comp sci.");
             xml.WriteElementString("itunes", "summary", null, "Doing deep dives on the EU and NA Esports leagues of Heroes of the Storm. Discussing strategies and state-of-the-game ideas on how to get elite wins and dominate Silver & Gold leagues in all major Blizzard titles. Also talks about crypto currency, blockchain and technology from the point of view of engineering and comp sci.");
             xml.WriteElementString("itunes", "subtitle", null, "A chill podcast about Blizzard games that you can drink beers to. Also talks about crypto");
-            xml.WriteElementString("lastBuildDate", "Mon, 23 April 2018 00:00:00 AEST");
+            xml.WriteElementString("lastBuildDate", "Mon, 23 Apr 2018 00:00:00 AEST");
             return 0;
         }
 
