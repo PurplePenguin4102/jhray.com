@@ -13,7 +13,7 @@ namespace jhray.com.Engine
 
         public string ReadFromFolderContents()
         {
-            var directories = Directory.GetDirectories(@"D:\RSSFeed");
+            var directories = Directory.GetDirectories(@"/home/penguin/podcast/");
             var feedBuilder = new StringBuilder();
             
             using (var xml = XmlWriter.Create(feedBuilder))
