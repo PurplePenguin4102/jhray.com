@@ -5,6 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
+using jhray.com.Engine;
 
 namespace jhray.com.Controllers
 {
@@ -18,6 +19,13 @@ namespace jhray.com.Controllers
         public IActionResult ChilledESports()
         {
             return View();
+        }
+
+
+        public IActionResult GetRssFeed(DateTime date)
+        {
+            var feed = new RSSFeed().ReadFromFolderContents();
+            return Content(feed, "application/rss+xml");
         }
 
         public IActionResult About()
