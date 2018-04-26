@@ -18,6 +18,7 @@ namespace jhray.com.Engine
             
             using (var xml = XmlWriter.Create(feedBuilder))
             {
+                xml.Settings.Encoding = Encoding.UTF8;
                 xml.WriteStartDocument();
                 WriteRSSHeader(xml);
                 WriteChannelHeader(xml);
