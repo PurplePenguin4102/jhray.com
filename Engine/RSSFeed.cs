@@ -129,7 +129,7 @@ namespace jhray.com.Engine
             xml.WriteStartElement("enclosure");
             xml.WriteAttributeString("url", meta["location"]);
             xml.WriteAttributeString("type", "audio/mpeg");
-            xml.WriteAttributeString("length", "1");
+            xml.WriteAttributeString("length", meta["lengthinbytes"]);
             xml.WriteEndElement();
             xml.WriteElementString("guid", meta["location"]);
             xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
