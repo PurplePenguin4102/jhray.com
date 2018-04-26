@@ -8,12 +8,14 @@ using System.Text;
 
 namespace jhray.com.Engine
 {
+
     public class RSSFeed
     {
-
+        private Dictionary<string, string> _feedMeta;
         public string ReadFromFolderContents(string podcastDirectory)
         {
             var directories = Directory.GetDirectories(podcastDirectory);
+            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
             var feedBuilder = new StringBuilder();
             
             using (var xml = XmlWriter.Create(feedBuilder))
@@ -49,55 +51,55 @@ namespace jhray.com.Engine
         private void WriteChannelHeader(XmlWriter xml)
         {
             xml.WriteStartElement("channel");
-            xml.WriteElementString("link", "http://jhray.com");
+            xml.WriteElementString("link", _feedMeta["channellink"]);
             xml.WriteElementString("language", "en-us");
             xml.WriteElementString("copyright", "&#169; 2018");
-            xml.WriteElementString("webMaster", "joseph.h.ray@protonmail.com (Joey Ray)");
-            xml.WriteElementString("managingEditor", "joseph.h.ray@protonmail.com (Joey Ray)");
+            xml.WriteElementString("webMaster", _feedMeta["webmaster"]);
+            xml.WriteElementString("managingEditor", _feedMeta["managingeditor"]);
         }
 
         private void WriteLogo(XmlWriter xml)
         {
             xml.WriteStartElement("image");
-            xml.WriteElementString("url", "http://jhray.com/images/chilled_beer.jpg");
-            xml.WriteElementString("title", "Chilled E-Sports");
-            xml.WriteElementString("link", "http://jhray.com");
+            xml.WriteElementString("url", _feedMeta["logourl"]);
+            xml.WriteElementString("title", _feedMeta["logotitle"]);
+            xml.WriteElementString("link", _feedMeta["logolink"]);
             xml.WriteEndElement();
         }
 
         private void WriteItunesStuff(XmlWriter xml)
         {
             xml.WriteStartElement("itunes", "owner", null);
-            xml.WriteElementString("itunes", "name", null, "Eugene Cafun");
-            xml.WriteElementString("itunes", "email", null, "Eugene.Cafun@gmail.com");
+            xml.WriteElementString("itunes", "name", null, _feedMeta["itunesname"]);
+            xml.WriteElementString("itunes", "email", null, _feedMeta["itunesemail"]);
             xml.WriteEndElement();
 
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", "Games & Hobbies");
+            xml.WriteAttributeString("text", _feedMeta["itunescategory"]);
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", "Video Games");
+            xml.WriteAttributeString("text", _feedMeta["itunessubcategory"]);
             xml.WriteEndElement();
             xml.WriteEndElement();
 
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", "Technology");
+            xml.WriteAttributeString("text", _feedMeta["itunescategory2"]);
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", "Tech News");
+            xml.WriteAttributeString("text", _feedMeta["itunessubcategory2"]);
             xml.WriteEndElement();
             xml.WriteEndElement();
 
-            xml.WriteElementString("itunes", "keywords", null, "Hots, Overwatch, Blizzard, Games, ESports, Blockchain, Crypto, Crypto Currency, Relaxed");
-            xml.WriteElementString("itunes", "explicit", null, "yes");
+            xml.WriteElementString("itunes", "keywords", null, _feedMeta["ituneskeywords"]);
+            xml.WriteElementString("itunes", "explicit", null, _feedMeta["itunesexplicit"]);
 
             xml.WriteStartElement("itunes", "image", null);
-            xml.WriteAttributeString("href", "http://jhray.com/images/chilled_beer.jpg");
+            xml.WriteAttributeString("href", _feedMeta["itunesimage"]);
             xml.WriteEndElement();
         }
 
         private void WriteAtomFeedInfo(XmlWriter xml)
         {
             xml.WriteStartElement("atom", "link", null);
-            xml.WriteAttributeString("href", "http://jhray.com/home/GetRSSFeed");
+            xml.WriteAttributeString("href", _feedMeta["atomlink"]);
             xml.WriteAttributeString("rel", "self");
             xml.WriteAttributeString("type", "application/rss+xml");
             xml.WriteEndElement();
@@ -105,21 +107,18 @@ namespace jhray.com.Engine
 
         private void WritePodcastHeader(XmlWriter xml)
         {
-            xml.WriteElementString("pubDate", "Mon, 23 Apr 2018 00:00:00 +1000");
-            xml.WriteElementString("title", "Chilled E-Sports");
-            xml.WriteElementString("itunes", "author", null, "Eugene and Joey");
-            xml.WriteElementString("description", "Doing deep dives on the EU and NA Esports leagues of Heroes of the Storm. Discussing strategies and state-of-the-game ideas on how to get elite wins and dominate Silver & Gold leagues in all major Blizzard titles. Also talks about crypto currency, blockchain and technology from the point of view of engineering and comp sci.");
-            xml.WriteElementString("itunes", "summary", null, "Doing deep dives on the EU and NA Esports leagues of Heroes of the Storm. Discussing strategies and state-of-the-game ideas on how to get elite wins and dominate Silver & Gold leagues in all major Blizzard titles. Also talks about crypto currency, blockchain and technology from the point of view of engineering and comp sci.");
-            xml.WriteElementString("itunes", "subtitle", null, "A chill podcast about Blizzard games that you can drink beers to. Also talks about crypto");
-            xml.WriteElementString("lastBuildDate", "Mon, 23 Apr 2018 00:00:00 +1000");
+            xml.WriteElementString("pubDate", _feedMeta["pubdate"]);
+            xml.WriteElementString("title", _feedMeta["title"]);
+            xml.WriteElementString("itunes", "author", null, _feedMeta["author"]);
+            xml.WriteElementString("description", _feedMeta["description"]);
+            xml.WriteElementString("itunes", "summary", null, _feedMeta["description"]);
+            xml.WriteElementString("itunes", "subtitle", null, _feedMeta["subtitle"]);
+            xml.WriteElementString("lastBuildDate", _feedMeta["lastbuilddate"]);
         }
 
         private void WriteItemInfoFromDirectory(XmlWriter xml, string directory)
         {
-            var lines = File.ReadAllLines(Path.Combine(directory, "Metadata.txt"));
-            var meta = lines.ToDictionary(
-                lin => lin.Substring(0, lin.IndexOf(":")),
-                lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
+            var meta = GetLinesOfMetadata(Path.Combine(directory, "Metadata.txt"));
             xml.WriteStartElement("item");
             xml.WriteElementString("title", meta["title"]);
             xml.WriteElementString("description", meta["description"]);
@@ -134,6 +133,14 @@ namespace jhray.com.Engine
             xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
             xml.WriteElementString("pubDate", meta["pubDate"]);
             xml.WriteEndElement();
+        }
+
+        private Dictionary<string, string> GetLinesOfMetadata(string path)
+        {
+            var lines = File.ReadAllLines(path);
+            return lines.ToDictionary(
+                lin => lin.Substring(0, lin.IndexOf(":")),
+                lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
         }
     }
 }
