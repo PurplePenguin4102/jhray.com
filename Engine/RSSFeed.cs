@@ -16,11 +16,10 @@ namespace jhray.com.Engine
         {
             var directories = Directory.GetDirectories(podcastDirectory);
             _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
-            var feedBuilder = new StringBuilder();
+            var feedBuilder = new MemoryStream();
             
-            using (var xml = XmlWriter.Create(feedBuilder))
+            using (var xml = XmlWriter.Create(feedBuilder, new XmlWriterSettings() { Encoding = Encoding.UTF8}))
             {
-                xml.Settings.Encoding = Encoding.UTF8;
                 xml.WriteStartDocument();
                 WriteRSSHeader(xml);
                 WriteChannelHeader(xml);
@@ -36,8 +35,11 @@ namespace jhray.com.Engine
 
                 xml.WriteEndDocument();
             }
-
-            return feedBuilder.ToString();
+            feedBuilder.Position = 0;
+            using (var reader = new StreamReader(feedBuilder))
+            {
+                return reader.ReadToEnd();
+            }
         }
 
         private void WriteRSSHeader(XmlWriter xml)
