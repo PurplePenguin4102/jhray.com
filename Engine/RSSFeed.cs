@@ -11,9 +11,9 @@ namespace jhray.com.Engine
     public class RSSFeed
     {
 
-        public string ReadFromFolderContents()
+        public string ReadFromFolderContents(string podcastDirectory)
         {
-            var directories = Directory.GetDirectories(@"/home/penguin/podcast/");
+            var directories = Directory.GetDirectories(podcastDirectory);
             var feedBuilder = new StringBuilder();
             
             using (var xml = XmlWriter.Create(feedBuilder))

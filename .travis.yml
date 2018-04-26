@@ -8,6 +8,6 @@ before_install:
  - bash _scripts/install.sh
 script:
  - dotnet restore jhray.com.csproj
- - dotnet build jhray.com.csproj
+ - dotnet build jhray.com.csproj -c Release
 after_success:
  - bash _scripts/deploy.sh

@@ -6,11 +6,19 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
 using jhray.com.Engine;
+using Microsoft.Extensions.Options;
 
 namespace jhray.com.Controllers
 {
     public class HomeController : Controller
     {
+        private IOptions<Paths> _pathsOpt;
+
+        public HomeController(IOptions<Paths> pathsOpt)
+        {
+            _pathsOpt = pathsOpt;
+        }
+
         public IActionResult Index()
         {
             return View();
@@ -24,7 +32,7 @@ namespace jhray.com.Controllers
 
         public IActionResult GetRssFeed(DateTime date)
         {
-            var feed = new RSSFeed().ReadFromFolderContents();
+            var feed = new RSSFeed().ReadFromFolderContents(_pathsOpt.Value.PodcastDirectory);
             return Content(feed, "application/rss+xml");
         }
 
