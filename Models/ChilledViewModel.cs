@@ -20,9 +20,13 @@ namespace jhray.com.Models
                     var files = Directory.EnumerateFiles(Path.Combine(value, pod)).Where(f => Path.GetExtension(f) == ".mp3");
                     var uri = new UriBuilder("http", "jhray.com");
                     if (files.Count() != 1) continue;
-
-                    
-                    uri.Path = Regex.Replace(files.First(), "^/home/penguin", _baseAddress);
+                    var fpath = files.First();
+                    var sanitized = Regex.Replace(value, @"\\", "/");
+                    if (fpath.Contains("\\"))
+                    {
+                        fpath = Regex.Replace(fpath, @"\\", "/");
+                    }
+                    uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast");
                     AudioLinks.Add(uri.Uri.ToString());
                 }
             }
