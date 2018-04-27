@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace jhray.com.Models
@@ -20,13 +21,14 @@ namespace jhray.com.Models
                     var uri = new UriBuilder("http", "jhray.com");
                     if (files.Count() != 1) continue;
 
-                    uri.Path = $"podcast/{pod}/{files.First()}";
+                    
+                    uri.Path = Regex.Replace(files.First(), "^/home/penguin", _baseAddress);
                     AudioLinks.Add(uri.Uri.ToString());
                 }
             }
         }
 
         public List<string> AudioLinks { get; set; } = new List<string>();
-        private string _baseAddress = "http://jhray.com/podcast";
+        private string _baseAddress = "http://jhray.com";
     }
 }
