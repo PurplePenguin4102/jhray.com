@@ -28,7 +28,7 @@ namespace jhray.com.Models
                         fpath = Regex.Replace(fpath, @"\\", "/");
                     }
 
-                    uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast");
+                    uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
                     AudioLinks.Add(uri.Uri.ToString());
                 }
             }
