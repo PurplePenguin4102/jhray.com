@@ -5,12 +5,17 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh">
-    <div class="container body-content" style="opacity:0.9; background-color:darkolivegreen">
-        <h2>Chilled E-Sports</h2>
+    <div class="container body-content">
+        <div class="chilledBackground">
+            <h2>Chilled E-Sports</h2>
 
-        @foreach (var link in Model.AudioLinks)
-        {
-            <p>@link</p>
-        }
+            @foreach (var link in Model.AudioLinks)
+            {
+            <audio>
+                <source src="@link" type="audio/mpeg"/>
+                Your browser does not support the audio element.
+            </audio>
+            }
+        </div>
     </div>
 </div>
