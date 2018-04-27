@@ -28,7 +28,7 @@ namespace jhray.com.Controllers
         {
             var direc = _pathsOpt.Value.PodcastDirectory;
 
-            return View(new ChilledViewModel { Podcast = direc });
+            return View(new ChilledViewModel { PodcastFSPath = direc });
         }
 
 
