@@ -19,7 +19,11 @@ namespace jhray.com.Models
             {
 
                 var files = Directory.EnumerateFiles(Path.Combine(PodcastFSPath, pod)).Where(f => Path.GetExtension(f) == ".mp3");
+                var uri = new UriBuilder("http", "jhray.com");
+                if (files.Count() != 1) continue;
 
+                uri.Path = $"podcast/{pod}/{files.First()}";
+                AudioLinks.Add(uri.Uri.ToString());
             }
         }
     }

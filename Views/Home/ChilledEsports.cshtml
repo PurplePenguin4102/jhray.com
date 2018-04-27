@@ -1,8 +1,14 @@
-﻿
+﻿@using Microsoft.Data.OData.Atom
+@model ChilledViewModel
 @{
     ViewData["Title"] = "ChilledEsports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <h2>Chilled E-Sports</h2>
+
+@foreach (var link in Model.AudioLinks)
+{
+    <p>@link</p>
+}
 
