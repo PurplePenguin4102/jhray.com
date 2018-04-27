@@ -11,10 +11,10 @@
 
             @foreach (var link in Model.AudioLinks)
             {
-            <audio>
-                <source src="@link" type="audio/mpeg"/>
-                Your browser does not support the audio element.
-            </audio>
+                <audio controls>
+                    <source src="@link" type="audio/mpeg"/>
+                    Your browser does not support the audio element.
+                </audio>
             }
         </div>
     </div>
