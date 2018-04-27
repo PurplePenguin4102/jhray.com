@@ -26,7 +26,7 @@ namespace jhray.com.Models
             }
         }
 
-        public List<string> AudioLinks { get; set; }
+        public List<string> AudioLinks { get; set; } = new List<string>();
         private string _baseAddress = "http://jhray.com/podcast";
     }
 }
