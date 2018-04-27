@@ -8,23 +8,25 @@ namespace jhray.com.Models
 {
     public class ChilledViewModel
     {
-        public string PodcastFSPath { get; set; }
-        public List<string> AudioLinks { get; set; }
-        private string _baseAddress = "http://jhray.com/podcast";
-
-        public ChilledViewModel()
-        {
-            var podcasts = Directory.EnumerateDirectories(PodcastFSPath);
-            foreach (var pod in podcasts)
+        public string PodcastFSPath
+        { 
+            set 
             {
+                var podcasts = Directory.EnumerateDirectories(value);
+                foreach (var pod in podcasts)
+                {
 
-                var files = Directory.EnumerateFiles(Path.Combine(PodcastFSPath, pod)).Where(f => Path.GetExtension(f) == ".mp3");
-                var uri = new UriBuilder("http", "jhray.com");
-                if (files.Count() != 1) continue;
+                    var files = Directory.EnumerateFiles(Path.Combine(value, pod)).Where(f => Path.GetExtension(f) == ".mp3");
+                    var uri = new UriBuilder("http", "jhray.com");
+                    if (files.Count() != 1) continue;
 
-                uri.Path = $"podcast/{pod}/{files.First()}";
-                AudioLinks.Add(uri.Uri.ToString());
+                    uri.Path = $"podcast/{pod}/{files.First()}";
+                    AudioLinks.Add(uri.Uri.ToString());
+                }
             }
         }
+
+        public List<string> AudioLinks { get; set; }
+        private string _baseAddress = "http://jhray.com/podcast";
     }
 }
