@@ -96,7 +96,7 @@
 
 .greenGem {
     width:27%;
-    display:inline-block;
+    display:inline-table;
     background-color:lightgreen;
     height:400px;
     margin:10px 2.8%;
