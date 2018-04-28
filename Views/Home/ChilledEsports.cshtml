@@ -4,17 +4,22 @@
     ViewData["Title"] = "ChilledEsports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh">
+<div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh; min-width:100vw; position:fixed">
     <div class="container body-content">
         <div class="chilledBackground">
             <h2>Chilled E-Sports</h2>
 
-            @foreach (var link in Model.AudioLinks)
+            @foreach (var gem in Model.Gems)
             {
-                <audio controls>
-                    <source src="@link" type="audio/mpeg"/>
-                    Your browser does not support the audio element.
-                </audio>
+                var someshit = "greenGem";
+                <div class="@someshit">
+                    <h3 class="gemHeader">@gem.Title</h3>
+                    <audio class="gemAudio" controls>
+                        <source src="@gem.AudioLink" type="audio/mpeg"/>
+                        Your browser does not support the audio element.
+                    </audio>
+                    <p class="gemText">@gem.Text</p>
+                </div>
             }
         </div>
     </div>

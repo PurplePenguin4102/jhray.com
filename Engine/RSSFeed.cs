@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
+using static jhray.com.Utils.Utils;
 
 namespace jhray.com.Engine
 {
@@ -135,14 +136,6 @@ namespace jhray.com.Engine
             xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
             xml.WriteElementString("pubDate", meta["pubDate"]);
             xml.WriteEndElement();
-        }
-
-        private Dictionary<string, string> GetLinesOfMetadata(string path)
-        {
-            var lines = File.ReadAllLines(path);
-            return lines.ToDictionary(
-                lin => lin.Substring(0, lin.IndexOf(":")),
-                lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
         }
     }
 }

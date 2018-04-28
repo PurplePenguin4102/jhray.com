@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using static jhray.com.Utils.Utils;
 
 namespace jhray.com.Models
 {
@@ -18,6 +19,7 @@ namespace jhray.com.Models
                 {
 
                     var files = Directory.EnumerateFiles(Path.Combine(value, pod)).Where(f => Path.GetExtension(f) == ".mp3");
+                    var metadata = GetLinesOfMetadata(Path.Combine(pod, "Metadata.txt"));
                     var uri = new UriBuilder("http", "jhray.com");
                     if (files.Count() != 1) continue;
 
@@ -29,12 +31,18 @@ namespace jhray.com.Models
                     }
 
                     uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
-                    AudioLinks.Add(uri.Uri.ToString());
+                    Gems.Add(new Gem
+                    {
+                        AudioLink = uri.Uri.ToString(),
+                        Title = metadata["title"],
+                        Text = metadata["description"]
+                    });
+
                 }
             }
         }
 
-        public List<string> AudioLinks { get; set; } = new List<string>();
-        
+        public List<Gem> Gems { get; set; } = new List<Gem>();
+      
     }
 }
