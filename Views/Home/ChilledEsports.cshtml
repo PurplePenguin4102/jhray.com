@@ -7,12 +7,14 @@
 <div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh; min-width:100vw; position:fixed">
     <div class="container body-content">
         <div class="chilledBackground">
-            <h2>Chilled E-Sports</h2>
-
+            <div class="GemTitle">
+                <h2>Chilled E-Sports</h2>
+            </div>
+            <div class="GemMasonry">
             @foreach (var gem in Model.Gems)
             {
                 var someshit = "greenGem";
-                <div class="@someshit">
+                <div class="@someshit gemItem">
                     <h3 class="gemHeader">@gem.Title</h3>
                     <audio class="gemAudio" controls>
                         <source src="@gem.AudioLink" type="audio/mpeg"/>
@@ -21,6 +23,7 @@
                     <p class="gemText">@gem.Text</p>
                 </div>
             }
+            </div>
         </div>
     </div>
 </div>

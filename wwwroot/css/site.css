@@ -95,11 +95,9 @@
 }
 
 .greenGem {
-    width:27%;
-    display:inline-table;
-    background-color:lightgreen;
-    height:400px;
-    margin:10px 2.8%;
+    background: url("/images/ruby.png") no-repeat;
+    background-size: cover;
+
 }
 
 .gemHeader {
@@ -117,6 +115,19 @@
     text-align:left;
     margin-left:16px;
     margin-right:16px;
+}
+
+.gemItem {
+    display: inline-block;
+    margin: 0 0 1em;
+    width: 100%;
+    padding: 15px 40px;
+
+}
+
+.GemMasonry {
+    column-count: 3;
+    column-gap: 1em;
 }
 
 .chilledBackground {
