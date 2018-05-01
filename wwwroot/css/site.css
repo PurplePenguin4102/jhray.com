@@ -137,6 +137,10 @@
     border-radius: 80px;
 }
 
+.GemTitle {
+    margin:0% 40%;
+}
+
 .gemText {
     text-align:left;
     margin-left:16px;
