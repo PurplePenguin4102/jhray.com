@@ -14,12 +14,14 @@
             @foreach (var gem in Model.Gems)
             {
                 <div class="@gem.Type.ToString() gemItem">
-                    <h3 class="gemHeader">@gem.Title</h3>
-                    <audio class="gemAudio" controls>
-                        <source src="@gem.AudioLink" type="audio/mpeg"/>
-                        Your browser does not support the audio element.
-                    </audio>
-                    <p class="gemText">@gem.Text</p>
+                    <div class="gemContents">
+                        <h3 class="gemHeader">@gem.Title</h3>
+                        <audio class="gemAudio" controls>
+                            <source src="@gem.AudioLink" type="audio/mpeg"/>
+                            Your browser does not support the audio element.
+                        </audio>
+                        <p class="gemText">@gem.Text</p>
+                    </div>
                 </div>
             }
             </div>

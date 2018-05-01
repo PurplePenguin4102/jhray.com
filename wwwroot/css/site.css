@@ -96,42 +96,34 @@
 
 .greenGem {
     background: url("/images/emerald.png") ;
-    background-size: cover;
 }
 
 .redGem {
     background: url("/images/ruby.png") ;
-    background-size: cover;
 }
 
 .yellowGem {
     background: url("/images/topaz.png") ;
-    background-size: cover;
 }
 
 .orangeGem {
     background: url("/images/citrine.png") ;
-    background-size: cover;
 }
 
 .blueGem {
     background: url("/images/sapphire.png") ;
-    background-size: cover;
 }
 
 .blackGem {
     background: url("/images/agate.png") ;
-    background-size: cover;
 }
 
 .purpleGem {
     background: url("/images/amethyst.png") ;
-    background-size: cover;
 }
 
 .diamondGem {
     background: url("/images/diamond.png") ;
-    background-size: cover;
 }
 
 .gemHeader {
@@ -140,8 +132,8 @@
 }
 
 .gemAudio {
-    width: 120px;
-    margin: 10px 30%;
+    width: 100%;
+    margin: 10px 0px;
     border-radius: 80px;
 }
 
@@ -156,7 +148,11 @@
     margin: 0 0 1em;
     width: 100%;
     padding: 15px 40px;
+    background-size: 100% 100%;
+}
 
+.gemContents {
+    margin: 100px 2em;
 }
 
 .GemMasonry {
