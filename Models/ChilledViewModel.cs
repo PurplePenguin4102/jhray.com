@@ -15,6 +15,8 @@ namespace jhray.com.Models
             set 
             {
                 var podcasts = Directory.EnumerateDirectories(value);
+                var gemTypes = Enum.GetValues(typeof(GemType));
+                var rnd = new Random();
                 foreach (var pod in podcasts)
                 {
 
@@ -35,7 +37,8 @@ namespace jhray.com.Models
                     {
                         AudioLink = uri.Uri.ToString(),
                         Title = metadata["title"],
-                        Text = metadata["description"]
+                        Text = metadata["description"],
+                        Type = (GemType)gemTypes.GetValue(rnd.Next(gemTypes.Length))
                     });
 
                 }

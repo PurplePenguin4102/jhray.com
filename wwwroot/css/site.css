@@ -95,9 +95,43 @@
 }
 
 .greenGem {
-    background: url("/images/ruby.png") no-repeat;
+    background: url("/images/emerald.png") ;
     background-size: cover;
+}
 
+.redGem {
+    background: url("/images/ruby.png") ;
+    background-size: cover;
+}
+
+.yellowGem {
+    background: url("/images/topaz.png") ;
+    background-size: cover;
+}
+
+.orangeGem {
+    background: url("/images/citrine.png") ;
+    background-size: cover;
+}
+
+.blueGem {
+    background: url("/images/sapphire.png") ;
+    background-size: cover;
+}
+
+.blackGem {
+    background: url("/images/agate.png") ;
+    background-size: cover;
+}
+
+.purpleGem {
+    background: url("/images/amethyst.png") ;
+    background-size: cover;
+}
+
+.diamondGem {
+    background: url("/images/diamond.png") ;
+    background-size: cover;
 }
 
 .gemHeader {
@@ -132,7 +166,7 @@
 
 .chilledBackground {
     background-color: aliceblue;
-    opacity: 0.85;
+    opacity: 0.90;
     margin-top: 50px;
     padding: 20px
 }

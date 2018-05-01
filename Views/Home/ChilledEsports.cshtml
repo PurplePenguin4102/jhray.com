@@ -13,8 +13,7 @@
             <div class="GemMasonry">
             @foreach (var gem in Model.Gems)
             {
-                var someshit = "greenGem";
-                <div class="@someshit gemItem">
+                <div class="@gem.Type.ToString() gemItem">
                     <h3 class="gemHeader">@gem.Title</h3>
                     <audio class="gemAudio" controls>
                         <source src="@gem.AudioLink" type="audio/mpeg"/>
