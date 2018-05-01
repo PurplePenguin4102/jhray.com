@@ -4,13 +4,13 @@
     ViewData["Title"] = "ChilledEsports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh; min-width:100vw; position:fixed">
+<div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh; min-width:100vw; background-attachment:fixed">
     <div class="container body-content">
         <div class="chilledBackground">
             <div class="GemTitle">
-                <h2>Chilled E-Sports</h2>
+                <h2 style="background-color:aliceblue; text-align:center">Chilled E-Sports</h2>
             </div>
-            <div class="GemMasonry">
+            <div class="clearfix">
             @foreach (var gem in Model.Gems)
             {
                 <div class="@gem.Type.ToString() gemItem">
