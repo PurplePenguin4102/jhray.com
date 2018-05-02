@@ -142,23 +142,18 @@
 }
 
 .gemText {
-    text-align:left;
+    text-align:center;
     margin-left:16px;
     margin-right:16px;
 }
 
 .gemItem {
-    margin: 0 0 1em;
-    width: 330px;
-    margin: 1em 16px;
-    height: 481px;
-    padding: 15px 40px;
+    /*max-width: 300px;*/
     background-size: 100% 100%;
-    float: left;
 }
 
 .gemContents {
-    margin: 125px 10px;
+    margin: 125px 25px;
     height: 280px;
 }
 
@@ -225,7 +220,7 @@
     margin: 15px;
 }
 
-@media screen and (max-width: 1024px) {
+/*@media screen and (max-width: 1024px) {
 
     .gemItem {
         margin: 1em 180px;
@@ -262,7 +257,7 @@
     .gemItem {
         margin: 1em -36px;
     }
-}
+}*/
 
 
 

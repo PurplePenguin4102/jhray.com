@@ -4,26 +4,36 @@
     ViewData["Title"] = "ChilledEsports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div style="background-image:url(/images/Heaven_Hell_overview02.0.jpg); min-height:100vh; min-width:100vw; background-attachment:fixed">
+<div style="background:url(/images/Heaven_Hell_overview02.0.jpg); height:100%; width:100%; background-attachment: fixed;">
     <div class="container body-content">
         <div class="chilledBackground">
             <div class="GemTitle">
                 <h2>Chilled E-Sports</h2>
             </div>
             <div class="clearfix">
-            @foreach (var gem in Model.Gems)
-            {
-                <div class="@gem.Type.ToString() gemItem">
-                    <div class="gemContents">
-                        <h3 class="gemHeader">@gem.Title</h3>
-                        <audio class="gemAudio" controls>
-                            <source src="@gem.AudioLink" type="audio/mpeg"/>
-                            Your browser does not support the audio element.
-                        </audio>
-                        <p class="gemText">@gem.Text</p>
+                @{ int colCount = 4; }
+                @for (int i = 0; i < Model.Gems.Count; i++)
+                {
+                    if (i % colCount == 0)
+                    {
+                        @Html.Raw("<div class=\"row\">")
+                    }
+                    var gem = Model.Gems[i];
+                    <div class="@gem.Type.ToString() gemItem col-md-3">
+                        <div class="gemContents">
+                            <h3 class="gemHeader">@gem.Title</h3>
+                            <audio class="gemAudio" controls>
+                                <source src="@gem.AudioLink" type="audio/mpeg"/>
+                                Your browser does not support the audio element.
+                            </audio>
+                            <p class="gemText">@gem.Text</p>
+                        </div>
                     </div>
-                </div>
-            }
+                    if (i % colCount == colCount - 1)
+                    {
+                        @Html.Raw("</div>")
+                    }
+                }
             </div>
         </div>
     </div>
