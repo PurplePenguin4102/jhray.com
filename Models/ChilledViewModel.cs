@@ -17,35 +17,33 @@ namespace jhray.com.Models
                 var podcasts = Directory.EnumerateDirectories(value);
                 var gemTypes = Enum.GetValues(typeof(GemType));
                 var rnd = new Random();
-                for (int i = 0; i < 3; i++)
+                foreach (var pod in podcasts)
                 {
-                    foreach (var pod in podcasts)
+
+                    var files = Directory.EnumerateFiles(Path.Combine(value, pod))
+                        .Where(f => Path.GetExtension(f) == ".mp3");
+                    var metadata = GetLinesOfMetadata(Path.Combine(pod, "Metadata.txt"));
+                    var uri = new UriBuilder("http", "jhray.com");
+                    if (files.Count() != 1) continue;
+
+                    var fpath = files.First();
+                    var sanitized = Regex.Replace(value, @"\\", "/");
+                    if (fpath.Contains("\\"))
                     {
-
-                        var files = Directory.EnumerateFiles(Path.Combine(value, pod))
-                            .Where(f => Path.GetExtension(f) == ".mp3");
-                        var metadata = GetLinesOfMetadata(Path.Combine(pod, "Metadata.txt"));
-                        var uri = new UriBuilder("http", "jhray.com");
-                        if (files.Count() != 1) continue;
-
-                        var fpath = files.First();
-                        var sanitized = Regex.Replace(value, @"\\", "/");
-                        if (fpath.Contains("\\"))
-                        {
-                            fpath = Regex.Replace(fpath, @"\\", "/");
-                        }
-
-                        uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
-                        Gems.Add(new Gem
-                        {
-                            AudioLink = uri.Uri.ToString(),
-                            Title = metadata["title"],
-                            Text = metadata["description"],
-                            Type = (GemType) gemTypes.GetValue(rnd.Next(gemTypes.Length))
-                        });
-
+                        fpath = Regex.Replace(fpath, @"\\", "/");
                     }
+
+                    uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
+                    Gems.Add(new Gem
+                    {
+                        AudioLink = uri.Uri.ToString(),
+                        Title = metadata["title"],
+                        Text = metadata["description"],
+                        Type = (GemType) gemTypes.GetValue(rnd.Next(gemTypes.Length))
+                    });
+
                 }
+                
             }
         }
 
