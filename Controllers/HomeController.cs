@@ -27,8 +27,12 @@ namespace jhray.com.Controllers
         public IActionResult ChilledESports()
         {
             var direc = _pathsOpt.Value.PodcastDirectory;
-
-            return View(new ChilledViewModel { PodcastFSPath = direc });
+            var vm = new ChilledViewModelBuilder()
+                .Configure
+                .AddPodcastToGemList(direc)
+                .AddPicturesToGemList()
+                .Build();
+            return View(vm);
         }
 
 

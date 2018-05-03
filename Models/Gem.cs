@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace jhray.com.Models
 {
-    public class Gem
+    public class Gem : IGem
     {
         public string AudioLink { get; set; }
         public string Title { get; set; }

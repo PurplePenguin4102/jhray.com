@@ -5,8 +5,9 @@ using System.Threading.Tasks;
 
 namespace jhray.com.Models
 {
-    public class ChilledViewModel
+    public interface IGem
     {
-        public List<IGem> Gems { get; set; }
+        GemType Type { get; }
+        string Title { get; }
     }
 }

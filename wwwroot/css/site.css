@@ -137,6 +137,10 @@
     border-radius: 80px;
 }
 
+.gemPicture {
+    width:100%;
+}
+
 .GemTitle {
     margin:0% 30%;
     text-align:center;
@@ -230,52 +234,8 @@
     .gemText {
         display: none;
     }
-}
-/*@media screen and (max-width: 1024px) {
 
-    .gemItem {
-        margin: 1em 180px;
+    .gemHeader {
+        font-size: 17px;
     }
 }
-
-@media screen and (max-width: 767px) and (max-width: 1023px) {
-
-    .gemItem {
-        margin: 1em 0px;
-    }
-}
-
-@media screen and (max-width: 384px) and (max-width: 766px) {
-    .gemItem {
-        margin: 1em -7px;
-    }
-}
-
-@media screen and (max-width: 375px) and (max-width: 383px) {
-    .gemItem {
-        margin: 1em -11px;
-    }
-}
-
-
-@media screen and (max-width: 361px) {
-    .gemItem {
-        margin: 1em -20px;
-    }
-}
-
-@media screen and (max-width: 320px) {
-    .gemItem {
-        margin: 1em -36px;
-    }
-}*/
-
-
-
-
-
-
-
-
-
-
