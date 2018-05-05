@@ -15,7 +15,7 @@ namespace jhray.com.Engine
         private Dictionary<string, string> _feedMeta;
         public string ReadFromFolderContents(string podcastDirectory)
         {
-            var directories = Directory.GetDirectories(podcastDirectory).OrderBy(a => a);
+            var directories = Directory.GetDirectories(podcastDirectory).OrderByDescending(a => a);
             _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
             var feedBuilder = new MemoryStream();
             

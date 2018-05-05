@@ -228,14 +228,23 @@
 @media screen and (max-width: 500px) {
     .gemContents {
         margin: 0px 25px;
-        padding: 43px;
+        padding: 76px 6px;
     }
 
     .gemText {
         display: none;
     }
 
-    .gemHeader {
+    .Podcast {
         font-size: 17px;
     }
+
+    .Picture {
+        display: none;
+    }
+
+    .chilledBackground {
+        margin: 25px 20px;
+    }
+
 }

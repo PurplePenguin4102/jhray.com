@@ -19,11 +19,11 @@
                         @Html.Raw("<div class=\"row\">")
                     }
                     var gem = Model.Gems[i];
-                    <div class="@gem.Type.ToString() gemItem col-md-3">
+                    <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
                         <div class="gemContents">
-                            <h3 class="gemHeader">@gem.Title</h3>
                             @if (gem is Gem)
                             {
+                                <h3 class="gemHeader Podcast">@gem.Title</h3>
                                 var podcastGem = gem as Gem;
                                 <audio class="gemAudio" controls>
                                     <source src="@podcastGem.AudioLink" type="audio/mpeg"/>
@@ -33,6 +33,7 @@
                             }
                             else
                             {
+                                <h3 class="gemHeader Picture">@gem.Title</h3>
                                 var imageGem = gem as PictureGem;
                                 <a href="@imageGem.PictureLink"><img class="gemPicture" src="@imageGem.PictureLink"/></a>
                                 <p style="text-align:center">Artist Name : <a style="text-align:center" href="@imageGem.ArtistSource">@imageGem.ArtistName</a></p>
