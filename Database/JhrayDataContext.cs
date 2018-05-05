@@ -25,7 +25,6 @@ namespace jhray.com.Database
 
             // shadow properties
             builder.Entity<User>().Property<DateTimeOffset>("UpdatedTimestamp");
-
             base.OnModelCreating(builder);
         }
 
@@ -49,6 +48,5 @@ namespace jhray.com.Database
                 entry.Property("UpdatedTimestamp").CurrentValue = DateTimeOffset.UtcNow;
             }
         }
-
     }
 }

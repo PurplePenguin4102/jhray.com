@@ -11,6 +11,11 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Data.OData.Query.SemanticAst;
+using jhray.com.Database;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc.Formatters;
+using Newtonsoft.Json;
+using jhray.com.Repository;
 
 namespace jhray.com
 {
@@ -26,10 +31,22 @@ namespace jhray.com
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.Configure<Paths>(Configuration.GetSection("Paths"));
+
+            var sqlConnectionString = Configuration.GetConnectionString("DataAccessPostgreSqlProvider");
+
+            services.AddDbContext<JhrayDataContext>(options =>
+                options.UseNpgsql(
+                    sqlConnectionString,
+                    b => b.MigrationsAssembly("AspNet5MultipleProject")
+                )
+            );
+
             services.AddMvc();
+
+            services.Configure<Paths>(Configuration.GetSection("Paths"));
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
+            services.AddScoped<IJhrayRepository, JhrayRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -72,6 +89,8 @@ namespace jhray.com
             });
             
             app.UseAuthentication();
+
+
         }
     }
 }
