@@ -22,7 +22,7 @@ namespace jhray.com.Engine
 
             public Configuration AddPodcastToGemList(string podcastFSPath)
             {
-                var podcasts = Directory.EnumerateDirectories(podcastFSPath);
+                var podcasts = Directory.EnumerateDirectories(podcastFSPath).OrderBy(a => a);
                 foreach (var pod in podcasts)
                 {
 
