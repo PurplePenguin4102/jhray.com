@@ -18,6 +18,11 @@
     overflow-y: auto;
 }
 
+#feedIcon {
+    width: 40px;
+    margin-bottom: 9px;
+}
+
 .parallax__layer {
     position: absolute;
     top: 0;

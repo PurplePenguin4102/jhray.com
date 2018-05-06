@@ -16,6 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using jhray.com.Repository;
+using System.Data.Common;
 
 namespace jhray.com
 {
@@ -34,12 +35,13 @@ namespace jhray.com
 
             var sqlConnectionString = Configuration.GetConnectionString("DataAccessPostgreSqlProvider");
 
-            services.AddDbContext<JhrayDataContext>(options =>
-                options.UseNpgsql(
-                    sqlConnectionString,
-                    b => b.MigrationsAssembly("AspNet5MultipleProject")
-                )
-            );
+
+            //services.AddDbContext<JhrayDataContext>(options =>
+            //    options.UseNpgsql(
+            //        sqlConnectionString,
+            //        b => b.MigrationsAssembly("AspNet5MultipleProject")
+            //    )
+            //);
 
             services.AddMvc();
 
