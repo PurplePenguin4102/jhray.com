@@ -1,0 +1,8 @@
+﻿@model jhray.com.Models.IGem
+
+@{
+    var imageGem = Model as PictureGem;
+    <h3 class="gemHeader Picture">@imageGem.Title</h3>
+    <a href="@imageGem.PictureLink"><img class="gemPicture" src="@imageGem.PictureLink" /></a>
+    <p style="text-align:center">Artist Name : <a style="text-align:center" href="@imageGem.ArtistSource">@imageGem.ArtistName</a></p>
+}

@@ -23,20 +23,11 @@
                         <div class="gemContents">
                             @if (gem is Gem)
                             {
-                                <h3 class="gemHeader Podcast">@gem.Title</h3>
-                                var podcastGem = gem as Gem;
-                                <audio class="gemAudio" controls>
-                                    <source src="@podcastGem.AudioLink" type="audio/mpeg"/>
-                                    Your browser does not support the audio element.
-                                </audio>
-                                <p class="gemText">@podcastGem.Text</p>
+                                @Html.Partial("PodcastGem", gem);
                             }
                             else
                             {
-                                <h3 class="gemHeader Picture">@gem.Title</h3>
-                                var imageGem = gem as PictureGem;
-                                <a href="@imageGem.PictureLink"><img class="gemPicture" src="@imageGem.PictureLink"/></a>
-                                <p style="text-align:center">Artist Name : <a style="text-align:center" href="@imageGem.ArtistSource">@imageGem.ArtistName</a></p>
+                                @Html.Partial("PictureGem", gem);
                             }
 
                         </div>
