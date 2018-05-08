@@ -1,10 +1,17 @@
 ﻿@model jhray.com.Models.IGem
 @{ 
-    var podcastGem = Model as Gem;
+    var podcastGem = Model as PodcastGem;
     <h3 class="gemHeader Podcast">@podcastGem.Title</h3>
     <audio class="gemAudio" controls>
         <source src="@podcastGem.AudioLink" type="audio/mpeg"/>
         Your browser does not support the audio element.
     </audio>
-    <p class="gemText">@podcastGem.Text</p>
+    if (podcastGem.DisplayText.Length < podcastGem.Text.Length)
+    {
+        <p class="gemText">@podcastGem.DisplayText <a href="#">... More</a></p>
+    }
+    else
+    {
+        <p class="gemText">@podcastGem.DisplayText</p>
+    }
 }

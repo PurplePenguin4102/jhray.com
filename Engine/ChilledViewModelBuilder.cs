@@ -40,7 +40,7 @@ namespace jhray.com.Engine
                     }
 
                     uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
-                    Gems.Add(new Gem
+                    Gems.Add(new PodcastGem
                     {
                         AudioLink = uri.Uri.ToString(),
                         Title = metadata["title"],

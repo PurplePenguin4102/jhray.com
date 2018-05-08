@@ -21,7 +21,7 @@
                     var gem = Model.Gems[i];
                     <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
                         <div class="gemContents">
-                            @if (gem is Gem)
+                            @if (gem is PodcastGem)
                             {
                                 @Html.Partial("PodcastGem", gem);
                             }
