@@ -33,15 +33,15 @@ namespace jhray.com
         public void ConfigureServices(IServiceCollection services)
         {
 
-            var sqlConnectionString = Configuration.GetConnectionString("DataAccessPostgreSqlProvider");
+            var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(), GetPasswordFromFile());
+            
 
-
-            //services.AddDbContext<JhrayDataContext>(options =>
-            //    options.UseNpgsql(
-            //        sqlConnectionString,
-            //        b => b.MigrationsAssembly("AspNet5MultipleProject")
-            //    )
-            //);
+            services.AddDbContext<JhrayDataContext>(options =>
+                options.UseNpgsql(
+                    sqlConnectionString,
+                    b => b.MigrationsAssembly("jhray.com")
+                )
+            );
 
             services.AddMvc();
 
@@ -49,6 +49,16 @@ namespace jhray.com
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
             services.AddScoped<IJhrayRepository, JhrayRepository>();
+        }
+
+        private string GetPasswordFromFile()
+        {
+            return "";
+        }
+
+        private string GetUsernameFromFile()
+        {
+            return "";
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

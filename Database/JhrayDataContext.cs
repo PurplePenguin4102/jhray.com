@@ -16,6 +16,11 @@ namespace jhray.com.Database
 
         DbSet<User> Users { get; set; }
 
+        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        //{
+        //    
+        //}
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<User>().HasKey(m => m.Id);
