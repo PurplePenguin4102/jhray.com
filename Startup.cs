@@ -36,7 +36,6 @@ namespace jhray.com
             var direc = Configuration.GetSection("Paths").GetValue<string>("CredsDirectory");
             
             var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
-            
 
             services.AddDbContext<JhrayDataContext>(options =>
                 options.UseNpgsql(
@@ -55,12 +54,12 @@ namespace jhray.com
 
         private string GetPasswordFromFile(string direc)
         {
-            return File.ReadAllText(direc + @"Password.txt");
+            return File.ReadAllText(Path.Combine(direc, @"Password.txt"));
         }
 
         private string GetUsernameFromFile(string direc)
         {
-            return File.ReadAllText(direc + @"UserName.txt");
+            return File.ReadAllText(Path.Combine(direc, @"UserName.txt"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
