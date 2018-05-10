@@ -32,8 +32,10 @@ namespace jhray.com
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
-            var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(), GetPasswordFromFile());
+            services.Configure<Paths>(Configuration.GetSection("Paths"));
+            var direc = Configuration.GetSection("Paths").GetValue<string>("CredsDirectory");
+            
+            var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
             
 
             services.AddDbContext<JhrayDataContext>(options =>
@@ -45,20 +47,20 @@ namespace jhray.com
 
             services.AddMvc();
 
-            services.Configure<Paths>(Configuration.GetSection("Paths"));
+            
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
             services.AddScoped<IJhrayRepository, JhrayRepository>();
         }
 
-        private string GetPasswordFromFile()
+        private string GetPasswordFromFile(string direc)
         {
-            return "";
+            return File.ReadAllText(direc + @"Password.txt");
         }
 
-        private string GetUsernameFromFile()
+        private string GetUsernameFromFile(string direc)
         {
-            return "";
+            return File.ReadAllText(direc + @"UserName.txt");
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

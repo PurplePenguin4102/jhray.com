@@ -8,5 +8,10 @@ namespace jhray.com
     public class Paths
     {
         public string PodcastDirectory { get; set; }
+        public string CredsDirectory { get; set; }
+        public string PicturesDirectory { get; set; }
+        public string BlogsDirectory { get; set; }
+        public string AudioDirectory { get; set; }
+        public string VideoDirectory { get; set; }
     }
 }
