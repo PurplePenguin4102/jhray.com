@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
 using jhray.com.Engine;
 using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authorization;
 
 namespace jhray.com.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
         private IOptions<Paths> _pathsOpt;

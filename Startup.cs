@@ -17,6 +17,8 @@ using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
 using jhray.com.Repository;
 using System.Data.Common;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc.Authorization;
 
 namespace jhray.com
 {
@@ -37,19 +39,29 @@ namespace jhray.com
             
             var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
 
-            services.AddDbContext<JhrayDataContext>(options =>
+            services.AddEntityFrameworkNpgsql().AddDbContext<JhrayDataContext>(options =>
                 options.UseNpgsql(
                     sqlConnectionString,
-                    b => b.MigrationsAssembly("jhray.com")
-                )
-            );
+                    b => b.MigrationsAssembly("jhray.com")));
+            //services.AddDbContext<JhrayDataContext>(options =>
+            //    options.UseNpgsql(
+            //        sqlConnectionString,
+            //        b => b.MigrationsAssembly("jhray.com")
+            //    )
+            //);
 
-            services.AddMvc();
-
-            
+            services.AddAuthorization();
+            services.AddAuthentication();
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
             services.AddScoped<IJhrayRepository, JhrayRepository>();
+            services.AddMvc( config =>
+            {
+                var policy = new AuthorizationPolicyBuilder()
+                                 .RequireAuthenticatedUser()
+                                 .Build();
+                config.Filters.Add(new AuthorizeFilter(policy));
+            });
         }
 
         private string GetPasswordFromFile(string direc)

@@ -18,7 +18,7 @@
             @Html.LabelFor(m => m.Password, "Password")
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
-        @Html.AntiForgeryToken();
+        @Html.AntiForgeryToken()
         <input type="submit" value="Log Me In!" />
     </div>
 }
