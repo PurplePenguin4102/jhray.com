@@ -183,6 +183,10 @@
     user-select: none;
 }
 
+.loginContainer {
+    padding: 150px 450px;
+}
+
 @keyframes from_left {
     0% {
         margin-right: 30%;
