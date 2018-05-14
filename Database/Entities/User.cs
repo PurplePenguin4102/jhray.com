@@ -31,7 +31,6 @@ namespace jhray.com.Database.Entities
         }
 
         private string _password;
-        [MinLength(8)]
         public string Password
         {
             get => _password;
@@ -58,5 +57,7 @@ namespace jhray.com.Database.Entities
                 }
             }
         }
+
+        public IEnumerable<UserRole> UserRoles;
     }
 }

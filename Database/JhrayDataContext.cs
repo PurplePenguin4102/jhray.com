@@ -15,7 +15,9 @@ namespace jhray.com.Database
         }
 
         DbSet<User> Users { get; set; }
-
+        DbSet<UserRole> UserRoles { get; set; }
+        DbSet<Role> Roles { get; set; }
+        
         //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         //{
         //    
@@ -26,6 +28,10 @@ namespace jhray.com.Database
             builder.Entity<User>().HasKey(m => m.Id);
             builder.Entity<User>().HasIndex(u => u.Id).IsUnique().HasName("User_Idx");
             builder.Entity<User>().HasIndex(u => u.Name).HasName("UserName_Idx");
+
+            builder.Entity<User>().HasMany(u => u.UserRoles).WithOne(ur => ur.User);
+            builder.Entity<Role>().HasMany(r => r.UserRoles).WithOne(ur => ur.Role);
+
             builder.HasChangeTrackingStrategy(ChangeTrackingStrategy.ChangedNotifications);
 
             // shadow properties

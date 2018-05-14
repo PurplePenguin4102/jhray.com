@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace jhray.com.Models
 {
-    public class User : Database.Entities.User
+    public class UserRole : Database.Entities.UserRole
     {
     }
 }
