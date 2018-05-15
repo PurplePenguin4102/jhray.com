@@ -7,5 +7,6 @@ namespace jhray.com.Repository
 {
     public class JhrayRepository : IJhrayRepository
     {
+
     }
 }

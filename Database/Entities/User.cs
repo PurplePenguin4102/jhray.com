@@ -5,15 +5,15 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace jhray.com.Database.Entities
 {
-    public class User : EntityBase
+    public class User : IdentityUser, INotifyPropertyChanged
     {
         [Key]
         public int Id{ get; set; }
-
         private string _name;
         [Display]
         [Editable(true)]
@@ -25,36 +25,6 @@ namespace jhray.com.Database.Entities
                 if (_name != value)
                 {
                     _name = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        private string _email;
-        [Display]
-        [Editable(true)]
-        public string Email
-        {
-            get => _email;
-            set
-            {
-                if (_email != value)
-                {
-                    _email = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
-        private string _password;
-        public string Password
-        {
-            get => _password;
-            set
-            {
-                if (_password != value)
-                {
-                    _password = value;
                     NotifyPropertyChanged();
                 }
             }
@@ -73,7 +43,8 @@ namespace jhray.com.Database.Entities
                 }
             }
         }
-
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         public IEnumerable<UserRole> UserRoles;
     }
 }

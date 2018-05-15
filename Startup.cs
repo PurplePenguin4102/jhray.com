@@ -45,14 +45,8 @@ namespace jhray.com
                 options.UseNpgsql(
                     sqlConnectionString,
                     b => b.MigrationsAssembly("jhray.com")));
-            //services.AddDbContext<JhrayDataContext>(options =>
-            //    options.UseNpgsql(
-            //        sqlConnectionString,
-            //        b => b.MigrationsAssembly("jhray.com")
-            //    )
-            //);
 
-            services.AddIdentity<IdentityUser, IdentityRole>()
+            services.AddIdentity<User, IdentityRole>()
                 .AddEntityFrameworkStores<JhrayDataContext>()
                 .AddDefaultTokenProviders();
 
