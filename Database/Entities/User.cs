@@ -30,6 +30,22 @@ namespace jhray.com.Database.Entities
             }
         }
 
+        private string _email;
+        [Display]
+        [Editable(true)]
+        public string Email
+        {
+            get => _email;
+            set
+            {
+                if (_email != value)
+                {
+                    _email = value;
+                    NotifyPropertyChanged();
+                }
+            }
+        }
+
         private string _password;
         public string Password
         {

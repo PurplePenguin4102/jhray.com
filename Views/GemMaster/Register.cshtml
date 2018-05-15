@@ -1,13 +1,12 @@
 ﻿@model User
-@*
-    For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
-*@
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Login", "GemMaster", FormMethod.Post))
+<h2>Register</h2>
+
+@using (Html.BeginForm("Register", "GemMaster", FormMethod.Post))
 {
     <div class="container body-content loginContainer">
         <div class="form-group">

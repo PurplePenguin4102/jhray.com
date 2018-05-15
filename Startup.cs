@@ -135,6 +135,8 @@ namespace jhray.com
                 ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto
             });
 
+            app.UseAuthentication();
+
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
@@ -153,10 +155,6 @@ namespace jhray.com
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            
-            app.UseAuthentication();
-
-
         }
     }
 }
