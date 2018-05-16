@@ -56,10 +56,11 @@ namespace jhray.com.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && model.Password == model.ConfirmPassword)
             {
-                var user = new ChilledUser { UserName = model.Email, Email = model.Email };
-                var result = await _userManager.CreateAsync(user, "1234");
+                var user = new ChilledUser { UserName = model.Name, Email = model.Email, Joined = DateTimeOffset.Now };
+                
+                var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=532713

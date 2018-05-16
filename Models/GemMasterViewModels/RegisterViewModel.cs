@@ -9,7 +9,6 @@ namespace jhray.com.Models.GemMasterViewModels
     public class RegisterViewModel
     {
         [Required]
-        [EmailAddress]
         [Display(Name = "Thou Name, Hero")]
         public string Name { get; set; }
 
