@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using jhray.com.Models;
+using jhray.com.Models.Gems;
 using static jhray.com.Utils.Utils;
 
 namespace jhray.com.Engine

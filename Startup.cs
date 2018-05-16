@@ -19,7 +19,7 @@ using jhray.com.Repository;
 using System.Data.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
-using jhray.com.Models;
+using jhray.com.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 
 namespace jhray.com
@@ -41,13 +41,13 @@ namespace jhray.com
             
             var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<JhrayDataContext>(options =>
+            services.AddEntityFrameworkNpgsql().AddDbContext<ChilledDbContext>(options =>
                 options.UseNpgsql(
                     sqlConnectionString,
                     b => b.MigrationsAssembly("jhray.com")));
 
-            services.AddIdentity<User, IdentityRole>()
-                .AddEntityFrameworkStores<JhrayDataContext>()
+            services.AddIdentity<ChilledUser, IdentityRole>()
+                .AddEntityFrameworkStores<ChilledDbContext>()
                 .AddDefaultTokenProviders();
 
 
@@ -112,7 +112,7 @@ namespace jhray.com
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
-            if (env.IsDevelopment())
+            if (env.EnvironmentName =="Debug")
             {
                 app.UseDeveloperExceptionPage();
             }

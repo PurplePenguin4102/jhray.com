@@ -10,26 +10,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace jhray.com.Database.Entities
 {
-    public class User : IdentityUser, INotifyPropertyChanged
+    public class ChilledUser : IdentityUser, INotifyPropertyChanged
     {
-        [Key]
-        public int Id{ get; set; }
-        private string _name;
-        [Display]
-        [Editable(true)]
-        public string Name
-        {
-            get => _name;
-            set
-            {
-                if (_name != value)
-                {
-                    _name = value;
-                    NotifyPropertyChanged();
-                }
-            }
-        }
-
         private DateTimeOffset _joined;
         public DateTimeOffset Joined
         {
@@ -45,6 +27,6 @@ namespace jhray.com.Database.Entities
         }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        public IEnumerable<UserRole> UserRoles;
+        //public IEnumerable<UserRole> UserRoles;
     }
 }

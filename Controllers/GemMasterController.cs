@@ -2,58 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using jhray.com.Models;
+using jhray.com.Models.GemMasterViewModels;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using jhray.com.Database.Entities;
 
 namespace jhray.com.Controllers
 {
     public class GemMasterController : Controller
     {
-        private readonly UserManager<User> _userManager;
-        private readonly SignInManager<User> _signInManager;
+        private readonly UserManager<ChilledUser> _userManager;
+        private readonly SignInManager<ChilledUser> _signInManager;
         private readonly ILogger _logger;
 
-        public GemMasterController(UserManager<User> userManager, SignInManager<User> signInManager, ILogger<GemMasterController> logger)
+        public GemMasterController(UserManager<ChilledUser> userManager, SignInManager<ChilledUser> signInManager, ILogger<GemMasterController> logger)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
         }
 
+        [HttpGet]
         [AllowAnonymous]
         public IActionResult Login()
         {
-            var usr = new User();
-            return View(usr);
+            
+            return View();
         }
 
         [AllowAnonymous]
         [HttpPost]
-        public IActionResult Login(User user)
+        public async Task<IActionResult> Login(LoginViewModel login)
         {
+            // Clear the existing external cookie to ensure a clean login process
+            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            return View(user);
+            return View();
         }
 
         [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
-            // If we got this far, something failed, redisplay form
-            return View(new User());
+            
+            return View();
         }
 
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Register(User model)
+        public async Task<IActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
             {
-                var user = new User { UserName = model.Email, Email = model.Email };
+                var user = new ChilledUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, "1234");
                 if (result.Succeeded)
                 {

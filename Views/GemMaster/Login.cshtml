@@ -1,9 +1,9 @@
-﻿@model User
+﻿@model jhray.com.Models.GemMasterViewModels.LoginViewModel
 @*
     For more information on enabling MVC for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
-    ViewData["Title"] = "Login";
+    ViewData["Title"] = "Return... Hero";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,12 +13,21 @@
         <div class="form-group">
             @Html.LabelFor(m => m.Name, "Name")
             @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            
         </div>
         <div class="form-group">
             @Html.LabelFor(m => m.Password, "Password")
             @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
         </div>
         @Html.AntiForgeryToken()
-        <input type="submit" value="Log Me In!" />
+        <div class="form-group">
+            @Html.LabelFor(m => m.RememberMe, Html.DisplayNameFor(x => x.RememberMe))
+            @Html.CheckBoxFor(m => m.RememberMe)
+        </div>
+        <input type="submit" value="I HAVE RETURNED!" />
     </div>
+}
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
 }

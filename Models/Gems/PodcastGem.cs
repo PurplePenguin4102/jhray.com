@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace jhray.com.Models
+namespace jhray.com.Models.Gems
 {
     public class PodcastGem : IGem
     {
