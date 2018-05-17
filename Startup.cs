@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
 using jhray.com.Database.Entities;
 using Microsoft.AspNetCore.Identity;
+using jhray.com.Services;
 
 namespace jhray.com
 {
@@ -90,6 +91,7 @@ namespace jhray.com
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
             services.AddScoped<IJhrayRepository, JhrayRepository>();
+            services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc( config =>
             {
                 var policy = new AuthorizationPolicyBuilder()
