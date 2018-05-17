@@ -85,6 +85,11 @@ namespace jhray.com.Controllers
             return View();
         }
 
+        public IActionResult Myself()
+        {
+            return View();
+        }
+
         private void AddErrors(IdentityResult result)
         {
             foreach (var error in result.Errors)

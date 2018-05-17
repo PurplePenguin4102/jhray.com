@@ -1,0 +1,28 @@
+﻿@using jhray.com.Database.Entities
+@model ChilledUser
+
+@{
+    ViewBag.Title = "Myself";
+    Layout = "_Layout";
+}
+
+<h2>Nothing here boss!</h2>
+<p>@User.Identity.Name</p>
+@foreach (var cl in User.Claims)
+{
+    <h4>Claim Data</h4>
+    <p>@cl.Issuer</p>
+    <p>@cl.Value</p>
+    <p>@cl.OriginalIssuer</p>
+    <p>@cl.Type</p>
+    <p>@cl.ValueType</p>
+    
+    <h4>Subject</h4>
+    <p>@cl.Subject.Name</p>
+    <p>@cl.Subject.AuthenticationType</p>
+    <p>@cl.Subject.IsAuthenticated</p>
+    <p>@cl.Subject.Label</p>
+    <p>@cl.Subject.NameClaimType</p>
+    <p>@cl.Subject.RoleClaimType</p>
+
+}

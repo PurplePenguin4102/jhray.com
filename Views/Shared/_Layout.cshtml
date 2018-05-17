@@ -36,8 +36,16 @@
                     
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a asp-area="" asp-controller="GemMaster" asp-action="Login">Login</a></li>
-                    <li><a asp-area="" asp-controller="GemMaster" asp-action="Register">New User</a></li>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <li><a href="#" style="cursor:default">Hail @User.Identity.Name!</a></li>
+                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Myself">Stat Sheet</a></li>
+                    }
+                    else
+                    {
+                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Register">New Hero</a></li>
+                    }
                 </ul>
             </div>
         </div>
