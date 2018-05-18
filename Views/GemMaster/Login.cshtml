@@ -7,27 +7,32 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-@using (Html.BeginForm("Login", "GemMaster", FormMethod.Post))
-{
-    <div class="container body-content loginContainer">
-        <div class="form-group">
-            @Html.LabelFor(m => m.Name, "Name")
-            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-            
+<div style="background:url(/images/Pegasus-fantasy-31003865-1024-768.jpg); height:100%; width:100%; min-height:100vh; background-size:cover; background-attachment: fixed;">
+    <div class="container body-content loginContainer" style="background-color:azure; opacity:0.9">
+        <div class="page-header">
+            <h2 class="panel-title text-center"> Time For More Heroics</h2>
         </div>
-        <div class="form-group">
-            @Html.LabelFor(m => m.Password, "Password")
-            @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
-        </div>
-        @Html.AntiForgeryToken()
-        <div class="form-group">
-            @Html.LabelFor(m => m.RememberMe, Html.DisplayNameFor(x => x.RememberMe))
-            @Html.CheckBoxFor(m => m.RememberMe)
-        </div>
-        <input type="submit" value="I HAVE RETURNED!" />
-    </div>
-}
+        @using (Html.BeginForm("Login", "GemMaster", FormMethod.Post))
+        {
+            <div class="form-group">
+                @Html.LabelFor(m => m.Name, "Name")
+                @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
 
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Password, "Secret Spell")
+                @Html.PasswordFor(m => m.Password, new { @class = "form-control" })
+            </div>
+            @Html.AntiForgeryToken()
+            <div class="form-group">
+                @Html.LabelFor(m => m.RememberMe, Html.DisplayNameFor(x => x.RememberMe))
+                @Html.CheckBoxFor(m => m.RememberMe)
+            </div>
+            <input type="submit" class="btn-block loginButton" value="Let Me QUEST!" />
+        }
+    </div>
+
+    @section Scripts {
+        @await Html.PartialAsync("_ValidationScriptsPartial")
+    }
+</div>
