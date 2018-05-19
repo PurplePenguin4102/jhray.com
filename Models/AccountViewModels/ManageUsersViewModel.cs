@@ -11,6 +11,6 @@ namespace jhray.com.Models.AccountViewModels
     public class ManageUsersViewModel
     {
         public List<ChilledUser> Users { get; set; }
-        public List<ChilledUser> Roles { get; set; }
+        public List<IdentityRole> Roles { get; set; }
     }
 }

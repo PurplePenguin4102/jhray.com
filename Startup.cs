@@ -15,7 +15,6 @@ using jhray.com.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc.Formatters;
 using Newtonsoft.Json;
-using jhray.com.Repository;
 using System.Data.Common;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.Authorization;
@@ -90,7 +89,6 @@ namespace jhray.com
             services.AddAuthentication();
             services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
             services.AddResponseCompression();
-            services.AddScoped<IJhrayRepository, JhrayRepository>();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc( config =>
             {
@@ -151,6 +149,8 @@ namespace jhray.com
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            SeedDatabase.Go(app.ApplicationServices);
         }
     }
 }
