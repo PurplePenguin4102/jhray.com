@@ -10,32 +10,21 @@ namespace jhray.com.Database
 {
     public class SeedDatabase
     {
-        public static async void Go(IServiceProvider serviceProvider)
+        public static async Task<IdentityResult> Go(ChilledDbContext context, UserManager<ChilledUser> userManager, RoleManager<IdentityRole> roleManager, string email)
         {
-            var context = serviceProvider.GetService(typeof(ChilledDbContext)) as ChilledDbContext;
-
-            await AssignRoles(serviceProvider, "joseph.h.ray@gmail.com");
-
-            await context.SaveChangesAsync();
-        }
-
-        public static async Task<IdentityResult> AssignRoles(IServiceProvider services, string email)
-        {
-            var _userManager = services.GetService(typeof(UserManager<ChilledUser>)) as UserManager<ChilledUser>;
-            var _roleManager = services.GetService(typeof(RoleManager<IdentityRole>)) as RoleManager<IdentityRole>;
-
-            if (!await _roleManager.RoleExistsAsync("SuperGenius"))
+            if (!await roleManager.RoleExistsAsync("SuperGenius"))
             {
-                await _roleManager.CreateAsync(new IdentityRole("SuperGenius"));
+                await roleManager.CreateAsync(new IdentityRole("SuperGenius"));
             }
 
-            var user = await _userManager.FindByEmailAsync(email);
-            var roles = _roleManager.Roles;
-            if (user != null)
+            var user = await userManager.FindByEmailAsync(email);
+            var role = await roleManager.FindByNameAsync("SuperGenius");
+            if (user != null && !await userManager.IsInRoleAsync(user, role.Name))
             {
-                var result = await _userManager.AddToRoleAsync(user, roles.Last().Name);
+                var result = await userManager.AddToRoleAsync(user, role.Name);
                 return result;
             }
+            await context.SaveChangesAsync();
             return IdentityResult.Failed();
         }
     }

@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using jhray.com.Database.Entities;
 using jhray.com.Services;
+using jhray.com.Database;
 
 namespace jhray.com.Controllers
 {
@@ -20,11 +21,13 @@ namespace jhray.com.Controllers
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
+        private readonly ChilledDbContext _context;
 
-        public GemMasterController(UserManager<ChilledUser> userManager, 
-            SignInManager<ChilledUser> signInManager, 
+        public GemMasterController(UserManager<ChilledUser> userManager,
+            SignInManager<ChilledUser> signInManager,
             RoleManager<IdentityRole> roleManager,
-            ILogger<GemMasterController> logger, 
+            ILogger<GemMasterController> logger,
+            ChilledDbContext context,
             IEmailSender emailSender)
         {
             _userManager = userManager;
@@ -32,6 +35,7 @@ namespace jhray.com.Controllers
             _roleManager = roleManager;
             _emailSender = emailSender;
             _logger = logger;
+            _context = context;
         }
 
         [HttpGet]
@@ -59,6 +63,8 @@ namespace jhray.com.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
+                    // assign superuser
+                    await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
                 //if (result.RequiresTwoFactor)
