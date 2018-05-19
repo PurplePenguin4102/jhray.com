@@ -10,18 +10,21 @@ namespace jhray.com.Database
 {
     public class ChilledDbContext : IdentityDbContext<ChilledUser>
     {
+        public ChilledDbContext() { }
+
         public ChilledDbContext(DbContextOptions<ChilledDbContext> options) :base(options)
         {
 
         }
 
+        public DbSet<Gem> Gems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
-
             base.OnModelCreating(builder);
             // modify user here because IdentityDbContext sets stuff up for us first
             builder.Entity<ChilledUser>().ToTable("ChilledUser");
-
+            builder.Entity<ChilledUser>().HasMany(u => u.CreatedGems).WithOne(g => g.CreatedBy);
             // shadow properties
             //builder.Entity<User>().Property<DateTimeOffset>("UpdatedTimestamp");
         }

@@ -25,6 +25,8 @@ namespace jhray.com.Database.Entities
                 }
             }
         }
+
+        public List<Gem> CreatedGems { get; set; }
         public event PropertyChangedEventHandler PropertyChanged;
         protected void NotifyPropertyChanged([CallerMemberName] String propertyName = "") => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         //public IEnumerable<UserRole> UserRoles;

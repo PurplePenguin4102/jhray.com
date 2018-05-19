@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using jhray.com.Database.Entities;
 using jhray.com.Services;
+using jhray.com.Repository;
 
 namespace jhray.com.Controllers
 {
@@ -17,15 +18,24 @@ namespace jhray.com.Controllers
     {
         private readonly UserManager<ChilledUser> _userManager;
         private readonly SignInManager<ChilledUser> _signInManager;
+        private readonly RoleManager<ChilledUser> _roleManager;
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
+        private readonly IJhrayRepository _repo;
 
-        public GemMasterController(UserManager<ChilledUser> userManager, SignInManager<ChilledUser> signInManager, ILogger<GemMasterController> logger, IEmailSender emailSender)
+        public GemMasterController(UserManager<ChilledUser> userManager, 
+            SignInManager<ChilledUser> signInManager, 
+            RoleManager<ChilledUser> roleManager,
+            ILogger<GemMasterController> logger, 
+            IEmailSender emailSender,
+            IJhrayRepository jhrayRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _roleManager = roleManager;
             _emailSender = emailSender;
             _logger = logger;
+            _repo = jhrayRepository;
         }
 
         [HttpGet]
