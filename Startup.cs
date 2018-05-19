@@ -149,8 +149,9 @@ namespace jhray.com
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-
-            SeedDatabase.Go(app.ApplicationServices);
+            var context = app.ApplicationServices.GetService(typeof(ChilledDbContext)) as ChilledDbContext;
+            //SeedDatabase.Go(app.ApplicationServices);
+            
         }
     }
 }
