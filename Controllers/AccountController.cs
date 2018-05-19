@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 
 namespace jhray.com.Controllers
 {
-    [AllowAnonymous]
+
     public class AccountController : Controller
     {
         private readonly UserManager<ChilledUser> _userManager;
@@ -29,23 +29,23 @@ namespace jhray.com.Controllers
             _roleManager = roleManager;
             _logger = logger;
         }
-
+        [AllowAnonymous]
         public IActionResult Unauthorized()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult Forbidden()
         {
             return View();
         }
-
+        [AllowAnonymous]
         public IActionResult WhoAmI()
         {
             return View();
         }
 
-        [Authorize(Roles = "SuperAdmin")]
+        [Authorize(Roles = "SuperGenius")]
         public IActionResult ManageUsers()
         {
             var vm = new ManageUsersViewModel();

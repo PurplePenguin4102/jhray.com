@@ -140,6 +140,15 @@ namespace jhray.com.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
+        [Authorize(Roles = "SuperGenius")]
+        public IActionResult ManageUsers()
+        {
+            var vm = new ManageUsersViewModel();
+            vm.Roles = _roleManager.Roles.ToList();
+            vm.Users = _userManager.Users.ToList();
+            return View(vm);
+        }
+
         public IActionResult Portal()
         {
             return View();
