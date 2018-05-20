@@ -11,6 +11,8 @@ using Microsoft.Extensions.Logging;
 using jhray.com.Database.Entities;
 using jhray.com.Services;
 using jhray.com.Database;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Http;
 
 namespace jhray.com.Controllers
 {
@@ -64,7 +66,8 @@ namespace jhray.com.Controllers
                 {
                     _logger.LogInformation("User logged in.");
                     // assign superuser
-                    await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+                    //await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
                 //if (result.RequiresTwoFactor)
@@ -140,13 +143,15 @@ namespace jhray.com.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        public IActionResult Portal()
+        [Authorize(Roles = "SuperGenius,GemCreator")]
+        public async Task<IActionResult> Portal()
         {
             return View();
         }
 
-        public IActionResult Myself()
+        public async Task<IActionResult> Myself()
         {
+            await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
             return View();
         }
 
