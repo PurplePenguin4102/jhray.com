@@ -14,7 +14,7 @@
         <td>@row.Key.Id</td>
         <td>@row.Key.UserName</td>
         <td>@row.Key.Joined</td>
-        <td>@row.Key.CreatedGems.Count</td>
+        <td>@row.Key.CreatedGems?.Count()</td>
         <td>@row.Key.Email</td>
         <td>@string.Join(", ", row.Value)</td>
         <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>

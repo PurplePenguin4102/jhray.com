@@ -52,6 +52,7 @@ namespace jhray.com.Controllers
             vm.Roles = _roleManager.Roles.ToList();
 
             vm.Users = _userManager.Users.ToList();
+            vm.UserRoles = new Dictionary<ChilledUser, IEnumerable<string>>();
             foreach (var usr in vm.Users)
             {
                 vm.UserRoles.Add(usr,await _userManager.GetRolesAsync(usr));
