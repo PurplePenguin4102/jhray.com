@@ -6,18 +6,34 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>User Management</h1>
-<table>
-@foreach (var row in Model.UserRoles)
-{
-    <tr>
-        <td>@row.Key.Id</td>
-        <td>@row.Key.UserName</td>
-        <td>@row.Key.Joined</td>
-        <td>@row.Key.CreatedGems?.Count()</td>
-        <td>@row.Key.Email</td>
-        <td>@string.Join(", ", row.Value)</td>
-        <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>
-    </tr>
-}
-</table>
+<div class="container body-content">
+    <h1>User Management</h1>
+
+    <table class="table table-bordered table-striped">
+        <thead>
+        <tr>
+            <th scope="col">User Id</th>
+            <th scope="col">User Name</th>
+            <th scope="col">User Joined</th>
+            <th scope="col">User Gems</th>
+            <th scope="col">User Email</th>
+            <th scope="col">User Roles</th>
+            <th scope="col">User New Role</th>
+        </tr>
+        </thead>
+        <tbody>
+        @foreach (var row in Model.UserRoles)
+        {
+            <tr>
+                <td>@row.Key.Id</td>
+                <td>@row.Key.UserName</td>
+                <td>@row.Key.Joined</td>
+                <td>@row.Key.CreatedGems?.Count()</td>
+                <td>@row.Key.Email</td>
+                <td>@string.Join(", ", row.Value)</td>
+                <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>
+            </tr>
+        }
+        </tbody>
+    </table>
+</div>
