@@ -36,4 +36,22 @@
         }
         </tbody>
     </table>
+    
+    <table class="table table-bordered table-striped">
+    	<thead>
+    	<tr>
+    		<th scope="col">Role Id</th>
+    		<th scope="col">Role Name</th>
+    		<th scope="col">Num Users</th>
+    	</tr>
+    	</thead>
+    	@foreach (var role in Model.Roles)
+    	{
+            <tr>
+    		<td>@role.Id</td>
+    		<td>@role.Name</td>
+    		<td>@role.Users.Count</td>	
+    	    </tr>
+    	}
+    </table>
 </div>
