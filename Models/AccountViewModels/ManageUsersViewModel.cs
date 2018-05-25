@@ -15,5 +15,9 @@ namespace jhray.com.Models.AccountViewModels
         [Display(Name="New Role")]
         public List<IdentityRole> Roles { get; set; }
         public Dictionary<ChilledUser, IEnumerable<string>> UserRoles { get; set; }
+
+        
+        [Display(Name ="New Role")]
+        public string NewRole { get; set; }
     }
 }

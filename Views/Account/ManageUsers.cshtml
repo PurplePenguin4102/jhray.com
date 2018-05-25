@@ -11,47 +11,56 @@
 
     <table class="table table-bordered table-striped">
         <thead>
-        <tr>
-            <th scope="col">User Id</th>
-            <th scope="col">User Name</th>
-            <th scope="col">User Joined</th>
-            <th scope="col">User Gems</th>
-            <th scope="col">User Email</th>
-            <th scope="col">User Roles</th>
-            <th scope="col">User New Role</th>
-        </tr>
+            <tr>
+                <th scope="col">User Id</th>
+                <th scope="col">User Name</th>
+                <th scope="col">User Joined</th>
+                <th scope="col">User Gems</th>
+                <th scope="col">User Email</th>
+                <th scope="col">User Roles</th>
+                <th scope="col">User New Role</th>
+            </tr>
         </thead>
         <tbody>
-        @foreach (var row in Model.UserRoles)
-        {
-            <tr>
-                <td>@row.Key.Id</td>
-                <td>@row.Key.UserName</td>
-                <td>@row.Key.Joined</td>
-                <td>@row.Key.CreatedGems?.Count()</td>
-                <td>@row.Key.Email</td>
-                <td>@string.Join(", ", row.Value)</td>
-                <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>
-            </tr>
-        }
+            @foreach (var row in Model.UserRoles)
+            {
+                <tr>
+                    <td>@row.Key.Id</td>
+                    <td>@row.Key.UserName</td>
+                    <td>@row.Key.Joined</td>
+                    <td>@row.Key.CreatedGems?.Count()</td>
+                    <td>@row.Key.Email</td>
+                    <td>@string.Join(", ", row.Value)</td>
+                    <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>
+                </tr>
+            }
         </tbody>
     </table>
-    
+
     <table class="table table-bordered table-striped">
-    	<thead>
-    	<tr>
-    		<th scope="col">Role Id</th>
-    		<th scope="col">Role Name</th>
-    		<th scope="col">Num Users</th>
-    	</tr>
-    	</thead>
-    	@foreach (var role in Model.Roles)
-    	{
+        <thead>
             <tr>
-    		<td>@role.Id</td>
-    		<td>@role.Name</td>
-    		<td>@role.Users.Count</td>	
-    	    </tr>
-    	}
+                <th scope="col">Role Id</th>
+                <th scope="col">Role Name</th>
+                <th scope="col">Num Users</th>
+            </tr>
+        </thead>
+        @foreach (var role in Model.Roles)
+        {
+            <tr>
+                <td>@role.Id</td>
+                <td>@role.Name</td>
+                <td>@Model.UserRoles.Count(ur => ur.Value.Contains(role.Name))</td>
+            </tr>
+        }
     </table>
+
+    @using (Html.BeginForm("Account", "ManageUsers", FormMethod.Post))
+    {
+        <div class="form-group">
+            @Html.LabelFor(m => m.NewRole, Html.DisplayNameFor(m => m.NewRole))
+            @Html.TextBoxFor(m => m.NewRole)
+        </div>
+        <input type="submit" class="btn-block btn-primary" value="Add role" />
+    }
 </div>
