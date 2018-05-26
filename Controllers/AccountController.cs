@@ -64,16 +64,12 @@ namespace jhray.com.Controllers
         [HttpPost]
         public async Task<IActionResult> ManageUsers(ManageUsersViewModel muvm)
         {
-            var vm = new ManageUsersViewModel();
-            vm.Roles = _roleManager.Roles.ToList();
-
-            vm.Users = _userManager.Users.ToList();
-            vm.UserRoles = new Dictionary<ChilledUser, IEnumerable<string>>();
-            foreach (var usr in vm.Users)
+            if (ModelState.IsValid && !string.IsNullOrEmpty(muvm.NewRole))
             {
-                vm.UserRoles.Add(usr, await _userManager.GetRolesAsync(usr));
+                await _roleManager.CreateAsync(new IdentityRole(muvm.NewRole));
+                muvm.Roles = _roleManager.Roles.ToList();
             }
-            return View(vm);
+            return View(muvm);
         }
     }
 }
