@@ -19,6 +19,7 @@
                 <th scope="col">User Email</th>
                 <th scope="col">User Roles</th>
                 <th scope="col">User New Role</th>
+                <th scope="col">Add/Remove</th>
             </tr>
         </thead>
         <tbody>
@@ -31,7 +32,8 @@
                     <td>@row.Key.CreatedGems?.Count()</td>
                     <td>@row.Key.Email</td>
                     <td>@string.Join(", ", row.Value)</td>
-                    <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles))</td>
+                    <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles), new { id = row.Key.Id })</td>
+                    <td><button value="Add" onclick="doAdd(@row.Key.Id)"/><button value="Remove" onclick="doRemove(@row.Key.Id)" /></td>
                 </tr>
             }
         </tbody>
@@ -64,3 +66,18 @@
         <input type="submit" class="btn-block btn-primary" value="Add role" />
     }
 </div>
+
+<script>
+    function doAdd(rowId) {
+        var user = rowId;
+        var roleLst = document.getElementById(rowId);
+        var role = roleLst.options[roleLst.selectedIndex].text;
+        document.location.href = 'http://jhray.com/Account/AddRoleToUser/?userId=' + user + '&role=' + role;
+    }
+
+    function doRemove(rowId) {
+        var user = rowId;
+        var role = roleLst.options[roleLst.selectedIndex].text;
+        document.location.href = 'http://jhray.com/Account/RemoveRoleFromUser/?userId=' + user + '&role=' + role;
+    }
+</script>
