@@ -33,38 +33,41 @@
                     <td>@row.Key.Email</td>
                     <td>@string.Join(", ", row.Value)</td>
                     <td>@Html.DropDownListFor(model => model.UserRoles[row.Key], new SelectList(Model.Roles), new { id = row.Key.Id })</td>
-                    <td><button value="Add" onclick="doAdd(@row.Key.Id)"/><button value="Remove" onclick="doRemove(@row.Key.Id)" /></td>
+                    <td><button class="btn-success" onclick="doAdd('@row.Key.Id')">+</button><button class="btn-warning" onclick="doRemove('@row.Key.Id')">-</button></td>
                 </tr>
             }
         </tbody>
     </table>
-
-    <table class="table table-bordered table-striped">
-        <thead>
+    
+    <div class="col-md-6">
+        <table class="table table-bordered table-striped">
+            <thead>
             <tr>
                 <th scope="col">Role Id</th>
                 <th scope="col">Role Name</th>
                 <th scope="col">Num Users</th>
             </tr>
-        </thead>
-        @foreach (var role in Model.Roles)
+            </thead>
+            @foreach (var role in Model.Roles)
+            {
+                <tr>
+                    <td>@role.Id</td>
+                    <td>@role.Name</td>
+                    <td>@Model.UserRoles.Count(ur => ur.Value.Contains(role.Name))</td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("ManageUsers", "Account", FormMethod.Post, new {@class="form-inline" }))
         {
-            <tr>
-                <td>@role.Id</td>
-                <td>@role.Name</td>
-                <td>@Model.UserRoles.Count(ur => ur.Value.Contains(role.Name))</td>
-            </tr>
+            <h2 class="text-center text-info">Add new Role</h2>
+            <div class="form-group" style="margin-left:90px">
+                @Html.TextBoxFor(m => m.NewRole, new { @placeholder="New Role", @class = "form-control", @style = "margin:0px 40px 0px 15px" })
+            </div>
+            <input type="submit" class="btn btn-primary" value="Add" />
         }
-    </table>
-
-    @using (Html.BeginForm("Account", "ManageUsers", FormMethod.Post))
-    {
-        <div class="form-group">
-            @Html.LabelFor(m => m.NewRole, Html.DisplayNameFor(m => m.NewRole))
-            @Html.TextBoxFor(m => m.NewRole)
-        </div>
-        <input type="submit" class="btn-block btn-primary" value="Add role" />
-    }
+    </div>
 </div>
 
 <script>
@@ -72,12 +75,13 @@
         var user = rowId;
         var roleLst = document.getElementById(rowId);
         var role = roleLst.options[roleLst.selectedIndex].text;
-        document.location.href = 'http://jhray.com/Account/AddRoleToUser/?userId=' + user + '&role=' + role;
+        document.location.href = 'AddRoleToUser?userId=' + user + '&role=' + role;
     }
 
     function doRemove(rowId) {
         var user = rowId;
+        var roleLst = document.getElementById(rowId);
         var role = roleLst.options[roleLst.selectedIndex].text;
-        document.location.href = 'http://jhray.com/Account/RemoveRoleFromUser/?userId=' + user + '&role=' + role;
+        document.location.href = 'RemoveRoleFromUser?userId=' + user + '&role=' + role;
     }
 </script>
