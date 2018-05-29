@@ -37,7 +37,6 @@ namespace jhray.com.Controllers
             return View(vm);
         }
 
-
         public IActionResult GetRssFeed(DateTime date)
         {
             var feed = new RSSFeed().ReadFromFolderContents(_pathsOpt.Value.PodcastDirectory);

@@ -29,16 +29,19 @@ namespace jhray.com.Controllers
             _roleManager = roleManager;
             _logger = logger;
         }
+
         [AllowAnonymous]
         public IActionResult Unauthorized()
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult Forbidden()
         {
             return View();
         }
+
         [AllowAnonymous]
         public IActionResult WhoAmI()
         {
