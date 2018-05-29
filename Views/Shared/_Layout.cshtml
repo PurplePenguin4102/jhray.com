@@ -30,22 +30,22 @@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
-                    @*<li><a asp-area="" asp-controller="Home" asp-action="Index">Home</a></li>*@
                     <li><a asp-area="" asp-controller="Home" asp-action="ChilledESports">Chilled E-Sports</a></li>
-                    @if(User.Identity.IsAuthenticated && User.Identity.AuthenticationType.Contains("RegularGenius"))
-                    {
-                    <ul class="dropdown-menu">
-                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Portal</a></li>
-                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Add Gem</a></li>
-                        @if (User.Identity.AuthenticationType.Contains("RegularGenius"))
-                        {
-                        <li><a asp-area="" asp-controller="Account" asp-action="ManageUsers">Manage Users</a></li>
-                        }
-                    </ul>
-
-                    }
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    
+                    @if (User.Identity.IsAuthenticated && User.IsInRole("RegularGenius"))
+                    {
+                        <li class="dropdown">
+                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Portal</a></li>
+                                <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Add Gem</a></li>
+                                @if (User.IsInRole("SuperGenius"))
+                                {
+                                    <li><a asp-area="" asp-controller="Account" asp-action="ManageUsers">Manage Users</a></li>
+                                }
+                            </ul>
+                        </li>
+                    }
                 </ul>
                 <ul class="nav navbar-nav navbar-right">
                     @if (User.Identity.IsAuthenticated)
