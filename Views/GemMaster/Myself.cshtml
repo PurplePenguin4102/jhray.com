@@ -7,6 +7,13 @@
 }
 
 <h2>Nothing here boss!</h2>
+
+@if (User.Identity.IsAuthenticated && User.IsInRole("superGenius"))
+{
+    <a asp-action="SeedDB" asp-controller="GemMaster" class="btn-primary btn-block">Seed Database</a>
+}
+
+<a asp-action="Logoff" asp-controller="Account" class="btn-primary btn-block">Log Off</a>
 <p>@User.Identity.Name</p>
 @foreach (var cl in User.Claims)
 {

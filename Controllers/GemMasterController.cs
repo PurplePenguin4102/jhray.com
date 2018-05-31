@@ -142,18 +142,15 @@ namespace jhray.com.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        [Authorize(Roles = "SuperGenius,GemCreator")]
+        [Authorize(Roles = "RegularGenius")]
         public async Task<IActionResult> Portal()
         {
             
             return View();
         }
-        
-        [AllowAnonymous]
+
         public async Task<IActionResult> Myself()
         {
-            await _signInManager.SignOutAsync();
-            await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
             return View();
         }
 
@@ -163,6 +160,21 @@ namespace jhray.com.Controllers
             {
                 ModelState.AddModelError(string.Empty, error.Description);
             }
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        public IActionResult GemManager()
+        {
+            return View();
+        }
+
+        [Authorize(Roles = "SuperGenius")]
+        [HttpGet]
+        public async Task<IActionResult> SeedDB()
+        {
+            await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+            RedirectToAction(nameof(HomeController.Index), "Home");
+            throw new Exception();
         }
     }
 }

@@ -32,13 +32,13 @@
                 <ul class="nav navbar-nav">
                     <li><a asp-area="" asp-controller="Home" asp-action="ChilledESports">Chilled E-Sports</a></li>
                     <li><a asp-area="" asp-controller="Home" asp-action="Contact">Contact</a></li>
-                    @if (User.Identity.IsAuthenticated && User.IsInRole("RegularGenius"))
+                    @if (User.Identity.IsAuthenticated && (User.IsInRole("RegularGenius")))
                     {
                         <li class="dropdown">
                             <a class="dropdown-toggle" data-toggle="dropdown" href="#">Admin<span class="caret"></span></a>
                             <ul class="dropdown-menu">
                                 <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Portal</a></li>
-                                <li><a asp-area="" asp-controller="GemMaster" asp-action="Portal">Add Gem</a></li>
+                                <li><a asp-area="" asp-controller="GemMaster" asp-action="GemManager">Add Gem</a></li>
                                 @if (User.IsInRole("SuperGenius"))
                                 {
                                     <li><a asp-area="" asp-controller="Account" asp-action="ManageUsers">Manage Users</a></li>

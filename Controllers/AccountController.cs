@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using jhray.com.Database;
 using jhray.com.Database.Entities;
 using jhray.com.Models.AccountViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -95,6 +96,12 @@ namespace jhray.com.Controllers
             }
 
             return RedirectToAction("ManageUsers");
+        }
+
+        public async Task<IActionResult> Logoff()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [Authorize(Roles = "SuperGenius")]
