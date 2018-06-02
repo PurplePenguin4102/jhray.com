@@ -1,14 +1,24 @@
-﻿
+﻿@model jhray.com.Models.GemMasterViewModels.PodcastMetadata
 @{
     ViewData["Title"] = "GemManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <div class="container body-content">
     <h2 class="text-center">GemManager</h2>
+    <div class="col-lg-6">
+        <h2>Your Gems</h2>
+        <p class="text-muted">Nothin here boss!</p>
+    </div>
+    <div class="col-lg-6">
+        
     @using (Html.BeginForm("GemMaster", "AddGem"))
     {
-
-
+        <h2>Add Podcast</h2>
+        @Html.TextBoxFor(m => m.Title, "Gem Title")
+        @Html.TextAreaFor(m => m.Description, "Description")
+        @Html.TextBoxFor(m => m.ShortDescription, "Short Description (10-11 words)")
+        @Html.TextBoxFor(m => m.ItunesDuration, "Itunes Duration (eg 1:46:31)")
     }
+    </div>
 </div>
 
