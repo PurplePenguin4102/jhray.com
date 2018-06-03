@@ -3,6 +3,8 @@
     ViewData["Title"] = "GemManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<script type="text/javascript" src="~/js/moment.min.js"></script>
+<script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js"></script>
 <div class="container body-content">
     <h2 class="text-center">GemManager</h2>
     <div class="col-lg-6">
@@ -10,15 +12,42 @@
         <p class="text-muted">Nothin here boss!</p>
     </div>
     <div class="col-lg-6">
-        
-    @using (Html.BeginForm("GemMaster", "AddGem"))
-    {
-        <h2>Add Podcast</h2>
-        @Html.TextBoxFor(m => m.Title, "Gem Title")
-        @Html.TextAreaFor(m => m.Description, "Description")
-        @Html.TextBoxFor(m => m.ShortDescription, "Short Description (10-11 words)")
-        @Html.TextBoxFor(m => m.ItunesDuration, "Itunes Duration (eg 1:46:31)")
-    }
+
+        @using (Html.BeginForm("GemMaster", "AddGem", FormMethod.Post))
+        {
+            <h2>Add Podcast</h2>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Title, "Gem Title")
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.Description, "Description")
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ShortDescription, "Short Description (10-11 words)")
+                @Html.TextBoxFor(m => m.ShortDescription, new { @class = "form-control" })
+
+            </div>
+            <div class="form-group">
+                @Html.LabelFor(m => m.ItunesDuration, "Itunes Duration (eg 1:46:31)")
+                @Html.TextBoxFor(m => m.ItunesDuration, new { @class = "form-control" })
+            </div>
+            <div class="form-group">
+                <div class='input-group date' id='datetimepicker1'>
+                    @Html.TextBoxFor(m => m.PubDate, new { @class = "form-control" })
+                    <span class="input-group-addon">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div>
+            </div>
+            <input type="submit" class="btn-block loginButton" value="Craft!" />
+        }
     </div>
 </div>
 
+<script type="text/javascript">
+    $(function () {
+        $('#datetimepicker1').datetimepicker();
+    });
+</script>
