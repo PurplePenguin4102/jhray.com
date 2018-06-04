@@ -14,7 +14,7 @@ namespace jhray.com.Controllers
     [AllowAnonymous]
     public class HomeController : Controller
     {
-        private IOptions<Paths> _pathsOpt;
+        private readonly IOptions<Paths> _pathsOpt;
 
         public HomeController(IOptions<Paths> pathsOpt)
         {
@@ -39,7 +39,7 @@ namespace jhray.com.Controllers
 
         public IActionResult GetRssFeed(DateTime date)
         {
-            var feed = new RSSFeed().ReadFromFolderContents(_pathsOpt.Value.PodcastDirectory);
+            var feed = new RSSFeed(_pathsOpt.Value.PodcastDirectory).ReadFromFolderContents();
             return Content(feed, "application/rss+xml");
         }
 

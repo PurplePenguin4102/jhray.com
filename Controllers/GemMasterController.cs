@@ -12,7 +12,9 @@ using jhray.com.Database.Entities;
 using jhray.com.Services;
 using jhray.com.Database;
 using System.Security.Claims;
+using jhray.com.Engine;
 using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Options;
 
 namespace jhray.com.Controllers
 {
@@ -24,13 +26,15 @@ namespace jhray.com.Controllers
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
         private readonly ChilledDbContext _context;
+        private readonly IOptions<Paths> _pathsOpt;
 
         public GemMasterController(UserManager<ChilledUser> userManager,
                                    SignInManager<ChilledUser> signInManager,
                                    RoleManager<IdentityRole> roleManager,
                                    ILogger<GemMasterController> logger,
                                    ChilledDbContext context,
-                                   IEmailSender emailSender)
+                                   IEmailSender emailSender,
+                                   IOptions<Paths> pathsOpt)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -38,6 +42,7 @@ namespace jhray.com.Controllers
             _emailSender = emailSender;
             _logger = logger;
             _context = context;
+            _pathsOpt = pathsOpt;
         }
 
         [HttpGet]
@@ -64,25 +69,11 @@ namespace jhray.com.Controllers
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
-                    // assign superuser
-                    //await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
-
                     return RedirectToAction(nameof(HomeController.Index), "Home");
                 }
-                //if (result.RequiresTwoFactor)
-                //{
-                //    return RedirectToAction(nameof(LoginWith2fa), new { returnUrl, model.RememberMe });
-                //}
-                //if (result.IsLockedOut)
-                //{
-                //    _logger.LogWarning("User account locked out.");
-                //    return RedirectToAction(nameof(Lockout));
-                //}
-                else
-                {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
-                    return View(model);
-                }
+
+                ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                return View(model);
             }
             return View();
         }
@@ -91,7 +82,6 @@ namespace jhray.com.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Register()
         {
-            
             return View();
         }
 
@@ -142,14 +132,7 @@ namespace jhray.com.Controllers
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 
-        [Authorize(Roles = "RegularGenius")]
-        public async Task<IActionResult> Portal()
-        {
-            
-            return View();
-        }
-
-        public async Task<IActionResult> Myself()
+        public IActionResult Myself()
         {
             return View();
         }
@@ -166,6 +149,17 @@ namespace jhray.com.Controllers
         public IActionResult GemManager()
         {
             return View();
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        public IActionResult AddGem(PodcastMetadata gem)
+        {
+            if (ModelState.IsValid)
+            {
+                //new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem);
+            }
+            RedirectToAction("GemManager");
+            throw new Exception();
         }
 
         [Authorize(Roles = "SuperGenius")]

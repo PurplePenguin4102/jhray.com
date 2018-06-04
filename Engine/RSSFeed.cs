@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
+using jhray.com.Models.GemMasterViewModels;
 using static jhray.com.Utils.Utils;
 
 namespace jhray.com.Engine
@@ -12,10 +13,34 @@ namespace jhray.com.Engine
 
     public class RSSFeed
     {
-        private Dictionary<string, string> _feedMeta;
-        public string ReadFromFolderContents(string podcastDirectory)
+        private string podcastDirectory;
+        public RSSFeed(string podcastDirectory)
         {
-            var directories = Directory.GetDirectories(podcastDirectory).OrderByDescending(a => a);
+            this.podcastDirectory = podcastDirectory;
+        }
+
+        public bool CreateNewEpisode(PodcastMetadata podCast)
+        {
+            var directories = GetDirectories(podcastDirectory);
+            var epDir = directories.First();
+            if (!int.TryParse(Path.GetFileName(epDir), out int epNum))
+            {
+                return false;
+            }
+            var newEp = epNum++;
+            var epFolder = Path.Combine(podcastDirectory, newEp.ToString());
+
+            Directory.CreateDirectory($"{epFolder}");
+
+            return false;
+        }
+
+        private IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => a);
+
+        private Dictionary<string, string> _feedMeta;
+        public string ReadFromFolderContents()
+        {
+            var directories = GetDirectories(podcastDirectory);
             _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
             var feedBuilder = new MemoryStream();
             
