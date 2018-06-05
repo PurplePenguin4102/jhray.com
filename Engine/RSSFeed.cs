@@ -5,6 +5,7 @@ using System.IO;
 using System.Threading.Tasks;
 using System.Xml;
 using System.Text;
+using System.Text.RegularExpressions;
 using jhray.com.Models.GemMasterViewModels;
 using static jhray.com.Utils.Utils;
 
@@ -19,8 +20,10 @@ namespace jhray.com.Engine
             this.podcastDirectory = podcastDirectory;
         }
 
-        public bool CreateNewEpisode(PodcastMetadata podCast)
+        public async Task<bool> CreateNewEpisode(PodcastMetadata podCast)
         {
+            podCast.Title = podCast.Title.Trim();
+            podCast.Title = Regex.Replace(podCast.Title, " ", "_");
             var directories = GetDirectories(podcastDirectory);
             var epDir = directories.First();
             if (!int.TryParse(Path.GetFileName(epDir), out int epNum))
@@ -29,8 +32,15 @@ namespace jhray.com.Engine
             }
             var newEp = epNum++;
             var epFolder = Path.Combine(podcastDirectory, newEp.ToString());
+            var metaFile = Path.Combine(epFolder, "Metadata.txt");
 
             Directory.CreateDirectory($"{epFolder}");
+            File.CreateText($"{metaFile}");
+
+            using (var stream = new FileStream(Path.Combine(epFolder, podCast.Title), FileMode.CreateNew))
+            {
+                await podCast.PodcastFile.CopyToAsync(stream);
+            }
 
             return false;
         }
