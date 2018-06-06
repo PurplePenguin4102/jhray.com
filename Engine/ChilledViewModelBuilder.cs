@@ -32,7 +32,7 @@ namespace jhray.com.Engine
                     var metadata = GetLinesOfMetadata(Path.Combine(pod, "Metadata.txt"));
                     var uri = new UriBuilder("http", "jhray.com");
                     if (files.Count() != 1) continue;
-
+                    //http://localhost:58273
                     var fpath = files.First();
                     var sanitized = Regex.Replace(podcastFSPath, @"\\", "/");
                     if (fpath.Contains("\\"))
@@ -53,10 +53,7 @@ namespace jhray.com.Engine
                 return this;
             }
 
-            private GemType GetRandomGemType()
-            {
-                return (GemType)gemTypes.GetValue(rnd.Next(gemTypes.Length));
-            }
+            private GemType GetRandomGemType() => (GemType)gemTypes.GetValue(rnd.Next(gemTypes.Length));
 
             public Configuration AddPicturesToGemList()
             {

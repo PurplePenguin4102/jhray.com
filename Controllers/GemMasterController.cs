@@ -152,14 +152,13 @@ namespace jhray.com.Controllers
         }
 
         [Authorize(Roles = "RegularGenius")]
-        public IActionResult AddGem(PodcastMetadata gem)
+        public async Task<IActionResult> AddGem(PodcastMetadata gem)
         {
             if (ModelState.IsValid)
             {
-                //new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem);
+                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem);
             }
-            RedirectToAction("GemManager");
-            throw new Exception();
+            return RedirectToAction("GemManager");
         }
 
         [Authorize(Roles = "SuperGenius")]

@@ -8,12 +8,14 @@ using System.Text;
 using System.Text.RegularExpressions;
 using jhray.com.Models.GemMasterViewModels;
 using static jhray.com.Utils.Utils;
+using System.Globalization;
 
 namespace jhray.com.Engine
 {
 
     public class RSSFeed
     {
+        private readonly string DateFormat = "ddd, dd MMM yyyy 21:00:00 +1000";
         private string podcastDirectory;
         public RSSFeed(string podcastDirectory)
         {
@@ -23,29 +25,107 @@ namespace jhray.com.Engine
         public async Task<bool> CreateNewEpisode(PodcastMetadata podCast)
         {
             podCast.Title = podCast.Title.Trim();
-            podCast.Title = Regex.Replace(podCast.Title, " ", "_");
+            var filename = Regex.Replace(podCast.PodcastFile.FileName, " ", "_");
             var directories = GetDirectories(podcastDirectory);
             var epDir = directories.First();
             if (!int.TryParse(Path.GetFileName(epDir), out int epNum))
             {
                 return false;
             }
-            var newEp = epNum++;
-            var epFolder = Path.Combine(podcastDirectory, newEp.ToString());
+            ++epNum;
+            var epFolder = Path.Combine(podcastDirectory, epNum.ToString());
             var metaFile = Path.Combine(epFolder, "Metadata.txt");
 
             Directory.CreateDirectory($"{epFolder}");
-            File.CreateText($"{metaFile}");
+            
 
-            using (var stream = new FileStream(Path.Combine(epFolder, podCast.Title), FileMode.CreateNew))
+            using (var stream = new FileStream(Path.Combine(epFolder, filename), FileMode.CreateNew))
             {
                 await podCast.PodcastFile.CopyToAsync(stream);
+                stream.Flush();
             }
-
-            return false;
+            using (var sw = File.CreateText($"{metaFile}"))
+            {
+                sw.WriteLine($"title:{podCast.Title}");
+                sw.WriteLine($"description:{podCast.Description}");
+                sw.WriteLine($"short_subtitle:{podCast.ShortDescription}");
+                sw.WriteLine($"location:http://jhray.com/podcast/{epNum}/{filename}");
+                sw.WriteLine($"itunes_duration:{podCast.ItunesDuration}");
+                sw.WriteLine($"pubDate:{podCast.PubDate.ToString(DateFormat, CultureInfo.CreateSpecificCulture("en-US"))}");
+                sw.WriteLine($"lengthInBytes:{podCast.PodcastFile.Length}");
+                sw.Flush();
+            }
+            return true;
         }
 
-        private IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => a);
+        public bool DeleteLatestEp()
+        {
+            var directories = GetDirectories(podcastDirectory);
+            var epDir = directories.First();
+            DeleteDirectory(epDir);
+            return true;
+        }
+
+        public bool DeleteParticularEp(int epNum)
+        {
+            var directories = GetDirectories(podcastDirectory);
+            var epStr = epNum.ToString();
+            var deleted = false;
+            foreach(var dir in directories)
+            {
+                if (deleted)
+                {
+                    ShuffleDirectories(dir);
+                    continue;
+                }
+                var fileName = Path.GetFileName(dir);
+                if (epStr == fileName)
+                {
+                    DeleteDirectory(dir);
+                    deleted = true;
+                }
+            }
+            
+            return true;
+        }
+
+        private void ShuffleDirectories(string dir)
+        {
+            //decide new directory name
+            var fileName = Path.GetFileName(dir);
+            var newNum = int.Parse(fileName) - 1;
+            var newDir = Path.Combine(podcastDirectory, newNum.ToString());
+            Directory.Move(dir, newDir);
+
+            // relocate metafile hook to new FS location
+            var Metafile = Path.Combine(newDir, "Metadata.txt");
+            var oldMeta = File.ReadAllLines(Metafile);
+            File.Delete(Metafile);
+            using (var stream = File.CreateText(Metafile))
+            {
+                foreach (var line in oldMeta)
+                {
+                    if (line.Substring(0, line.IndexOf(':')).Equals("location"))
+                    {
+                        Regex.Replace(line, @"\/\d+\/", $"/{newNum.ToString()}/");
+                    }
+                    stream.WriteLine(line);
+                }
+                stream.Flush();
+            }
+        }
+
+        private bool DeleteDirectory(string dir)
+        {
+            foreach (var file in Directory.EnumerateFiles(dir))
+            {
+                File.Delete(file);
+            }
+            Directory.Delete(dir);
+            return true;
+        }
+
+        private IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => int.Parse(Path.GetFileName(a)));
 
         private Dictionary<string, string> _feedMeta;
         public string ReadFromFolderContents()
