@@ -148,15 +148,20 @@ namespace jhray.com.Controllers
         [Authorize(Roles = "RegularGenius")]
         public IActionResult GemManager()
         {
-            return View();
+            var direc = _pathsOpt.Value.PodcastDirectory;
+            var vm = new ChilledViewModelBuilder()
+                .Configure
+                .AddPodcastToGemList(direc)
+                .Build<GemManagerViewModel>();
+            return View(vm);
         }
 
         [Authorize(Roles = "RegularGenius")]
-        public async Task<IActionResult> AddGem(PodcastMetadata gem)
+        public async Task<IActionResult> AddGem(GemManagerViewModel gem)
         {
             if (ModelState.IsValid)
             {
-                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem);
+                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem.PodcastMetadata);
             }
             return RedirectToAction("GemManager");
         }

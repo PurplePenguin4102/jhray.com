@@ -12,7 +12,6 @@ namespace jhray.com.Engine
 {
     public class ChilledViewModelBuilder
     {
-        
         public Configuration Configure { get; set; } = new Configuration();
 
         public class Configuration
@@ -23,7 +22,7 @@ namespace jhray.com.Engine
 
             public Configuration AddPodcastToGemList(string podcastFSPath)
             {
-                var podcasts = Directory.EnumerateDirectories(podcastFSPath).OrderByDescending(a => a);
+                var podcasts = GetDirectories(podcastFSPath);
                 foreach (var pod in podcasts)
                 {
 
@@ -68,9 +67,9 @@ namespace jhray.com.Engine
                 return this;
             }
 
-            public ChilledViewModel Build()
+            public T Build<T>() where T : IContainsGemList, new()
             {
-                return new ChilledViewModel { Gems = Gems };
+                return new T { Gems = Gems };
             }
         }
     }

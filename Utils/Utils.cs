@@ -18,10 +18,7 @@ namespace jhray.com.Utils
                 lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
         }
 
-        public static string WriteMetadataFile(Dictionary<string, string> metadata, string path)
-        {
-            return path;
-        }
+        public static IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => int.Parse(Path.GetFileName(a)));
 
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {

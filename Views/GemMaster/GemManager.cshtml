@@ -1,4 +1,4 @@
-﻿@model jhray.com.Models.GemMasterViewModels.PodcastMetadata
+﻿@model jhray.com.Models.GemMasterViewModels.GemManagerViewModel
 @{
     ViewData["Title"] = "GemManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -7,44 +7,75 @@
 <script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js"></script>
 <div class="container body-content">
     <h2 class="text-center">GemManager</h2>
-    <div class="col-lg-6">
+    <div class="col-lg-8">
         <h2>Your Gems</h2>
-        <p class="text-muted">Nothin here boss!</p>
+        @if (!Model.Gems.Any())
+        {
+            <p class="text-muted">Nothin here boss!</p>
+        }
+        else
+        {
+            <table class="table table-bordered table-striped">
+                <thead>
+                    <tr>
+                        <th scope="col">EpNum</th>
+                        <th scope="col">AudioLink</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Text</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Gems.Count; i++)
+                    {
+                        var gem = Model.Gems[i] as jhray.com.Models.Gems.PodcastGem;
+                        var epNum = Model.Gems.Count - i;
+                        <tr>
+                            <td>@epNum</td>
+                            <td>@gem.AudioLink</td>
+                            <td>@gem.Title</td>
+                            <td>@gem.Text</td>
+                        </tr>
+
+                    }
+                </tbody>
+            </table>
+        }
+
     </div>
-    <div class="col-lg-6">
+    <div class="col-lg-4">
 
         @using (Html.BeginForm("AddGem", "GemMaster", FormMethod.Post, new { @enctype="multipart/form-data"}))
         {
             <h2>Add Podcast</h2>
             <div class="form-group">
-                @Html.LabelFor(m => m.Title, "Gem Title")
-                @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                @Html.LabelFor(m => m.PodcastMetadata.Title, "Gem Title")
+                @Html.TextBoxFor(m => m.PodcastMetadata.Title, new { @class = "form-control" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.Description, "Description")
-                @Html.TextAreaFor(m => m.Description, new { @class = "form-control" })
+                @Html.LabelFor(m => m.PodcastMetadata.Description, "Description")
+                @Html.TextAreaFor(m => m.PodcastMetadata.Description, new { @class = "form-control" })
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.ShortDescription, "Short Description (10-11 words)")
-                @Html.TextBoxFor(m => m.ShortDescription, new { @class = "form-control" })
+                @Html.LabelFor(m => m.PodcastMetadata.ShortDescription, "Short Description (10-11 words)")
+                @Html.TextBoxFor(m => m.PodcastMetadata.ShortDescription, new { @class = "form-control" })
 
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.ItunesDuration, "Itunes Duration (eg 1:46:31)")
-                @Html.TextBoxFor(m => m.ItunesDuration, new { @class = "form-control" })
+                @Html.LabelFor(m => m.PodcastMetadata.ItunesDuration, "Itunes Duration (eg 1:46:31)")
+                @Html.TextBoxFor(m => m.PodcastMetadata.ItunesDuration, new { @class = "form-control" })
             </div>
             <div class="form-group">
+                @Html.LabelFor(m => m.PodcastMetadata.ItunesDuration, "PubDate")
                 <div class='input-group date' id='datetimepicker1'>
-                    @Html.LabelFor(m => m.ItunesDuration, "PubDate")
-                    @Html.TextBoxFor(m => m.PubDate, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.PodcastMetadata.PubDate, new { @class = "form-control" })
                     <span class="input-group-addon">
                         <span class="glyphicon glyphicon-calendar"></span>
                     </span>
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(m => m.PodcastFile, "Podcast File")
-                <input type="file" name="PodcastFile"/>
+                @Html.LabelFor(m => m.PodcastMetadata.PodcastFile, "Podcast File")
+                <input type="file" name="PodcastMetadata.PodcastFile"/>
             </div>
             <input type="submit" class="btn-block loginButton" value="Craft!"/>
         }

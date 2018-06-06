@@ -125,7 +125,7 @@ namespace jhray.com.Engine
             return true;
         }
 
-        private IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => int.Parse(Path.GetFileName(a)));
+        
 
         private Dictionary<string, string> _feedMeta;
         public string ReadFromFolderContents()

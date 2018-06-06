@@ -33,7 +33,7 @@ namespace jhray.com.Controllers
                 .Configure
                 .AddPodcastToGemList(direc)
                 .AddPicturesToGemList()
-                .Build();
+                .Build<ChilledViewModel>();
             return View(vm);
         }
 

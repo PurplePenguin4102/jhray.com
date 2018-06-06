@@ -5,10 +5,11 @@ using System.Threading.Tasks;
 using jhray.com.Engine;
 using jhray.com.Models.Gems;
 
-namespace jhray.com.Models
+namespace jhray.com.Models.GemMasterViewModels
 {
-    public class ChilledViewModel : IContainsGemList
+    public class GemManagerViewModel : IContainsGemList
     {
+        public PodcastMetadata PodcastMetadata { get; set; }
         public IList<IGem> Gems { get; set; }
     }
 }
