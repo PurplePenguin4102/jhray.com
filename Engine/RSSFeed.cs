@@ -50,7 +50,7 @@ namespace jhray.com.Engine
                 sw.WriteLine($"location:http://jhray.com/podcast/{epNum}/{filename}");
                 sw.WriteLine($"itunes_duration:{podCast.ItunesDuration}");
                 sw.WriteLine($"pubDate:{podCast.PubDate.ToString(DateFormat, CultureInfo.CreateSpecificCulture("en-US"))}");
-                sw.WriteLine($"lengthInBytes:{podCast.PodcastFile.Length}");
+                sw.WriteLine($"lengthinbytes:{podCast.PodcastFile.Length}");
                 sw.Flush();
             }
             return true;
