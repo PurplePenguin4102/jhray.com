@@ -37,8 +37,6 @@ namespace jhray.com.Engine
             var metaFile = Path.Combine(epFolder, "Metadata.txt");
 
             Directory.CreateDirectory($"{epFolder}");
-            
-
             using (var stream = new FileStream(Path.Combine(epFolder, filename), FileMode.CreateNew))
             {
                 await podCast.PodcastFile.CopyToAsync(stream);
