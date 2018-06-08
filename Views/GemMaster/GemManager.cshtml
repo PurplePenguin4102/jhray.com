@@ -36,7 +36,7 @@
                             <td>@gem.AudioLink</td>
                             <td>@gem.Title</td>
                             <td>@gem.Text</td>
-                            <td><button asp-action="DeletePodcast" asp-controller="GemMaster" asp-route-id="@epNum" class="btn-danger">-</button></td>
+                            <td><button class="btn-danger" onclick="doRemove('@epNum')">-</button></td>
                         </tr>
 
                     }
@@ -89,4 +89,8 @@
     $(function () {
         $('#datetimepicker1').datetimepicker();
     });
+
+    function doRemove(Id) {
+        document.location.href = 'DeletePodcast/' + Id;
+    }
 </script>

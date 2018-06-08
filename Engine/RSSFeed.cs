@@ -56,17 +56,9 @@ namespace jhray.com.Engine
             return true;
         }
 
-        public bool DeleteLatestEp()
-        {
-            var directories = GetDirectories(podcastDirectory);
-            var epDir = directories.First();
-            DeleteDirectory(epDir);
-            return true;
-        }
-
         public bool DeleteParticularEp(int epNum)
         {
-            var directories = GetDirectories(podcastDirectory);
+            var directories = GetDirectories(podcastDirectory).Reverse();
             var epStr = epNum.ToString();
             var deleted = false;
             foreach(var dir in directories)

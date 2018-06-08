@@ -174,5 +174,13 @@ namespace jhray.com.Controllers
             RedirectToAction(nameof(HomeController.Index), "Home");
             throw new Exception();
         }
+
+        [Authorize(Roles="RegularGenius")]
+        [HttpGet]
+        public IActionResult DeletePodcast(int id)
+        {
+            new RSSFeed(_pathsOpt.Value.PodcastDirectory).DeleteParticularEp(id);
+            return RedirectToAction("GemManager");
+        }
     }
 }
