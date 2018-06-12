@@ -13,7 +13,37 @@
     </div>
     <script src="~/js/particles.min.js"></script>
     <script src="~/js/app.js"></script>
-    <div id="ARIGATO" class="parallax__layer parallax__layer--base"></div>
+    <div id="ARIGATO" class="parallax__layer parallax__layer--base">
+        <div class="body-content container">
+            <div class="row" style="margin-top:150px; text-align:center;">
+                <div class="col-sm-4">
+                    <a asp-action="ChilledESports" asp-controller="Home"><img style="width:300px; border:groove; border-color:darkgoldenrod; border-radius:100px" src="~/images/chilled_little.png" /></a>
+                </div>
+                <div class="col-sm-offset-1 col-sm-7" style="color:darkslategray; margin-top:3%; height:100%">
+                    <h1>
+                        Chilled E-Sports
+                    </h1>
+                    <p>
+                        A blizzard fan-site I run to support my friend's podcast. We cover Blizzard E-sports and talk about what's new in gaming. Check out the latest episode here or <a asp-action="GetRssFeed" asp-controller="Home">subscribe to our feed</a>
+                    </p>
+                </div>
+            </div>
+            <div class="row" style="margin-top:150px; text-align:center; color:#192020">
+                <div class="col-sm-7" style="margin-top:3%">
+                    <h1>
+                        Meme Driven Development
+                    </h1>
+                    <p>
+                        The love of programming extends beyond what's useful and into the absurd. Suffice to say I've loved computers since I was a child. They are both serious and fun.
+                    </p>
+                </div>
+                <div class="col-sm-offset-1 col-sm-4">
+                    <a asp-action="ChilledESports" asp-controller="Home"><img style="height:200px; border:groove; border-radius:100px; border-color:darkgoldenrod;" src="~/images/shitposter.png" /></a>
+                </div>
+            </div>
+        </div>
+
+    </div>
     <hr />
     <footer>
         <p>&copy; 2017 - jhray.com</p>
