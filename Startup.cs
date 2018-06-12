@@ -21,6 +21,7 @@ using Microsoft.AspNetCore.Mvc.Authorization;
 using jhray.com.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using jhray.com.Services;
+using Microsoft.AspNetCore.Http.Features;
 
 namespace jhray.com
 {
@@ -38,7 +39,14 @@ namespace jhray.com
         {
             services.Configure<Paths>(Configuration.GetSection("Paths"));
             var direc = Configuration.GetSection("Paths").GetValue<string>("CredsDirectory");
-            
+
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = long.MaxValue;
+                x.MultipartHeadersLengthLimit = int.MaxValue;
+            });
+
             var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
 
             services.AddEntityFrameworkNpgsql().AddDbContext<ChilledDbContext>(options =>

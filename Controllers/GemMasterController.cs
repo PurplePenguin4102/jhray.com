@@ -12,6 +12,7 @@ using jhray.com.Database.Entities;
 using jhray.com.Services;
 using jhray.com.Database;
 using System.Security.Claims;
+using System.Threading;
 using jhray.com.Engine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
@@ -157,6 +158,15 @@ namespace jhray.com.Controllers
         }
 
         [Authorize(Roles = "RegularGenius")]
+        [HttpGet]
+        public IActionResult AddGem()
+        {
+            return RedirectToAction("GemManager");
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        [RequestSizeLimit(150_000_000)]
+        [HttpPost]
         public async Task<IActionResult> AddGem(GemManagerViewModel gem)
         {
             if (ModelState.IsValid)
