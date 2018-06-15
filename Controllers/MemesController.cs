@@ -12,7 +12,7 @@ namespace jhray.com.Controllers
         [AllowAnonymous]
         public IActionResult Index()
         {
-            return RedirectToPage("memes/");
+            return Redirect("http://jhray.com/memes/");
         }
     }
 }
