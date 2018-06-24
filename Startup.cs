@@ -22,6 +22,7 @@ using jhray.com.Database.Entities;
 using Microsoft.AspNetCore.Identity;
 using jhray.com.Services;
 using Microsoft.AspNetCore.Http.Features;
+using System.IO.Compression;
 
 namespace jhray.com
 {
@@ -95,7 +96,7 @@ namespace jhray.com
 
             services.AddAuthorization();
             services.AddAuthentication();
-            services.Configure<GzipCompressionProviderOptions>(options => options.Level = System.IO.Compression.CompressionLevel.Optimal);
+            services.Configure<GzipCompressionProviderOptions>(options => options.Level = CompressionLevel.Optimal);
             services.AddResponseCompression();
             services.AddTransient<IEmailSender, EmailSender>();
             services.AddMvc( config =>

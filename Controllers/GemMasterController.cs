@@ -52,6 +52,7 @@ namespace jhray.com.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+            
             return View();
         }
 
@@ -181,8 +182,7 @@ namespace jhray.com.Controllers
         public async Task<IActionResult> SeedDB()
         {
             await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
-            RedirectToAction(nameof(HomeController.Index), "Home");
-            throw new Exception();
+            return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
         [Authorize(Roles="RegularGenius")]
