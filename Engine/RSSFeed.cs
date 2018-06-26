@@ -9,6 +9,9 @@ using System.Text.RegularExpressions;
 using jhray.com.Models.GemMasterViewModels;
 using static jhray.com.Utils.Utils;
 using System.Globalization;
+using jhray.com.Database;
+using jhray.com.Database.Entities;
+using System.Transactions;
 
 namespace jhray.com.Engine
 {
@@ -23,10 +26,46 @@ namespace jhray.com.Engine
             this.podcastDirectory = podcastDirectory;
         }
 
-        public async Task<bool> CreateNewEpisode(PodcastMetadata podCast)
+        public async Task<bool> CreateNewEpisode(PodcastMetadata podCast, ChilledDbContext context, string currentUserId)
         {
             podCast.Title = podCast.Title.Trim();
             var filename = Regex.Replace(podCast.PodcastFile.FileName, " ", "_");
+            using (var txn = context.Database.BeginTransaction())
+            {
+                var podcastEntity = new Gem()
+                {
+                    Title = podCast.Title,
+                    SummaryText = new String(podCast.Description.Take(250).ToArray()),
+                    GemType = GemType.Podcast,
+
+                    CreatedById = currentUserId,
+                    PodcastData = new Podcast()
+                    {
+                        Description = podCast.Description,
+                        ShortDescription = podCast.ShortDescription,
+                        LengthInBytes = podCast.PodcastFile.Length,
+                        ItunesDuration = podCast.ItunesDuration,
+                        PubDate = podCast.PubDate,
+                    }
+                };
+
+                context.Gems.Add(podcastEntity);
+                context.SaveChanges();
+
+                podcastEntity.FilePath = Path.Combine(podcastDirectory, "Db", podcastEntity.Id.ToString());
+                Directory.CreateDirectory(podcastEntity.FilePath);
+                using (var stream = new FileStream(Path.Combine(podcastEntity.FilePath, filename), FileMode.CreateNew))
+                {
+                    await podCast.PodcastFile.CopyToAsync(stream);
+                    stream.Flush();
+                }
+
+                podcastEntity.FilePath = Path.Combine(podcastEntity.FilePath, filename);
+                podcastEntity.PodcastData.Location = $"http://jhray.com/podcast/Db/{podcastEntity.Id}/{filename}";
+                context.SaveChanges();
+                txn.Commit();
+            }
+
             var directories = GetDirectories(podcastDirectory);
             var epDir = directories.First();
             if (!int.TryParse(Path.GetFileName(epDir), out int epNum))

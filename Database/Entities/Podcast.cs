@@ -15,6 +15,7 @@ namespace jhray.com.Database.Entities
         public string Description { get; set; }
         public string ShortDescription { get; set; }
         public string Location { get; set; }
+        public string ItunesDuration { get; set; }
         public DateTimeOffset PubDate { get; set; }
         public long LengthInBytes { get; set; }
 

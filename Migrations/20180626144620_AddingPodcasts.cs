@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace jhray.com.Migrations
 {
-    public partial class adding_podcasts : Migration
+    public partial class AddingPodcasts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,6 +15,7 @@ namespace jhray.com.Migrations
                     Description = table.Column<string>(nullable: true),
                     ShortDescription = table.Column<string>(nullable: true),
                     Location = table.Column<string>(nullable: true),
+                    ItunesDuration = table.Column<string>(nullable: true),
                     PubDate = table.Column<DateTimeOffset>(nullable: false),
                     LengthInBytes = table.Column<long>(nullable: false)
                 },

@@ -172,7 +172,8 @@ namespace jhray.com.Controllers
         {
             if (ModelState.IsValid)
             {
-                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem.PodcastMetadata);
+                var userId = _userManager.GetUserId(User);
+                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem.PodcastMetadata, _context, userId);
             }
             return RedirectToAction("GemManager");
         }

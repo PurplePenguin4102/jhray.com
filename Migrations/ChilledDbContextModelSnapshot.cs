@@ -18,6 +18,101 @@ namespace jhray.com.Migrations
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.SerialColumn)
                 .HasAnnotation("ProductVersion", "2.1.1-rtm-30846");
 
+            modelBuilder.Entity("jhray.com.Database.Entities.ChilledUser", b =>
+                {
+                    b.Property<string>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<int>("AccessFailedCount");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken();
+
+                    b.Property<string>("Email")
+                        .HasMaxLength(256);
+
+                    b.Property<bool>("EmailConfirmed");
+
+                    b.Property<DateTimeOffset>("Joined");
+
+                    b.Property<bool>("LockoutEnabled");
+
+                    b.Property<DateTimeOffset?>("LockoutEnd");
+
+                    b.Property<string>("NormalizedEmail")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("NormalizedUserName")
+                        .HasMaxLength(256);
+
+                    b.Property<string>("PasswordHash");
+
+                    b.Property<string>("PhoneNumber");
+
+                    b.Property<bool>("PhoneNumberConfirmed");
+
+                    b.Property<string>("SecurityStamp");
+
+                    b.Property<bool>("TwoFactorEnabled");
+
+                    b.Property<string>("UserName")
+                        .HasMaxLength(256);
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("NormalizedEmail")
+                        .HasName("EmailIndex");
+
+                    b.HasIndex("NormalizedUserName")
+                        .IsUnique()
+                        .HasName("UserNameIndex");
+
+                    b.ToTable("ChilledUser");
+                });
+
+            modelBuilder.Entity("jhray.com.Database.Entities.Gem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd();
+
+                    b.Property<string>("CreatedById");
+
+                    b.Property<string>("FilePath");
+
+                    b.Property<int>("GemType");
+
+                    b.Property<string>("SummaryText");
+
+                    b.Property<string>("Title");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CreatedById");
+
+                    b.ToTable("Gems");
+                });
+
+            modelBuilder.Entity("jhray.com.Database.Entities.Podcast", b =>
+                {
+                    b.Property<int>("Id");
+
+                    b.Property<string>("Description");
+
+                    b.Property<string>("ItunesDuration");
+
+                    b.Property<long>("LengthInBytes");
+
+                    b.Property<string>("Location");
+
+                    b.Property<DateTimeOffset>("PubDate");
+
+                    b.Property<string>("ShortDescription");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Podcasts");
+                });
+
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
                     b.Property<string>("Id")
@@ -125,97 +220,19 @@ namespace jhray.com.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("jhray.com.Database.Entities.ChilledUser", b =>
-                {
-                    b.Property<string>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<int>("AccessFailedCount");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken();
-
-                    b.Property<string>("Email")
-                        .HasMaxLength(256);
-
-                    b.Property<bool>("EmailConfirmed");
-
-                    b.Property<DateTimeOffset>("Joined");
-
-                    b.Property<bool>("LockoutEnabled");
-
-                    b.Property<DateTimeOffset?>("LockoutEnd");
-
-                    b.Property<string>("NormalizedEmail")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("NormalizedUserName")
-                        .HasMaxLength(256);
-
-                    b.Property<string>("PasswordHash");
-
-                    b.Property<string>("PhoneNumber");
-
-                    b.Property<bool>("PhoneNumberConfirmed");
-
-                    b.Property<string>("SecurityStamp");
-
-                    b.Property<bool>("TwoFactorEnabled");
-
-                    b.Property<string>("UserName")
-                        .HasMaxLength(256);
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("NormalizedEmail")
-                        .HasName("EmailIndex");
-
-                    b.HasIndex("NormalizedUserName")
-                        .IsUnique()
-                        .HasName("UserNameIndex");
-
-                    b.ToTable("ChilledUser");
-                });
-
             modelBuilder.Entity("jhray.com.Database.Entities.Gem", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd();
-
-                    b.Property<string>("CreatedById");
-
-                    b.Property<string>("FilePath");
-
-                    b.Property<int>("GemType");
-
-                    b.Property<string>("SummaryText");
-
-                    b.Property<string>("Title");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CreatedById");
-
-                    b.ToTable("Gems");
+                    b.HasOne("jhray.com.Database.Entities.ChilledUser", "CreatedBy")
+                        .WithMany("CreatedGems")
+                        .HasForeignKey("CreatedById");
                 });
 
             modelBuilder.Entity("jhray.com.Database.Entities.Podcast", b =>
                 {
-                    b.Property<int>("Id");
-
-                    b.Property<string>("Description");
-
-                    b.Property<long>("LengthInBytes");
-
-                    b.Property<string>("Location");
-
-                    b.Property<DateTimeOffset>("PubDate");
-
-                    b.Property<string>("ShortDescription");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("Podcasts");
+                    b.HasOne("jhray.com.Database.Entities.Gem", "GemData")
+                        .WithOne("PodcastData")
+                        .HasForeignKey("jhray.com.Database.Entities.Podcast", "Id")
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -260,21 +277,6 @@ namespace jhray.com.Migrations
                     b.HasOne("jhray.com.Database.Entities.ChilledUser")
                         .WithMany()
                         .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("jhray.com.Database.Entities.Gem", b =>
-                {
-                    b.HasOne("jhray.com.Database.Entities.ChilledUser", "CreatedBy")
-                        .WithMany("CreatedGems")
-                        .HasForeignKey("CreatedById");
-                });
-
-            modelBuilder.Entity("jhray.com.Database.Entities.Podcast", b =>
-                {
-                    b.HasOne("jhray.com.Database.Entities.Gem", "GemData")
-                        .WithOne("PodcastData")
-                        .HasForeignKey("jhray.com.Database.Entities.Podcast", "Id")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 #pragma warning restore 612, 618
