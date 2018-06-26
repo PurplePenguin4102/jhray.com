@@ -137,6 +137,7 @@ namespace jhray.com.Engine
                 {
                     WriteItemInfoFromDirectory(xml, directory);
                 }
+                WriteItemsFromDatabase(xml);
 
                 xml.WriteEndDocument();
             }
@@ -240,6 +241,24 @@ namespace jhray.com.Engine
             xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
             xml.WriteElementString("pubDate", meta["pubDate"]);
             xml.WriteEndElement();
+        }
+
+        private void WriteItemsFromDatabase(XmlWriter xml)
+        {
+            //xml.WriteStartElement("item");
+            //xml.WriteElementString("title", meta["title"]);
+            //xml.WriteElementString("description", meta["description"]);
+            //xml.WriteElementString("itunes", "summary", null, meta["description"]);
+            //xml.WriteElementString("itunes", "subtitle", null, meta["short_subtitle"]);
+            //xml.WriteStartElement("enclosure");
+            //xml.WriteAttributeString("url", meta["location"]);
+            //xml.WriteAttributeString("type", "audio/mpeg");
+            //xml.WriteAttributeString("length", meta["lengthinbytes"]);
+            //xml.WriteEndElement();
+            //xml.WriteElementString("guid", meta["location"]);
+            //xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
+            //xml.WriteElementString("pubDate", meta["pubDate"]);
+            //xml.WriteEndElement();
         }
     }
 }
