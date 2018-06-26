@@ -12,9 +12,10 @@ using System;
 namespace jhray.com.Migrations
 {
     [DbContext(typeof(ChilledDbContext))]
-    partial class ChilledDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180626111359_AddingPodcastToDb")]
+    partial class AddingPodcastToDb
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

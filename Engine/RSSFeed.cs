@@ -17,6 +17,7 @@ namespace jhray.com.Engine
     {
         private readonly string DateFormat = "ddd, dd MMM yyyy 21:00:00 +1000";
         private string podcastDirectory;
+
         public RSSFeed(string podcastDirectory)
         {
             this.podcastDirectory = podcastDirectory;
@@ -114,8 +115,6 @@ namespace jhray.com.Engine
             Directory.Delete(dir);
             return true;
         }
-
-        
 
         private Dictionary<string, string> _feedMeta;
         public string ReadFromFolderContents()

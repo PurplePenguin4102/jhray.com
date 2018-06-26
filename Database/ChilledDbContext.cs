@@ -18,6 +18,7 @@ namespace jhray.com.Database
         }
 
         public DbSet<Gem> Gems { get; set; }
+        public DbSet<Podcast> Podcasts { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -25,6 +26,8 @@ namespace jhray.com.Database
             // modify user here because IdentityDbContext sets stuff up for us first
             builder.Entity<ChilledUser>().ToTable("ChilledUser");
             builder.Entity<ChilledUser>().HasMany(u => u.CreatedGems).WithOne(g => g.CreatedBy);
+            builder.Entity<Gem>().HasOne(g => g.PodcastData).WithOne(p => p.GemData).HasForeignKey<Podcast>(p => p.Id);
+            
             // shadow properties
             //builder.Entity<User>().Property<DateTimeOffset>("UpdatedTimestamp");
         }

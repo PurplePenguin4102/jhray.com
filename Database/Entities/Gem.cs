@@ -10,6 +10,7 @@ namespace jhray.com.Database.Entities
     public class Gem
     {
         [Key]
+        [ForeignKey("FK_Gem_Podcast")]
         public int Id { get; set; }
         public string Title { get; set; }
         public string FilePath { get; set; }
@@ -18,6 +19,8 @@ namespace jhray.com.Database.Entities
 
         [ForeignKey("FK_ChilledUser_Gem")]
         public string CreatedById { get; set; }
+        
+        public Podcast PodcastData { get; set; }
         public ChilledUser CreatedBy { get; set; }
     }
 }
