@@ -1,10 +1,9 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-using System;
-using System.Collections.Generic;
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace jhray.com.Migrations
 {
-    public partial class AddingPodcastToDb : Migration
+    public partial class adding_podcasts : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -12,12 +11,12 @@ namespace jhray.com.Migrations
                 name: "Podcasts",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int4", nullable: false),
-                    Description = table.Column<string>(type: "text", nullable: true),
-                    LengthInBytes = table.Column<long>(type: "int8", nullable: false),
-                    Location = table.Column<string>(type: "text", nullable: true),
-                    PubDate = table.Column<DateTimeOffset>(type: "timestamptz", nullable: false),
-                    ShortDescription = table.Column<string>(type: "text", nullable: true)
+                    Id = table.Column<int>(nullable: false),
+                    Description = table.Column<string>(nullable: true),
+                    ShortDescription = table.Column<string>(nullable: true),
+                    Location = table.Column<string>(nullable: true),
+                    PubDate = table.Column<DateTimeOffset>(nullable: false),
+                    LengthInBytes = table.Column<long>(nullable: false)
                 },
                 constraints: table =>
                 {
