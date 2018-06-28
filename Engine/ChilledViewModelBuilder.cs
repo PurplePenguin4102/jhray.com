@@ -60,7 +60,7 @@ namespace jhray.com.Engine
                 {
                     Title = "D.Va Shooting Pixels",
                     Type = GetRandomGemType(),
-                    PictureLink = "/images/d_va_by_liang_xing.jpg",
+                    PictureLink = "/uploads/pictures/d_va_by_liang_xing.jpg",
                     ArtistSource = "https://liang-xing.deviantart.com/art/D-VA-611312523",
                     ArtistName = "Liang-Xing"
                 });

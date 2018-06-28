@@ -23,6 +23,7 @@ using Microsoft.AspNetCore.Identity;
 using jhray.com.Services;
 using Microsoft.AspNetCore.Http.Features;
 using System.IO.Compression;
+using Microsoft.Extensions.FileProviders;
 
 namespace jhray.com
 {
@@ -39,6 +40,7 @@ namespace jhray.com
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<Paths>(Configuration.GetSection("Paths"));
+
             var direc = Configuration.GetSection("Paths").GetValue<string>("CredsDirectory");
 
             services.Configure<FormOptions>(x =>
@@ -132,6 +134,13 @@ namespace jhray.com
             app.UseResponseCompression();
 
             app.UseStaticFiles();
+            var paths = Configuration.GetSection("Paths").Get<Paths>();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+                FileProvider = new PhysicalFileProvider(
+                    Path.Combine(paths.StaticFilesDirectory)),
+                    RequestPath = "/Uploads"
+            });
 
             app.UseForwardedHeaders(new ForwardedHeadersOptions
             {
