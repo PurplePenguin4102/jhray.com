@@ -65,7 +65,7 @@ namespace jhray.com.Engine
                 }
 
                 podcastEntity.FilePath = Path.Combine(podcastEntity.FilePath, filename);
-                podcastEntity.PodcastData.Location = $"http://{urlPath}/uploads/{podcastEntity.Id}/{filename}";
+                podcastEntity.PodcastData.Location = $"http://{urlPath}/uploads/podcasts/{podcastEntity.Id}/{filename}";
                 context.SaveChanges();
                 txn.Commit();
             }
@@ -81,7 +81,7 @@ namespace jhray.com.Engine
 
         public string ReadFromFolderContents(ChilledDbContext context)
         {
-            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
+            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDbDirectory, "Metadata.txt"));
             var feedBuilder = new MemoryStream();
             
             using (var xml = XmlWriter.Create(feedBuilder, new XmlWriterSettings() { Encoding = Encoding.UTF8}))
@@ -97,7 +97,7 @@ namespace jhray.com.Engine
                 foreach (var podcast in context.Podcasts.OrderByDescending(p => p.PubDate))
                 {
                     context.Entry(podcast).Reference(p => p.GemData).Load();
-                    WriteItemsFromDatabase(xml, podcast);
+                    WritePodcast(xml, podcast);
                 }
                 xml.WriteEndDocument();
             }
@@ -184,7 +184,7 @@ namespace jhray.com.Engine
             xml.WriteElementString("lastBuildDate", _feedMeta["lastbuilddate"]);
         }
 
-        private void WriteItemsFromDatabase(XmlWriter xml, Podcast podcast)
+        private void WritePodcast(XmlWriter xml, Podcast podcast)
         {
             xml.WriteStartElement("item");
             xml.WriteElementString("title", podcast.GemData.Title);
