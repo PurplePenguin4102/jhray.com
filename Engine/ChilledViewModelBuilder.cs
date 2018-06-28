@@ -23,7 +23,6 @@ namespace jhray.com.Engine
 
             public Configuration AddPodcastToGemList(string podcastFSPath, ChilledDbContext context)
             {
-                var podcasts = GetDirectories(podcastFSPath);
                 foreach (var pod in context.Podcasts.OrderByDescending(p => p.PubDate))
                 {
                     context.Entry(pod).Reference(p => p.GemData).Load();
@@ -32,31 +31,6 @@ namespace jhray.com.Engine
                         AudioLink = pod.Location,
                         Title = pod.GemData.Title,
                         Text = pod.Description,
-                        Type = GetRandomGemType()
-                    });
-                }
-                foreach (var pod in podcasts)
-                {
-
-                    var files = Directory.EnumerateFiles(Path.Combine(podcastFSPath, pod))
-                        .Where(f => Path.GetExtension(f) == ".mp3");
-                    var metadata = GetLinesOfMetadata(Path.Combine(pod, "Metadata.txt"));
-                    var uri = new UriBuilder("http", "jhray.com");
-                    if (files.Count() != 1) continue;
-                    //http://localhost:58273
-                    var fpath = files.First();
-                    var sanitized = Regex.Replace(podcastFSPath, @"\\", "/");
-                    if (fpath.Contains("\\"))
-                    {
-                        fpath = Regex.Replace(fpath, @"\\", "/");
-                    }
-
-                    uri.Path = Regex.Replace(fpath, $"^{sanitized}", "podcast/");
-                    Gems.Add(new PodcastGem
-                    {
-                        AudioLink = uri.Uri.ToString(),
-                        Title = metadata["title"],
-                        Text = metadata["description"],
                         Type = GetRandomGemType()
                     });
                 }

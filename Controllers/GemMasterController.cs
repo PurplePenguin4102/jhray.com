@@ -182,7 +182,7 @@ namespace jhray.com.Controllers
         [HttpGet]
         public async Task<IActionResult> SeedDB()
         {
-            await SeedDatabase.Go(_context, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+            await SeedDatabase.Go(_context, _pathsOpt.Value, _userManager, _roleManager, "joseph.h.ray@gmail.com");
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

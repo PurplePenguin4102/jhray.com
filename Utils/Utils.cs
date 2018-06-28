@@ -18,8 +18,6 @@ namespace jhray.com.Utils
                 lin => lin.Substring(lin.IndexOf(":") + 1).Trim());
         }
 
-        public static IOrderedEnumerable<string> GetDirectories(string podcastDirectory) => Directory.GetDirectories(podcastDirectory).OrderByDescending(a => int.Parse(Path.GetFileName(a)));
-
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link)
         {
             return emailSender.SendEmailAsync(email, "Confirm your email",

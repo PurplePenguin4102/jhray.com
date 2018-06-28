@@ -73,61 +73,7 @@ namespace jhray.com.Engine
         }
 
         public bool DeleteParticularEp(int epNum)
-        {
-            var directories = GetDirectories(podcastDirectory).Reverse();
-            var epStr = epNum.ToString();
-            var deleted = false;
-            foreach(var dir in directories)
-            {
-                if (deleted)
-                {
-                    ShuffleDirectories(dir);
-                    continue;
-                }
-                var fileName = Path.GetFileName(dir);
-                if (epStr == fileName)
-                {
-                    DeleteDirectory(dir);
-                    deleted = true;
-                }
-            }
-            
-            return true;
-        }
-
-        private void ShuffleDirectories(string dir)
-        {
-            //decide new directory name
-            var fileName = Path.GetFileName(dir);
-            var newNum = int.Parse(fileName) - 1;
-            var newDir = Path.Combine(podcastDirectory, newNum.ToString());
-            Directory.Move(dir, newDir);
-
-            // relocate metafile hook to new FS location
-            var Metafile = Path.Combine(newDir, "Metadata.txt");
-            var oldMeta = File.ReadAllLines(Metafile);
-            File.Delete(Metafile);
-            using (var stream = File.CreateText(Metafile))
-            {
-                foreach (var line in oldMeta)
-                {
-                    if (line.Substring(0, line.IndexOf(':')).Equals("location"))
-                    {
-                        Regex.Replace(line, @"\/\d+\/", $"/{newNum.ToString()}/");
-                    }
-                    stream.WriteLine(line);
-                }
-                stream.Flush();
-            }
-        }
-
-        private bool DeleteDirectory(string dir)
-        {
-            foreach (var file in Directory.EnumerateFiles(dir))
-            {
-                File.Delete(file);
-            }
-            Directory.Delete(dir);
+        {   
             return true;
         }
 
@@ -135,7 +81,6 @@ namespace jhray.com.Engine
 
         public string ReadFromFolderContents(ChilledDbContext context)
         {
-            var directories = GetDirectories(podcastDirectory);
             _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
             var feedBuilder = new MemoryStream();
             
@@ -153,10 +98,6 @@ namespace jhray.com.Engine
                 {
                     context.Entry(podcast).Reference(p => p.GemData).Load();
                     WriteItemsFromDatabase(xml, podcast);
-                }
-                foreach (var directory in directories)
-                {
-                    WriteItemInfoFromDirectory(xml, directory);
                 }
                 xml.WriteEndDocument();
             }
@@ -241,25 +182,6 @@ namespace jhray.com.Engine
             xml.WriteElementString("itunes", "summary", null, _feedMeta["description"]);
             xml.WriteElementString("itunes", "subtitle", null, _feedMeta["subtitle"]);
             xml.WriteElementString("lastBuildDate", _feedMeta["lastbuilddate"]);
-        }
-
-        private void WriteItemInfoFromDirectory(XmlWriter xml, string directory)
-        {
-            var meta = GetLinesOfMetadata(Path.Combine(directory, "Metadata.txt"));
-            xml.WriteStartElement("item");
-            xml.WriteElementString("title", meta["title"]);
-            xml.WriteElementString("description", meta["description"]);
-            xml.WriteElementString("itunes", "summary", null, meta["description"]);
-            xml.WriteElementString("itunes", "subtitle", null, meta["short_subtitle"]);
-            xml.WriteStartElement("enclosure");
-            xml.WriteAttributeString("url", meta["location"]);
-            xml.WriteAttributeString("type", "audio/mpeg");
-            xml.WriteAttributeString("length", meta["lengthinbytes"]);
-            xml.WriteEndElement();
-            xml.WriteElementString("guid", meta["location"]);
-            xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
-            xml.WriteElementString("pubDate", meta["pubDate"]);
-            xml.WriteEndElement();
         }
 
         private void WriteItemsFromDatabase(XmlWriter xml, Podcast podcast)
