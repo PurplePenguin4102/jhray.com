@@ -8,6 +8,7 @@ using jhray.com.Models;
 using jhray.com.Engine;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using jhray.com.Database;
 
 namespace jhray.com.Controllers
 {
@@ -15,10 +16,12 @@ namespace jhray.com.Controllers
     public class HomeController : Controller
     {
         private readonly IOptions<Paths> _pathsOpt;
+        private readonly ChilledDbContext _context;
 
-        public HomeController(IOptions<Paths> pathsOpt)
+        public HomeController(IOptions<Paths> pathsOpt, ChilledDbContext context)
         {
             _pathsOpt = pathsOpt;
+            _context = context;
         }
 
         public IActionResult Index()
@@ -31,7 +34,7 @@ namespace jhray.com.Controllers
             var direc = _pathsOpt.Value.PodcastDirectory;
             var vm = new ChilledViewModelBuilder()
                 .Configure
-                .AddPodcastToGemList(direc)
+                .AddPodcastToGemList(direc, _context)
                 .AddPicturesToGemList()
                 .Build<ChilledViewModel>();
             return View(vm);
@@ -39,7 +42,7 @@ namespace jhray.com.Controllers
 
         public IActionResult GetRssFeed(DateTime date)
         {
-            var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents();
+            var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents(_context);
             return Content(feed, "application/rss+xml");
         }
 

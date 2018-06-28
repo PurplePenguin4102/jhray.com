@@ -153,7 +153,7 @@ namespace jhray.com.Controllers
             var direc = _pathsOpt.Value.PodcastDirectory;
             var vm = new ChilledViewModelBuilder()
                 .Configure
-                .AddPodcastToGemList(direc)
+                .AddPodcastToGemList(direc, _context)
                 .Build<GemManagerViewModel>();
             return View(vm);
         }

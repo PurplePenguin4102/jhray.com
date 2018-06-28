@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using jhray.com.Database;
 using jhray.com.Models;
 using jhray.com.Models.Gems;
 using static jhray.com.Utils.Utils;
@@ -20,9 +21,20 @@ namespace jhray.com.Engine
             private Random rnd = new Random();
             private Array gemTypes = Enum.GetValues(typeof(GemType));
 
-            public Configuration AddPodcastToGemList(string podcastFSPath)
+            public Configuration AddPodcastToGemList(string podcastFSPath, ChilledDbContext context)
             {
                 var podcasts = GetDirectories(podcastFSPath);
+                foreach (var pod in context.Podcasts.OrderByDescending(p => p.PubDate))
+                {
+                    context.Entry(pod).Reference(p => p.GemData).Load();
+                    Gems.Add(new PodcastGem
+                    {
+                        AudioLink = pod.Location,
+                        Title = pod.GemData.Title,
+                        Text = pod.Description,
+                        Type = GetRandomGemType()
+                    });
+                }
                 foreach (var pod in podcasts)
                 {
 
@@ -47,7 +59,6 @@ namespace jhray.com.Engine
                         Text = metadata["description"],
                         Type = GetRandomGemType()
                     });
-
                 }
                 return this;
             }

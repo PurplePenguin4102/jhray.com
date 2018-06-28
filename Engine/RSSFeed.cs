@@ -20,12 +20,14 @@ namespace jhray.com.Engine
     {
         private readonly string DateFormat = "ddd, dd MMM yyyy 21:00:00 +1000";
         private string podcastDirectory;
-        public string podcastDbDirectory;
+        private string podcastDbDirectory;
+        private string urlPath;
 
         public RSSFeed(Paths paths)
         {
             podcastDirectory = paths.PodcastDirectory;
             podcastDbDirectory = paths.PodcastDbDirectory;
+            urlPath = paths.URLPath;
         }
 
         public async Task<bool> CreateNewEpisode(PodcastMetadata podCast, ChilledDbContext context, string currentUserId)
@@ -63,37 +65,9 @@ namespace jhray.com.Engine
                 }
 
                 podcastEntity.FilePath = Path.Combine(podcastEntity.FilePath, filename);
-                podcastEntity.PodcastData.Location = $"http://jhray.com/podcast/Db/{podcastEntity.Id}/{filename}";
+                podcastEntity.PodcastData.Location = $"http://{urlPath}/uploads/{podcastEntity.Id}/{filename}";
                 context.SaveChanges();
                 txn.Commit();
-            }
-
-            var directories = GetDirectories(podcastDirectory);
-            var epDir = directories.First();
-            if (!int.TryParse(Path.GetFileName(epDir), out int epNum))
-            {
-                return false;
-            }
-            ++epNum;
-            var epFolder = Path.Combine(podcastDirectory, epNum.ToString());
-            var metaFile = Path.Combine(epFolder, "Metadata.txt");
-
-            Directory.CreateDirectory($"{epFolder}");
-            using (var stream = new FileStream(Path.Combine(epFolder, filename), FileMode.CreateNew))
-            {
-                await podCast.PodcastFile.CopyToAsync(stream);
-                stream.Flush();
-            }
-            using (var sw = File.CreateText($"{metaFile}"))
-            {
-                sw.WriteLine($"title:{podCast.Title}");
-                sw.WriteLine($"description:{podCast.Description}");
-                sw.WriteLine($"short_subtitle:{podCast.ShortDescription}");
-                sw.WriteLine($"location:http://jhray.com/podcast/{epNum}/{filename}");
-                sw.WriteLine($"itunes_duration:{podCast.ItunesDuration}");
-                sw.WriteLine($"pubDate:{podCast.PubDate.ToString(DateFormat, CultureInfo.CreateSpecificCulture("en-US"))}");
-                sw.WriteLine($"lengthinbytes:{podCast.PodcastFile.Length}");
-                sw.Flush();
             }
             return true;
         }
@@ -158,7 +132,8 @@ namespace jhray.com.Engine
         }
 
         private Dictionary<string, string> _feedMeta;
-        public string ReadFromFolderContents()
+
+        public string ReadFromFolderContents(ChilledDbContext context)
         {
             var directories = GetDirectories(podcastDirectory);
             _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDirectory, "Metadata.txt"));
@@ -173,13 +148,16 @@ namespace jhray.com.Engine
                 WriteItunesStuff(xml);
                 WriteAtomFeedInfo(xml);
                 WritePodcastHeader(xml);
-                
-                foreach(var directory in directories)
+
+                foreach (var podcast in context.Podcasts.OrderByDescending(p => p.PubDate))
+                {
+                    context.Entry(podcast).Reference(p => p.GemData).Load();
+                    WriteItemsFromDatabase(xml, podcast);
+                }
+                foreach (var directory in directories)
                 {
                     WriteItemInfoFromDirectory(xml, directory);
                 }
-                WriteItemsFromDatabase(xml);
-
                 xml.WriteEndDocument();
             }
             feedBuilder.Position = 0;
@@ -284,22 +262,22 @@ namespace jhray.com.Engine
             xml.WriteEndElement();
         }
 
-        private void WriteItemsFromDatabase(XmlWriter xml)
+        private void WriteItemsFromDatabase(XmlWriter xml, Podcast podcast)
         {
-            //xml.WriteStartElement("item");
-            //xml.WriteElementString("title", meta["title"]);
-            //xml.WriteElementString("description", meta["description"]);
-            //xml.WriteElementString("itunes", "summary", null, meta["description"]);
-            //xml.WriteElementString("itunes", "subtitle", null, meta["short_subtitle"]);
-            //xml.WriteStartElement("enclosure");
-            //xml.WriteAttributeString("url", meta["location"]);
-            //xml.WriteAttributeString("type", "audio/mpeg");
-            //xml.WriteAttributeString("length", meta["lengthinbytes"]);
-            //xml.WriteEndElement();
-            //xml.WriteElementString("guid", meta["location"]);
-            //xml.WriteElementString("itunes", "duration", null, meta["itunes_duration"]);
-            //xml.WriteElementString("pubDate", meta["pubDate"]);
-            //xml.WriteEndElement();
+            xml.WriteStartElement("item");
+            xml.WriteElementString("title", podcast.GemData.Title);
+            xml.WriteElementString("description", podcast.Description);
+            xml.WriteElementString("itunes", "summary", null, podcast.Description);
+            xml.WriteElementString("itunes", "subtitle", null, podcast.ShortDescription);
+            xml.WriteStartElement("enclosure");
+            xml.WriteAttributeString("url", podcast.Location);
+            xml.WriteAttributeString("type", "audio/mpeg");
+            xml.WriteAttributeString("length", podcast.LengthInBytes.ToString());
+            xml.WriteEndElement();
+            xml.WriteElementString("guid", podcast.Location);
+            xml.WriteElementString("itunes", "duration", null, podcast.ItunesDuration);
+            xml.WriteElementString("pubDate", podcast.PubDate.ToString(DateFormat));
+            xml.WriteEndElement();
         }
     }
 }
