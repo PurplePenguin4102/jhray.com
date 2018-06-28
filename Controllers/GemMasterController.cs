@@ -173,7 +173,7 @@ namespace jhray.com.Controllers
             if (ModelState.IsValid)
             {
                 var userId = _userManager.GetUserId(User);
-                await new RSSFeed(_pathsOpt.Value.PodcastDirectory).CreateNewEpisode(gem.PodcastMetadata, _context, userId);
+                await new RSSFeed(_pathsOpt.Value).CreateNewEpisode(gem.PodcastMetadata, _context, userId);
             }
             return RedirectToAction("GemManager");
         }
@@ -190,7 +190,7 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult DeletePodcast(int id)
         {
-            new RSSFeed(_pathsOpt.Value.PodcastDirectory).DeleteParticularEp(id);
+            new RSSFeed(_pathsOpt.Value).DeleteParticularEp(id);
             return RedirectToAction("GemManager");
         }
     }

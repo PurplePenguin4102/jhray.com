@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using jhray.com.Database;
+using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace jhray.com.Migrations
 {

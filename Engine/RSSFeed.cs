@@ -20,10 +20,12 @@ namespace jhray.com.Engine
     {
         private readonly string DateFormat = "ddd, dd MMM yyyy 21:00:00 +1000";
         private string podcastDirectory;
+        public string podcastDbDirectory;
 
-        public RSSFeed(string podcastDirectory)
+        public RSSFeed(Paths paths)
         {
-            this.podcastDirectory = podcastDirectory;
+            podcastDirectory = paths.PodcastDirectory;
+            podcastDbDirectory = paths.PodcastDbDirectory;
         }
 
         public async Task<bool> CreateNewEpisode(PodcastMetadata podCast, ChilledDbContext context, string currentUserId)
@@ -52,7 +54,7 @@ namespace jhray.com.Engine
                 context.Gems.Add(podcastEntity);
                 context.SaveChanges();
 
-                podcastEntity.FilePath = Path.Combine(podcastDirectory, "Db", podcastEntity.Id.ToString());
+                podcastEntity.FilePath = Path.Combine(podcastDbDirectory, podcastEntity.Id.ToString());
                 Directory.CreateDirectory(podcastEntity.FilePath);
                 using (var stream = new FileStream(Path.Combine(podcastEntity.FilePath, filename), FileMode.CreateNew))
                 {

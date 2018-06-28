@@ -39,7 +39,7 @@ namespace jhray.com.Controllers
 
         public IActionResult GetRssFeed(DateTime date)
         {
-            var feed = new RSSFeed(_pathsOpt.Value.PodcastDirectory).ReadFromFolderContents();
+            var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents();
             return Content(feed, "application/rss+xml");
         }
 
