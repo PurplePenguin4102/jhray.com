@@ -19,13 +19,11 @@ namespace jhray.com.Engine
     public class RSSFeed
     {
         private readonly string DateFormat = "ddd, dd MMM yyyy 21:00:00 +1000";
-        private string podcastDirectory;
         private string podcastDbDirectory;
         private string urlPath;
 
         public RSSFeed(Paths paths)
         {
-            podcastDirectory = paths.PodcastDirectory;
             podcastDbDirectory = paths.PodcastDbDirectory;
             urlPath = paths.URLPath;
         }
@@ -56,6 +54,8 @@ namespace jhray.com.Engine
                 context.Gems.Add(podcastEntity);
                 context.SaveChanges();
 
+                podcastEntity.PodcastData.Location = $"http://{urlPath}/uploads/podcasts/{podcastEntity.Id}/{filename}";
+
                 podcastEntity.FilePath = Path.Combine(podcastDbDirectory, podcastEntity.Id.ToString());
                 Directory.CreateDirectory(podcastEntity.FilePath);
                 using (var stream = new FileStream(Path.Combine(podcastEntity.FilePath, filename), FileMode.CreateNew))
@@ -63,9 +63,8 @@ namespace jhray.com.Engine
                     await podCast.PodcastFile.CopyToAsync(stream);
                     stream.Flush();
                 }
-
                 podcastEntity.FilePath = Path.Combine(podcastEntity.FilePath, filename);
-                podcastEntity.PodcastData.Location = $"http://{urlPath}/uploads/podcasts/{podcastEntity.Id}/{filename}";
+                
                 context.SaveChanges();
                 txn.Commit();
             }

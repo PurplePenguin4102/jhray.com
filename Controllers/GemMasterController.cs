@@ -150,10 +150,9 @@ namespace jhray.com.Controllers
         [Authorize(Roles = "RegularGenius")]
         public IActionResult GemManager()
         {
-            var direc = _pathsOpt.Value.PodcastDirectory;
             var vm = new ChilledViewModelBuilder()
                 .Configure
-                .AddPodcastToGemList(direc, _context)
+                .AddPodcastToGemList(_context)
                 .Build<GemManagerViewModel>();
             return View(vm);
         }

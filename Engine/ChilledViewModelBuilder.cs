@@ -21,7 +21,7 @@ namespace jhray.com.Engine
             private Random rnd = new Random();
             private Array gemTypes = Enum.GetValues(typeof(GemType));
 
-            public Configuration AddPodcastToGemList(string podcastFSPath, ChilledDbContext context)
+            public Configuration AddPodcastToGemList(ChilledDbContext context)
             {
                 foreach (var pod in context.Podcasts.OrderByDescending(p => p.PubDate))
                 {
