@@ -131,6 +131,33 @@
     background: url("/images/diamond.png") ;
 }
 
+.lightbox_bkg {
+    height: 100%;
+    width: 100%;
+    position: fixed;
+    top:0;
+    left:0;
+    background-color: rgba(10,10,40,0.7);
+    z-index: 900;
+    display:none;
+}
+
+.gem_big {
+    background-color: #a3e0cd;
+    position: fixed;
+    top: 10vh;
+    left: 30vw;
+    z-index: 910;
+    height: 80vh;
+    width: 40vw;
+    background-size: 100% 100%;
+    border-radius:20px;
+}
+
+.gem_full_contents {
+
+}
+
 .gemHeader {
     margin-top:20px;
     text-align:center;
