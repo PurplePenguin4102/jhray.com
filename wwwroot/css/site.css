@@ -100,35 +100,35 @@
 }
 
 .greenGem {
-    background: url("/images/emerald.png") ;
+    background: url("/static/emerald.png") ;
 }
 
 .redGem {
-    background: url("/images/ruby.png") ;
+    background: url("/static/ruby.png");
 }
 
 .yellowGem {
-    background: url("/images/topaz.png") ;
+    background: url("/static/topaz.png");
 }
 
 .orangeGem {
-    background: url("/images/citrine.png") ;
+    background: url("/static/citrine.png");
 }
 
 .blueGem {
-    background: url("/images/sapphire.png") ;
+    background: url("/static/sapphire.png");
 }
 
 .blackGem {
-    background: url("/images/agate.png") ;
+    background: url("/static/agate.png");
 }
 
 .purpleGem {
-    background: url("/images/amethyst.png") ;
+    background: url("/static/amethyst.png");
 }
 
 .diamondGem {
-    background: url("/images/diamond.png") ;
+    background: url("/static/diamond.png");
 }
 
 .lightbox_bkg {
