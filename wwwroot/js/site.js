@@ -22,3 +22,7 @@ function inspire() {
 		}, 200);
 	}
 }
+
+function expando(endpoint, id) {
+
+}

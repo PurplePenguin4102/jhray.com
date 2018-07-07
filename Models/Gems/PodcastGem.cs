@@ -13,5 +13,6 @@ namespace jhray.com.Models.Gems
         public string DisplayText => Text.Substring(0, Math.Min(180, Text.Length));
         
         public GemType Type { get; set; }
+        public string Id { get; set; }
     }
 }

@@ -12,5 +12,6 @@ namespace jhray.com.Models.Gems
         public string PictureLink { get; set; }
         public string ArtistSource { get; set; }
         public string ArtistName { get; set; }
+        public string Id { get; set; }
     }
 }

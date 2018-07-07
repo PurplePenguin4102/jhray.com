@@ -9,5 +9,6 @@ namespace jhray.com.Models.Gems
     {
         GemType Type { get; }
         string Title { get; }
+        string Id { get; }
     }
 }

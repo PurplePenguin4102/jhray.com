@@ -10,5 +10,7 @@ namespace jhray.com.Models.Gems
         public GemType Type => throw new NotImplementedException();
 
         public string Title => throw new NotImplementedException();
+
+        public string Id => throw new NotImplementedException();
     }
 }
