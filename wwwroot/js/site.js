@@ -24,5 +24,6 @@ function inspire() {
 }
 
 function expando(endpoint, id) {
-
+    console.log(endpoint);
+    console.log(id);
 }
