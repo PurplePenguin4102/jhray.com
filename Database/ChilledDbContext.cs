@@ -19,6 +19,8 @@ namespace jhray.com.Database
 
         public DbSet<Gem> Gems { get; set; }
         public DbSet<Podcast> Podcasts { get; set; }
+        public DbSet<Picture> Pictures { get; set; }
+        public DbSet<PictureTag> PictureTags { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,7 +29,9 @@ namespace jhray.com.Database
             builder.Entity<ChilledUser>().ToTable("ChilledUser");
             builder.Entity<ChilledUser>().HasMany(u => u.CreatedGems).WithOne(g => g.CreatedBy);
             builder.Entity<Gem>().HasOne(g => g.PodcastData).WithOne(p => p.GemData).HasForeignKey<Podcast>(p => p.Id);
-            
+            builder.Entity<Gem>().HasOne(g => g.PictureData).WithOne(p => p.GemData).HasForeignKey<Picture>(p => p.Id);
+            builder.Entity<Picture>().HasMany(pic => pic.PictureTags).WithOne(pt => pt.PictureData);
+
             // shadow properties
             //builder.Entity<User>().Property<DateTimeOffset>("UpdatedTimestamp");
         }
