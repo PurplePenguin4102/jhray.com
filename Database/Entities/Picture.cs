@@ -13,6 +13,8 @@ namespace jhray.com.Database.Entities
         [ForeignKey("FK_Picture_Gem")]
         public int Id { get; set; }
         public string ArtistLink { get; set; }
+        public string ArtistName { get; set; }
+
         public string HoverText { get; set; }
         public DateTime CreatedDate { get; set; }
 
