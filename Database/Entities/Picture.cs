@@ -15,6 +15,7 @@ namespace jhray.com.Database.Entities
         public string ArtistLink { get; set; }
         public string ArtistName { get; set; }
 
+        public long FileSize { get; set; }
         public string HoverText { get; set; }
         public DateTime CreatedDate { get; set; }
 

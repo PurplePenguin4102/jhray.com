@@ -16,6 +16,7 @@ using System.Threading;
 using jhray.com.Engine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using System.IO;
 
 namespace jhray.com.Controllers
 {
@@ -178,6 +179,35 @@ namespace jhray.com.Controllers
                 }
                 if (gem.PictureMetadata != null)
                 {
+                    
+                    var pic = new Picture()
+                    {
+                        GemData = new Gem()
+                        {
+                            Title = gem.PictureMetadata.Title,
+                            CreatedBy = await _userManager.GetUserAsync(User),
+                            GemType = GemType.Picture,
+                            SummaryText = gem.PictureMetadata.SummaryText
+                        },
+                        HoverText = gem.PictureMetadata.HoverText,
+                        ArtistName = gem.PictureMetadata.ArtistName,
+                        ArtistLink = gem.PictureMetadata.ArtistLink,
+                        CreatedDate = DateTime.Now,
+                        FileSize = gem.PictureMetadata.PictureFile.Length
+                    };
+                    _context.Pictures.Add(pic);
+                    _context.SaveChanges();
+
+                    var filePath = _pathsOpt.Value.PicturesDirectory;
+                    var fileFolder = Path.Combine(filePath, pic.Id.ToString());
+                    var fileName = gem.PictureMetadata.PictureFile.Name;
+                    var fullyQualified = Path.Combine(fileFolder, fileName);
+                    Directory.CreateDirectory(fileFolder);
+                    using (var stream = new FileStream(fileName, FileMode.CreateNew))
+                    {
+                        await gem.PictureMetadata.PictureFile.CopyToAsync(stream);
+                        stream.Flush();
+                    }
                     // save picture
                 }
             }

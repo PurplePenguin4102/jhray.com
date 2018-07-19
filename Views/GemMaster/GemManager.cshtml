@@ -104,7 +104,10 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PictureMetadata.HoverText, "Hover Text")
                         @Html.TextBoxFor(m => m.PictureMetadata.HoverText, new { @class = "form-control" })
-
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PictureMetadata.ArtistName, "Artist Name")
+                        @Html.TextBoxFor(m => m.PictureMetadata.ArtistName, new { @class = "form-control" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.PictureMetadata.ArtistLink, "Artist Link (eg. Deviantart Page)")

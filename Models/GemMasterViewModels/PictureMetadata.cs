@@ -15,6 +15,8 @@ namespace jhray.com.Models.GemMasterViewModels
         public string HoverText { get; set; }
 
         [Required]
+        public string ArtistName { get; set; }
+        [Required]
         public string ArtistLink { get; set; }
         [Required]
         public DateTime CreatedDate { get; set; }
