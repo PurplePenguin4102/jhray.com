@@ -1,6 +1,6 @@
 language: csharp
 solution: jhray.com.sln
-dotnet: 2.0.0
+dotnet: 2.1.5
 dist: artful
 addons:
  ssh_known_hosts: jhray.com
