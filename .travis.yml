@@ -1,6 +1,6 @@
 language: csharp
 solution: jhray.com.sln
-dotnet: 2.1.0
+dotnet: 2.0.0
 addons:
  ssh_known_hosts: jhray.com
 before_install:
