@@ -1,7 +1,7 @@
 language: csharp
 solution: jhray.com.sln
 dotnet: 2.1.5
-dist: artful
+dist: bionic
 addons:
  ssh_known_hosts: jhray.com
 before_install:
