@@ -1,7 +1,6 @@
 language: csharp
 solution: jhray.com.sln
 dotnet: 2.1.0
-dist: Bionic
 addons:
  ssh_known_hosts: jhray.com
 before_install:
