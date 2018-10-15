@@ -39,9 +39,9 @@ namespace jhray.com.Controllers
             return View(vm);
         }
 
-        public IActionResult GetRssFeed(DateTime date)
+        public IActionResult GetRssFeed(int id)
         {
-            var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents(_context);
+            var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents(_context, id);
             return Content(feed, "application/rss+xml");
         }
 

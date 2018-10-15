@@ -14,5 +14,6 @@ namespace jhray.com.Models.Gems
         
         public GemType Type { get; set; }
         public string Id { get; set; }
+        public int FeedId { get; set; }
     }
 }

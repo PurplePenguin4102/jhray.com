@@ -48,6 +48,7 @@ namespace jhray.com.Engine
                         LengthInBytes = podCast.PodcastFile.Length,
                         ItunesDuration = podCast.ItunesDuration,
                         PubDate = podCast.PubDate,
+                        FeedId = podCast.FeedId
                     }
                 };
 
@@ -78,9 +79,9 @@ namespace jhray.com.Engine
 
         private Dictionary<string, string> _feedMeta;
 
-        public string ReadFromFolderContents(ChilledDbContext context)
+        public string ReadFromFolderContents(ChilledDbContext context, int id)
         {
-            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDbDirectory, "Metadata.txt"));
+            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDbDirectory, $"Metadata_{id}.txt"));
             var feedBuilder = new MemoryStream();
             
             using (var xml = XmlWriter.Create(feedBuilder, new XmlWriterSettings() { Encoding = Encoding.UTF8}))

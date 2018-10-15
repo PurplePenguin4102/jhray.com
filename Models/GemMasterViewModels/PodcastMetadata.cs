@@ -25,6 +25,9 @@ namespace jhray.com.Models.GemMasterViewModels
         public IFormFile PodcastFile { get; set; }
 
         [Required]
+        public int FeedId { get; set; }
+
+        [Required]
         [DataType(DataType.Date)]
         public DateTimeOffset PubDate { get; set; }
 

@@ -24,6 +24,7 @@
                         <th scope="col">Title</th>
                         <th scope="col">Text</th>
                         <th scope="col">Remove</th>
+                        <th scope="col">FeedId</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -37,6 +38,7 @@
                             <td>@gem.Title</td>
                             <td>@gem.Text</td>
                             <td><button class="btn-danger" onclick="doRemove('@epNum')">-</button></td>
+                            <td>@gem.FeedId</td>
                         </tr>
 
                     }
@@ -73,6 +75,10 @@
                     <div class="form-group">
                         @Html.LabelFor(m => m.PodcastMetadata.ItunesDuration, "Itunes Duration (eg 1:46:31)")
                         @Html.TextBoxFor(m => m.PodcastMetadata.ItunesDuration, new { @class = "form-control" })
+                    </div>
+                    <div class="form-group">
+                        @Html.LabelFor(m => m.PodcastMetadata.FeedId, "FeedId (0 or 1)")
+                        @Html.TextBoxFor(m => m.PodcastMetadata.FeedId, new { @class = "form-control", @type = "number", @min = "0", @value = "0" })
                     </div>
                     <div class="form-group">
                         @Html.LabelFor(m => m.PodcastMetadata.PubDate, "PubDate")

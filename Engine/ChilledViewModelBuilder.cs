@@ -31,7 +31,8 @@ namespace jhray.com.Engine
                         AudioLink = pod.Location,
                         Title = pod.GemData.Title,
                         Text = pod.Description,
-                        Type = GetRandomGemType()
+                        Type = GetRandomGemType(),
+                        FeedId = pod.FeedId
                     });
                 }
                 return this;

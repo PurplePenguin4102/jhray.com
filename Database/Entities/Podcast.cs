@@ -19,6 +19,7 @@ namespace jhray.com.Database.Entities
         public DateTimeOffset PubDate { get; set; }
         public long LengthInBytes { get; set; }
 
+        public int FeedId { get; set; }
         public Gem GemData { get; set; }
     }
 }
