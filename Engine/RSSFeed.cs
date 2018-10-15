@@ -94,7 +94,7 @@ namespace jhray.com.Engine
                 WriteAtomFeedInfo(xml);
                 WritePodcastHeader(xml);
 
-                foreach (var podcast in context.Podcasts.OrderByDescending(p => p.PubDate))
+                foreach (var podcast in context.Podcasts.Where(pod => pod.FeedId == id).OrderByDescending(p => p.PubDate))
                 {
                     context.Entry(podcast).Reference(p => p.GemData).Load();
                     WritePodcast(xml, podcast);
