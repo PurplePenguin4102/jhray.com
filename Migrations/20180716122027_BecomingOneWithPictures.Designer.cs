@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using jhray.com.Database;
@@ -9,9 +10,10 @@ using jhray.com.Database;
 namespace jhray.com.Migrations
 {
     [DbContext(typeof(ChilledDbContext))]
-    partial class ChilledDbContextModelSnapshot : ModelSnapshot
+    [Migration("20180716122027_BecomingOneWithPictures")]
+    partial class BecomingOneWithPictures
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -98,10 +100,6 @@ namespace jhray.com.Migrations
                     b.Property<int>("Id");
 
                     b.Property<string>("ArtistLink");
-
-                    b.Property<string>("ArtistName");
-
-                    b.Property<DateTime>("CreatedDate");
 
                     b.Property<string>("HoverText");
 

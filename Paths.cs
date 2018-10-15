@@ -15,5 +15,6 @@ namespace jhray.com
         public string VideoDirectory { get; set; }
         public string StaticFilesDirectory { get; set; }
         public string URLPath { get; set; }
+        public string NginxDirectory { get; set; }
     }
 }

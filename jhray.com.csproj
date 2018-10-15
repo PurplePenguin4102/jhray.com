@@ -9,6 +9,9 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="Database\Entities\Gem.cs~RF1360dbeb.TMP" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Bootstrap.Less" Version="3.3.7" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker" Version="4.17.45" />
     <PackageReference Include="Bootstrap.v3.Datetimepicker.CSS" Version="4.17.45" />

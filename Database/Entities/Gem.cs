@@ -21,6 +21,7 @@ namespace jhray.com.Database.Entities
         public string CreatedById { get; set; }
         
         public Podcast PodcastData { get; set; }
+        public Picture PictureData { get; set; }
         public ChilledUser CreatedBy { get; set; }
     }
 }
