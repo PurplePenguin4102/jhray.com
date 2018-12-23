@@ -1,8 +1,9 @@
 language: csharp
 mono: none
+sudo: required
 solution: jhray.com.sln
 dist: xenial
-dotnet: 2.2.0
+dotnet: 2.2
 addons:
  ssh_known_hosts: jhray.com
 before_install:
