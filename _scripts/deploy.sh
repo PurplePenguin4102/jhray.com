@@ -3,7 +3,7 @@
 echo "Running deploy script on master branch"
 
 dotnet publish jhray.com.csproj
-cd /home/travis/build/PurplePenguin4102/jhray.com/bin/Debug/netcoreapp2.0/publish/
+cd /home/travis/build/PurplePenguin4102/jhray.com/bin/Debug/netcoreapp2.2/publish/
 echo "Initiating Git"
 git init
 git remote add deploy "deploy@jhray.com:/var/aspnetcore"
