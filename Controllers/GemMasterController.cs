@@ -149,12 +149,22 @@ namespace jhray.com.Controllers
         }
 
         [Authorize(Roles = "RegularGenius")]
-        public IActionResult GemManager()
+        public IActionResult PodcastGemManager()
         {
             var vm = new ChilledViewModelBuilder()
                 .Configure
                 .AddPodcastToGemList(_context)
-                .Build<GemManagerViewModel>();
+                .Build<PodcastGemManagerViewModel>();
+            return View(vm);
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        public IActionResult PictureGemManager()
+        {
+            var vm = new ChilledViewModelBuilder()
+                .Configure
+                .AddPicturesToGemList(_context)
+                .Build<PictureGemManagerViewModel>();
             return View(vm);
         }
 
@@ -162,13 +172,13 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult AddGem()
         {
-            return RedirectToAction("GemManager");
+            return RedirectToAction("PodcastGemManager");
         }
 
         [Authorize(Roles = "RegularGenius")]
         [RequestSizeLimit(150_000_000)]
         [HttpPost]
-        public async Task<IActionResult> AddGem(GemManagerViewModel gem)
+        public async Task<IActionResult> AddGem(PodcastGemManagerViewModel gem)
         {
             if (ModelState.IsValid)
             {
@@ -177,41 +187,46 @@ namespace jhray.com.Controllers
                 {
                     await new RSSFeed(_pathsOpt.Value).CreateNewEpisode(gem.PodcastMetadata, _context, userId);
                 }
-                if (gem.PictureMetadata != null)
-                {
-                    
-                    var pic = new Picture()
-                    {
-                        GemData = new Gem()
-                        {
-                            Title = gem.PictureMetadata.Title,
-                            CreatedBy = await _userManager.GetUserAsync(User),
-                            GemType = GemType.Picture,
-                            SummaryText = gem.PictureMetadata.SummaryText
-                        },
-                        HoverText = gem.PictureMetadata.HoverText,
-                        ArtistName = gem.PictureMetadata.ArtistName,
-                        ArtistLink = gem.PictureMetadata.ArtistLink,
-                        CreatedDate = DateTime.Now,
-                        FileSize = gem.PictureMetadata.PictureFile.Length
-                    };
-                    _context.Pictures.Add(pic);
-                    _context.SaveChanges();
+            }
+            return RedirectToAction("PodcastGemManager");
+        }
 
-                    var filePath = _pathsOpt.Value.PicturesDirectory;
-                    var fileFolder = Path.Combine(filePath, pic.Id.ToString());
-                    var fileName = gem.PictureMetadata.PictureFile.Name;
-                    var fullyQualified = Path.Combine(fileFolder, fileName);
-                    Directory.CreateDirectory(fileFolder);
-                    using (var stream = new FileStream(fileName, FileMode.CreateNew))
+        [Authorize(Roles = "RegularGenius")]
+        [RequestSizeLimit(5_000_000)]
+        [HttpPost]
+        public async Task<IActionResult> AddPictureGem(PictureGemManagerViewModel gem)
+        {
+            if (ModelState.IsValid && gem.PictureMetadata != null)
+            {
+                var pic = new Picture()
+                {
+                    GemData = new Gem()
                     {
-                        await gem.PictureMetadata.PictureFile.CopyToAsync(stream);
-                        stream.Flush();
-                    }
-                    // save picture
+                        Title = gem.PictureMetadata.Title,
+                        CreatedBy = await _userManager.GetUserAsync(User),
+                        GemType = GemType.Picture,
+                        SummaryText = gem.PictureMetadata.SummaryText
+                    },
+                    HoverText = gem.PictureMetadata.HoverText,
+                    ArtistName = gem.PictureMetadata.ArtistName,
+                    ArtistLink = gem.PictureMetadata.ArtistLink,
+                    CreatedDate = DateTime.Now,
+                    FileSize = gem.PictureMetadata.PictureFile.Length
+                };
+                _context.Pictures.Add(pic);
+                _context.SaveChanges();
+                var filePath = _pathsOpt.Value.PicturesDirectory;
+                var fileFolder = Path.Combine(filePath, pic.Id.ToString());
+                var fileName = gem.PictureMetadata.PictureFile.Name;
+                var fullyQualified = Path.Combine(fileFolder, fileName);
+                Directory.CreateDirectory(fileFolder);
+                using (var stream = new FileStream(fileName, FileMode.CreateNew))
+                {
+                    await gem.PictureMetadata.PictureFile.CopyToAsync(stream);
+                    stream.Flush();
                 }
             }
-            return RedirectToAction("GemManager");
+            return RedirectToAction("PictureGemManager");
         }
 
         [Authorize(Roles = "SuperGenius")]
@@ -226,8 +241,13 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult DeletePodcast(int id)
         {
-            new RSSFeed(_pathsOpt.Value).DeleteParticularEp(id);
-            return RedirectToAction("GemManager");
+            var podcast = _context.Podcasts.FirstOrDefault(p => p.Id == id);
+            if (podcast != null)
+            {
+                _context.Podcasts.Remove(podcast);
+                _context.SaveChanges();
+            }
+            return RedirectToAction("PodcastGemManager");
         }
     }
 }

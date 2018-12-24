@@ -34,7 +34,7 @@ namespace jhray.com.Controllers
             var vm = new ChilledViewModelBuilder()
                 .Configure
                 .AddPodcastToGemList(_context, 0)
-                .AddPicturesToGemList()
+                .AddPicturesToGemList(_context)
                 .Build<ChilledViewModel>();
             return View(vm);
         }

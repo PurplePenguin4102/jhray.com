@@ -1,5 +1,5 @@
 ﻿// Write your JavaScript code.
-var inspirations = ["Thought Leader", "Awesomenaut", "Fearless", "Genius", "Latte Critic", "Imagination Darer", "Thinkgineer", "Industrialist", "Solver", "Problem Destroyer", "Code Artist", "Thinker", "Architect", "Artisan", "Reality Shaper", "Teacher", "Possibility Realiser", "Dervish", "Scientist", "Philosopher", "Creator", "Dream Enabler", "Physicist", "Generalissimo", "Mind Expander", "Entrepreneur", "Cloud Specialist", "Blockchain", ".Com Developer", "Project Illuminary"];
+var inspirations = ["Thought Leader", "Awesomenaut", "Man of Athens", "1/0 Limit Endpoint", "Galaxy Brain", "Freelance Reimaginer", ".com Aficionado", "Fearless", "Genius", "Latte Critic", "Imagination Darer", "Thinkgineer", "Industrialist", "Solver", "Problem Destroyer", "Code Artist", "Thinker", "Architect", "Artisan", "Reality Shaper", "Teacher", "Possibility Realiser", "Divine Yogi", "Celestial Savant", "Dervish", "Scientist", "Philosopher", "Creator", "Dream Enabler", "Physicist", "Generalissimo", "Mind Expander", "Entrepreneur", "Cloud Specialist", "Kubernetes Kreator", "NoSql Relational Manager", "Blockchain", "Proud Roman", "Project Illuminary"];
 var flip = true;
 setInterval(function () { inspire() }, 1000);
 

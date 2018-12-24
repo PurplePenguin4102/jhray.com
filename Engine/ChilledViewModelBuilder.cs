@@ -40,16 +40,19 @@ namespace jhray.com.Engine
 
             private GemType GetRandomGemType() => (GemType)gemTypes.GetValue(rnd.Next(gemTypes.Length));
 
-            public Configuration AddPicturesToGemList()
+            public Configuration AddPicturesToGemList(ChilledDbContext context)
             {
-                Gems.Add(new PictureGem
+                foreach (var pic in context.Pictures.OrderByDescending(p => p.CreatedDate))
                 {
-                    Title = "D.Va Shooting Pixels",
-                    Type = GetRandomGemType(),
-                    PictureLink = "/uploads/pictures/d_va_by_liang_xing.jpg",
-                    ArtistSource = "https://liang-xing.deviantart.com/art/D-VA-611312523",
-                    ArtistName = "Liang-Xing"
-                });
+                    Gems.Add(new PictureGem
+                    {
+                        Title = pic.GemData.Title,
+                        Type = GetRandomGemType(),
+                        PictureLink = pic.GemData.FilePath,
+                        ArtistSource = pic.ArtistLink,
+                        ArtistName = pic.ArtistName
+                    });
+                }
                 return this;
             }
 

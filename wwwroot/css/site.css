@@ -67,8 +67,6 @@
 #jhray {
     color: aqua;
     display: inline;
-    -webkit-animation: from_left 3s 1 normal;
-    animation-fill-mode: forwards;
 }
 #thought_leader {
     perspective: 200px; 
@@ -83,8 +81,6 @@
 #com {
     color: mediumpurple;
     display: inline;
-    -webkit-animation: from_right 3s 1 normal;
-    animation-fill-mode: forwards;
 }
 #ARIGATO {
     top: 1000px;
@@ -318,4 +314,16 @@
         margin: 25px 20px;
     }
 
+}
+
+@media screen and (min-width: 1900px) {
+    #jhray {
+        -webkit-animation: from_left 3s 1 normal;
+        animation-fill-mode: forwards;
+    }
+
+    #com {
+        -webkit-animation: from_right 3s 1 normal;
+        animation-fill-mode: forwards;
+    }
 }

@@ -1,12 +1,23 @@
-﻿@model jhray.com.Models.GemMasterViewModels.GemManagerViewModel
+﻿@model jhray.com.Models.GemMasterViewModels.PodcastGemManagerViewModel
 @{
-    ViewData["Title"] = "GemManager";
+    ViewData["Title"] = "PodcastGemManager";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <script type="text/javascript" src="~/js/moment.min.js"></script>
 <script type="text/javascript" src="~/js/bootstrap-datetimepicker.min.js"></script>
+
+
+<div style="float:left">
+    <ul class="nav nav-tabs nav-stacked">
+        <li class="active"><a asp-controller="GemMaster" asp-action="PodcastGemManager">Podcasts<span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-headphones"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="PictureGemManager">Images  <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-picture"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
+    </ul>
+</div>
+
+
 <div class="container body-content">
-    <h2 class="text-center">GemManager</h2>
+    <h2 class="text-center">Gem Manager</h2>
     <div class="col-lg-8">
         <h2>Your Gems</h2>
         
@@ -19,7 +30,7 @@
             <table class="table table-bordered table-striped">
                 <thead>
                     <tr>
-                        <th scope="col">EpNum</th>
+                        <th scope="col">Id</th>
                         <th scope="col">AudioLink</th>
                         <th scope="col">Title</th>
                         <th scope="col">Text</th>
@@ -49,16 +60,12 @@
     </div>
     <div class="col-lg-4">
         
-        <h2>Add...</h2>
-        <ul class="nav nav-tabs nav-justified">
-            <li class="active"><a data-toggle="tab" href="#podcast">Podcast</a></li>
-            <li><a data-toggle="tab" href="#picture">Picture</a></li>
-        </ul>
+        <h2>Add Podcast</h2>
+        
         <div class="tab-content">
             <div id="podcast" class="tab-pane fade in active">
                 @using (Html.BeginForm("AddGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
                 {
-
                     <div class="form-group">
                         @Html.LabelFor(m => m.PodcastMetadata.Title, "Gem Title")
                         @Html.TextBoxFor(m => m.PodcastMetadata.Title, new { @class = "form-control" })
@@ -81,55 +88,7 @@
                         @Html.TextBoxFor(m => m.PodcastMetadata.FeedId, new { @class = "form-control", @type = "number", @min = "0", @value = "0" })
                     </div>
                     <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.PubDate, "PubDate")
-                        <div class='input-group date' id='datetimepicker1'>
-                            @Html.TextBoxFor(m => m.PodcastMetadata.PubDate, new { @class = "form-control" })
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
                         @Html.LabelFor(m => m.PodcastMetadata.PodcastFile, "Podcast File")
-                        <input type="file" name="PodcastMetadata.PodcastFile" />
-                    </div>
-                    <input type="submit" class="btn-block loginButton" value="Craft!" />
-                }
-            </div>
-            <div id="picture" class="tab-pane fade">
-                @using (Html.BeginForm("AddGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.Title, "Gem Title")
-                        @Html.TextBoxFor(m => m.PictureMetadata.Title, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.SummaryText, "Summary")
-                        @Html.TextAreaFor(m => m.PictureMetadata.SummaryText, new { @class = "form-control", @value = "A nice picture" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.HoverText, "Hover Text")
-                        @Html.TextBoxFor(m => m.PictureMetadata.HoverText, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.ArtistName, "Artist Name")
-                        @Html.TextBoxFor(m => m.PictureMetadata.ArtistName, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.ArtistLink, "Artist Link (eg. Deviantart Page)")
-                        @Html.TextBoxFor(m => m.PictureMetadata.ArtistLink, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.CreatedDate, "Created")
-                        <div class='input-group date' id='datetimepicker1'>
-                            @Html.TextBoxFor(m => m.PictureMetadata.CreatedDate, new { @class = "form-control", @value = $"{DateTime.Today.ToString("g")}" })
-                            <span class="input-group-addon">
-                                <span class="glyphicon glyphicon-calendar"></span>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.PictureFile, "Image File")
                         <input type="file" name="PodcastMetadata.PodcastFile" />
                     </div>
                     <input type="submit" class="btn-block loginButton" value="Craft!" />

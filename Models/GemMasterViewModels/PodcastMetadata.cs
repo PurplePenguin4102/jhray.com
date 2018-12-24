@@ -27,9 +27,7 @@ namespace jhray.com.Models.GemMasterViewModels
         [Required]
         public int FeedId { get; set; }
 
-        [Required]
-        [DataType(DataType.Date)]
-        public DateTimeOffset PubDate { get; set; }
+        public DateTimeOffset PubDate { get; } = DateTimeOffset.Now;
 
         private ulong LengthInBytes { get; set; }
         private string Location { get; set; }

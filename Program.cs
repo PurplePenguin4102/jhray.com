@@ -19,7 +19,7 @@ namespace jhray.com
 
         public static IWebHost BuildWebHost(string[] args) =>
             WebHost.CreateDefaultBuilder(args)
-                .UseKestrel(options =>
+                .ConfigureKestrel(options =>
                 {
                     options.Limits.MaxRequestBodySize = 150_000 * 1024; // 150,000 kB = 150MB
                     options.Limits.KeepAliveTimeout = TimeSpan.FromMinutes(30);
