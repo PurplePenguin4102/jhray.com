@@ -37,7 +37,7 @@ namespace jhray.com.Engine
                 var podcastEntity = new Gem()
                 {
                     Title = podCast.Title,
-                    SummaryText = new String(podCast.Description.Take(250).ToArray()),
+                    SummaryText = new string(podCast.Description.Take(250).ToArray()),
                     GemType = GemType.Podcast,
 
                     CreatedById = currentUserId,

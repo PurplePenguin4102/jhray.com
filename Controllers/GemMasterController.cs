@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using jhray.com.Models.GemMasterViewModels;
@@ -196,35 +197,42 @@ namespace jhray.com.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPictureGem(PictureGemManagerViewModel gem)
         {
-            if (ModelState.IsValid && gem.PictureMetadata != null)
+            if (ModelState.IsValid && 
+                gem.PictureMetadata != null && 
+                gem.PictureMetadata.PictureFile.ContentType.StartsWith("image"))
             {
-                var pic = new Picture()
+                var gemDB = new Gem()
                 {
-                    GemData = new Gem()
+                    Title = gem.PictureMetadata.Title,
+                    CreatedBy = await _userManager.GetUserAsync(User),
+                    GemType = GemType.Picture,
+                    SummaryText = gem.PictureMetadata.SummaryText,
+                    PictureData = new Picture()
                     {
-                        Title = gem.PictureMetadata.Title,
-                        CreatedBy = await _userManager.GetUserAsync(User),
-                        GemType = GemType.Picture,
-                        SummaryText = gem.PictureMetadata.SummaryText
-                    },
-                    HoverText = gem.PictureMetadata.HoverText,
-                    ArtistName = gem.PictureMetadata.ArtistName,
-                    ArtistLink = gem.PictureMetadata.ArtistLink,
-                    CreatedDate = DateTime.Now,
-                    FileSize = gem.PictureMetadata.PictureFile.Length
+                        HoverText = gem.PictureMetadata.HoverText,
+                        ArtistName = gem.PictureMetadata.ArtistName,
+                        ArtistLink = gem.PictureMetadata.ArtistLink,
+                        CreatedDate = DateTime.Now,
+                        FileSize = gem.PictureMetadata.PictureFile.Length
+                    }
                 };
-                _context.Pictures.Add(pic);
+
+                _context.Gems.Add(gemDB);
                 _context.SaveChanges();
                 var filePath = _pathsOpt.Value.PicturesDirectory;
-                var fileFolder = Path.Combine(filePath, pic.Id.ToString());
-                var fileName = gem.PictureMetadata.PictureFile.Name;
+                var fileFolder = Path.Combine(filePath, gemDB.Id.ToString());
+                var fileName = gem.PictureMetadata.PictureFile.FileName;
+                var filetype = gem.PictureMetadata.PictureFile.ContentType;
                 var fullyQualified = Path.Combine(fileFolder, fileName);
                 Directory.CreateDirectory(fileFolder);
-                using (var stream = new FileStream(fileName, FileMode.CreateNew))
+                using (var stream = new FileStream(fullyQualified, FileMode.CreateNew))
                 {
                     await gem.PictureMetadata.PictureFile.CopyToAsync(stream);
                     stream.Flush();
                 }
+                gemDB.PictureData.Location = $"{_pathsOpt.Value.URLPath}/uploads/pictures/{gemDB.Id}/{fileName}";
+                gemDB.FilePath = fullyQualified;
+                _context.SaveChanges();
             }
             return RedirectToAction("PictureGemManager");
         }
@@ -242,12 +250,29 @@ namespace jhray.com.Controllers
         public IActionResult DeletePodcast(int id)
         {
             var podcast = _context.Podcasts.FirstOrDefault(p => p.Id == id);
+            _context.Entry(podcast).Reference(pod => pod.GemData).Load();
             if (podcast != null)
             {
                 _context.Podcasts.Remove(podcast);
                 _context.SaveChanges();
+                System.IO.File.Delete(podcast.GemData.FilePath);
             }
             return RedirectToAction("PodcastGemManager");
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        [HttpGet]
+        public IActionResult DeletePicture(int id)
+        {
+            var picture = _context.Pictures.FirstOrDefault(p => p.Id == id);
+            _context.Entry(picture).Reference(pic => pic.GemData).Load(); 
+            if (picture != null)
+            {
+                _context.Pictures.Remove(picture);
+                _context.SaveChanges();
+                System.IO.File.Delete(picture.GemData.FilePath);
+            }
+            return RedirectToAction("PictureGemManager");
         }
     }
 }

@@ -42,13 +42,12 @@
                     @for (int i = 0; i < Model.Gems.Count; i++)
                     {
                         var gem = Model.Gems[i] as jhray.com.Models.Gems.PodcastGem;
-                        var epNum = Model.Gems.Count - i;
                         <tr>
-                            <td>@epNum</td>
+                            <td>@gem.Id</td>
                             <td>@gem.AudioLink</td>
                             <td>@gem.Title</td>
                             <td>@gem.Text</td>
-                            <td><button class="btn-danger" onclick="doRemove('@epNum')">-</button></td>
+                            <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
                             <td>@gem.FeedId</td>
                         </tr>
 
@@ -104,6 +103,8 @@
     });
 
     function doRemove(Id) {
-        document.location.href = 'DeletePodcast/' + Id;
+        if (confirm("Are you sure you want to delete this? (no take-backs)")) {
+            document.location.href = 'DeletePodcast/' + Id;
+        }
     }
 </script>

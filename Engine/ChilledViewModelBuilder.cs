@@ -28,6 +28,7 @@ namespace jhray.com.Engine
                     context.Entry(pod).Reference(p => p.GemData).Load();
                     Gems.Add(new PodcastGem
                     {
+                        Id = pod.Id.ToString(),
                         AudioLink = pod.Location,
                         Title = pod.GemData.Title,
                         Text = pod.Description,
@@ -44,8 +45,10 @@ namespace jhray.com.Engine
             {
                 foreach (var pic in context.Pictures.OrderByDescending(p => p.CreatedDate))
                 {
+                    context.Entry(pic).Reference(p => p.GemData).Load();
                     Gems.Add(new PictureGem
                     {
+                        Id = pic.Id.ToString(),
                         Title = pic.GemData.Title,
                         Type = GetRandomGemType(),
                         PictureLink = pic.GemData.FilePath,
