@@ -30,11 +30,11 @@
                         <div class="gemContents">
                             @if (gem is PodcastGem)
                             {
-                                @Html.PartialAsync("PodcastGem", gem);
+                                @await Html.PartialAsync("PodcastGem", gem);
                             }
                             else
                             {
-                                @Html.PartialAsync("PictureGem", gem);
+                                @await Html.PartialAsync("PictureGem", gem);
                             }
 
                         </div>
