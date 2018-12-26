@@ -19,7 +19,6 @@
             </div>
             <div class="clearfix">
                 @{
-                    int colCount = 4;
                     var podCastGems = Model.Gems.Where(g => g is PodcastGem);
                     var pictureGems = Model.Gems.Where(g => g is PictureGem);
                 }
@@ -40,60 +39,28 @@
                         Hello this is a blog :^)
                     </div>
                     <div class="tab-pane fade" id="podcast" role="tabpanel" aria-labelledby="podcast-tab">
-                        @{ int it = 0; }
-                        @{ bool open = false; }
-                        @foreach (var gem in podCastGems)
-                        {
-                            if (it % colCount == 0)
+                        <div class="row">
+                            @foreach (var gem in podCastGems)
                             {
-                                @Html.Raw("<div class=\"row\">");
-                                open = true;
-                            }
-
-                            <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
-                                <div class="gemContents ">
-                                    @await Html.PartialAsync("PodcastGem", gem);
+                                <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                                    <div class="gemContents ">
+                                        @await Html.PartialAsync("PodcastGem", gem);
+                                    </div>
                                 </div>
-                            </div>
-                            if (it % colCount == colCount - 1)
-                            {
-                                @Html.Raw("</div>");
-                                open = false;
                             }
-                            it++;
-                        }
-                        @if (open)
-                        {
-                            @Html.Raw("</div>");
-                            open = false;
-                        }
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
-                        @{ it = 0; }
-                        @foreach (var gem in pictureGems)
-                        {
-                            if (it % colCount == 0)
+                        <div class="row">
+                            @foreach (var gem in pictureGems)
                             {
-                                @Html.Raw("<div class=\"row\">")
-                                open = true;
-                            }
-
-                            <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
-                                <div class="gemContents">
-                                    @await Html.PartialAsync("PictureGem", gem)
+                                <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                                    <div class="gemContents">
+                                        @await Html.PartialAsync("PictureGem", gem)
+                                    </div>
                                 </div>
-                            </div>
-                            if (it % colCount == colCount - 1)
-                            {
-                                @Html.Raw("</div>")
-                                open = false;
                             }
-                        }
-                        @if (open)
-                        {
-                            @Html.Raw("</div>");
-                            open = false;
-                        }
+                        </div>
                     </div>
                 </div>
             </div>
