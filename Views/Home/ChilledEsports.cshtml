@@ -36,45 +36,63 @@
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div class="tab-pane fade show active" id="blog" role="tabpanel" aria-labelledby="home-tab">
-
+                    <div class="tab-pane fade show active" id="blog" role="tabpanel" aria-labelledby="blog-tab">
+                        Hello this is a blog :^)
                     </div>
-                    <div class="tab-pane fade" id="podcast" role="tabpanel" aria-labelledby="profile-tab">
-                        @for (int i = 0; i < podCastGems.Count(); i++)
+                    <div class="tab-pane fade" id="podcast" role="tabpanel" aria-labelledby="podcast-tab">
+                        @{ int it = 0; }
+                        @{ bool open = false; }
+                        @foreach (var gem in podCastGems)
                         {
-                            if (i % colCount == 0)
+                            if (it % colCount == 0)
                             {
-                                @Html.Raw("<div class=\"row\">")
+                                @Html.Raw("<div class=\"row\">");
+                                open = true;
                             }
-                            var gem = Model.Gems[i];
+
                             <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
-                                <div class="gemContents">
+                                <div class="gemContents ">
                                     @await Html.PartialAsync("PodcastGem", gem);
                                 </div>
                             </div>
-                            if (i % colCount == colCount - 1)
+                            if (it % colCount == colCount - 1)
                             {
-                                @Html.Raw("</div>")
+                                @Html.Raw("</div>");
+                                open = false;
                             }
+                            it++;
+                        }
+                        @if (open)
+                        {
+                            @Html.Raw("</div>");
+                            open = false;
                         }
                     </div>
-                    <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="contact-tab">
-                        @for (int i = 0; i < pictureGems.Count(); i++)
+                    <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
+                        @{ it = 0; }
+                        @foreach (var gem in pictureGems)
                         {
-                            if (i % colCount == 0)
+                            if (it % colCount == 0)
                             {
                                 @Html.Raw("<div class=\"row\">")
+                                open = true;
                             }
-                            var gem = Model.Gems[i];
+
                             <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
                                 <div class="gemContents">
-                                    @await Html.PartialAsync("PictureGem", gem);
+                                    @await Html.PartialAsync("PictureGem", gem)
                                 </div>
                             </div>
-                            if (i % colCount == colCount - 1)
+                            if (it % colCount == colCount - 1)
                             {
                                 @Html.Raw("</div>")
+                                open = false;
                             }
+                        }
+                        @if (open)
+                        {
+                            @Html.Raw("</div>");
+                            open = false;
                         }
                     </div>
                 </div>

@@ -72,11 +72,6 @@ namespace jhray.com.Engine
             return true;
         }
 
-        public bool DeleteParticularEp(int epNum)
-        {   
-            return true;
-        }
-
         private Dictionary<string, string> _feedMeta;
 
         public string ReadFromFolderContents(ChilledDbContext context, int id)

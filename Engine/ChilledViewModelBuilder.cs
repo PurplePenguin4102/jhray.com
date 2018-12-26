@@ -51,7 +51,7 @@ namespace jhray.com.Engine
                         Id = pic.Id.ToString(),
                         Title = pic.GemData.Title,
                         Type = GetRandomGemType(),
-                        PictureLink = pic.GemData.FilePath,
+                        PictureLink = pic.Location,
                         ArtistSource = pic.ArtistLink,
                         ArtistName = pic.ArtistName
                     });

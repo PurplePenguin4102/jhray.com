@@ -230,7 +230,7 @@ namespace jhray.com.Controllers
                     await gem.PictureMetadata.PictureFile.CopyToAsync(stream);
                     stream.Flush();
                 }
-                gemDB.PictureData.Location = $"{_pathsOpt.Value.URLPath}/uploads/pictures/{gemDB.Id}/{fileName}";
+                gemDB.PictureData.Location = $"//{_pathsOpt.Value.URLPath}/uploads/pictures/{gemDB.Id}/{fileName}";
                 gemDB.FilePath = fullyQualified;
                 _context.SaveChanges();
             }
