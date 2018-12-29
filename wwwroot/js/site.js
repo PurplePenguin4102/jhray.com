@@ -12,10 +12,10 @@ function inspire() {
 	}
 		
 	flip = !flip;
-	text.css({
-		transform: "rotatex" + "(" + flop + "deg)",
-		"transition": "all 0.2s ease-out",
-	})
+    text.css({
+        transform: "rotatex" + "(" + flop + "deg)",
+        "transition": "all 0.2s ease-out"
+    });
 	if (!flip) {
 		setTimeout(function () {
 			text.html(inspirations[randomInt]);
@@ -24,6 +24,25 @@ function inspire() {
 }
 
 function expando(endpoint, id) {
-    console.log(endpoint);
-    console.log(id);
+    var website = "/home/podcast/" + id;
+    $.getJSON(website, function (data) {
+        var items = [];
+        $.each(data, function (key, val) {
+            items.push("" + key + ":" + val);
+        });
+        $("#lightbox_bkg").css({
+            "display": "block"
+        });
+        $("#lightbox_bkg").click(function () {
+            $("#lightbox_bkg").css({
+                "display": "none"
+            });
+        });
+        $("#gem_full_title").text(data["Title"]);
+        $("#gem_full_contents").text(data["Text"]);
+        var audio = $("#gemAudioBig");  
+        $("#gem_full_audio_src").attr("src", data["AudioLink"]);
+        audio[0].pause();
+        audio[0].load();
+    });
 }

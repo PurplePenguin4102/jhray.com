@@ -4,10 +4,15 @@
     ViewData["Title"] = "ChilledEsports";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="lightbox_bkg">
+<div id="lightbox_bkg">
     <div class="gem_big">
-        <div class="gem_full_contents">
-
+        <div>
+            <h2 id="gem_full_title"></h2>
+            <audio id="gemAudioBig" controls>
+                <source id="gem_full_audio_src" src="" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+            <p id="gem_full_contents"></p>
         </div>
     </div>
 </div>
@@ -15,7 +20,7 @@
     <div class="container body-content">
         <div class="chilledBackground">
             <div class="GemTitle">
-                <h2>Chilled E-Sports <a href="http://jhray.com/home/getrssfeed"><img id="feedIcon" src="~/images/feed-icon.svg" /></a></h2>
+                <h2>Chilled E-Sports <a href="/home/getrssfeed"><img id="feedIcon" src="~/images/feed-icon.svg" /></a></h2>
             </div>
             <div class="clearfix">
                 @{
@@ -43,8 +48,8 @@
                             @foreach (var gem in podCastGems)
                             {
                                 <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
-                                    <div class="gemContents ">
-                                        @await Html.PartialAsync("PodcastGem", gem);
+                                    <div id="podcast_@gem.Id" class="gemContents ">
+                                        @await Html.PartialAsync("PodcastGem", gem)
                                     </div>
                                 </div>
                             }

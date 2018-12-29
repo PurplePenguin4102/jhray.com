@@ -9,6 +9,7 @@ using jhray.com.Engine;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
 using jhray.com.Database;
+using jhray.com.Models.Gems;
 
 namespace jhray.com.Controllers
 {
@@ -50,6 +51,27 @@ namespace jhray.com.Controllers
             ViewData["Message"] = "Contact your dreams.";
 
             return View();
+        }
+
+        public IActionResult Podcast(int Id)
+        {
+            var pod = _context.Podcasts.FirstOrDefault(p => p.Id == Id);
+            var retval = Content("", "application/json");
+            if (pod != null)
+            {
+                _context.Entry(pod).Reference(p => p.GemData).Load();
+                var gem = new PodcastGem
+                {
+                    Id = pod.Id.ToString(),
+                    AudioLink = pod.Location,
+                    Title = pod.GemData.Title,
+                    Text = pod.Description,
+                    Type = GemType.blueGem,
+                    FeedId = pod.FeedId
+                };
+                retval = Content(Newtonsoft.Json.JsonConvert.SerializeObject(gem), "application/json");
+            }
+            return retval;
         }
 
         public IActionResult Error()

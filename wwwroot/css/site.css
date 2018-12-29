@@ -127,7 +127,7 @@
     background: url("/static/diamond.png");
 }
 
-.lightbox_bkg {
+#lightbox_bkg {
     height: 100%;
     width: 100%;
     position: fixed;
@@ -144,14 +144,9 @@
     top: 10vh;
     left: 30vw;
     z-index: 910;
-    height: 80vh;
     width: 40vw;
     background-size: 100% 100%;
     border-radius:20px;
-}
-
-.gem_full_contents {
-
 }
 
 .gemHeader {
@@ -159,7 +154,7 @@
     text-align:center;
 }
 
-.gemAudio {
+.gemAudio, #gemAudioBig {
     width: 100%;
     margin: 10px 0px;
     border-radius: 80px;
@@ -190,6 +185,13 @@
     height: 280px;
 }
 
+#gem_full_title {
+    text-align: center;
+}
+
+#gem_full_contents {
+    padding: 16px;
+}
 
 .chilledBackground {
     background-color:cornsilk;
