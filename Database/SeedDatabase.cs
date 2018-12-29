@@ -67,6 +67,7 @@ namespace jhray.com.Database
                 context.SaveChanges();
             }
             var header1 = context.RSSHeaders.FirstOrDefault(rss => rss.RSSNumber == 1);
+            if (header1 == null)
             {
                 var _feedMeta1 = GetLinesOfMetadata(Path.Combine(paths.PodcastDbDirectory, $"Metadata_1.txt"));
                 var meta1 = new RSSHeader()
