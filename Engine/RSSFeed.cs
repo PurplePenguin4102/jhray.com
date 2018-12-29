@@ -72,11 +72,15 @@ namespace jhray.com.Engine
             return true;
         }
 
-        private Dictionary<string, string> _feedMeta;
+        private RSSHeader _feedMeta;
 
         public string ReadFromFolderContents(ChilledDbContext context, int id)
         {
-            _feedMeta = GetLinesOfMetadata(Path.Combine(podcastDbDirectory, $"Metadata_{id}.txt"));
+            _feedMeta = context.RSSHeaders.FirstOrDefault(rss => rss.RSSNumber == id);
+            if (_feedMeta == null)
+            {
+                return "";
+            }
             var feedBuilder = new MemoryStream();
             
             using (var xml = XmlWriter.Create(feedBuilder, new XmlWriterSettings() { Encoding = Encoding.UTF8}))
@@ -114,55 +118,55 @@ namespace jhray.com.Engine
         private void WriteChannelHeader(XmlWriter xml)
         {
             xml.WriteStartElement("channel");
-            xml.WriteElementString("link", _feedMeta["channellink"]);
+            xml.WriteElementString("link", _feedMeta.ChannelLink);
             xml.WriteElementString("language", "en-us");
             xml.WriteElementString("copyright", "&#169; 2018");
-            xml.WriteElementString("webMaster", _feedMeta["webmaster"]);
-            xml.WriteElementString("managingEditor", _feedMeta["managingeditor"]);
+            xml.WriteElementString("webMaster", _feedMeta.WebMaster);
+            xml.WriteElementString("managingEditor", _feedMeta.ManagingEditor);
         }
 
         private void WriteLogo(XmlWriter xml)
         {
             xml.WriteStartElement("image");
-            xml.WriteElementString("url", _feedMeta["logourl"]);
-            xml.WriteElementString("title", _feedMeta["logotitle"]);
-            xml.WriteElementString("link", _feedMeta["logolink"]);
+            xml.WriteElementString("url", _feedMeta.LogoUrl);
+            xml.WriteElementString("title", _feedMeta.LogoTitle);
+            xml.WriteElementString("link", _feedMeta.LogoLink);
             xml.WriteEndElement();
         }
 
         private void WriteItunesStuff(XmlWriter xml)
         {
             xml.WriteStartElement("itunes", "owner", null);
-            xml.WriteElementString("itunes", "name", null, _feedMeta["itunesname"]);
-            xml.WriteElementString("itunes", "email", null, _feedMeta["itunesemail"]);
+            xml.WriteElementString("itunes", "name", null, _feedMeta.ITunesName);
+            xml.WriteElementString("itunes", "email", null, _feedMeta.ITunesEmail);
             xml.WriteEndElement();
 
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", _feedMeta["itunescategory"]);
+            xml.WriteAttributeString("text", _feedMeta.ITunesCategory);
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", _feedMeta["itunessubcategory"]);
+            xml.WriteAttributeString("text", _feedMeta.ITunesSubCategory);
             xml.WriteEndElement();
             xml.WriteEndElement();
 
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", _feedMeta["itunescategory2"]);
+            xml.WriteAttributeString("text", _feedMeta.ITunesCategory2);
             xml.WriteStartElement("itunes", "category", null);
-            xml.WriteAttributeString("text", _feedMeta["itunessubcategory2"]);
+            xml.WriteAttributeString("text", _feedMeta.ITunesSubCategory2);
             xml.WriteEndElement();
             xml.WriteEndElement();
 
-            xml.WriteElementString("itunes", "keywords", null, _feedMeta["ituneskeywords"]);
-            xml.WriteElementString("itunes", "explicit", null, _feedMeta["itunesexplicit"]);
+            xml.WriteElementString("itunes", "keywords", null, _feedMeta.ITunesKeywords);
+            xml.WriteElementString("itunes", "explicit", null, _feedMeta.ITunesExplicit);
 
             xml.WriteStartElement("itunes", "image", null);
-            xml.WriteAttributeString("href", _feedMeta["itunesimage"]);
+            xml.WriteAttributeString("href", _feedMeta.ITunesImage);
             xml.WriteEndElement();
         }
 
         private void WriteAtomFeedInfo(XmlWriter xml)
         {
             xml.WriteStartElement("atom", "link", null);
-            xml.WriteAttributeString("href", _feedMeta["atomlink"]);
+            xml.WriteAttributeString("href", _feedMeta.AtomLink);
             xml.WriteAttributeString("rel", "self");
             xml.WriteAttributeString("type", "application/rss+xml");
             xml.WriteEndElement();
@@ -170,13 +174,13 @@ namespace jhray.com.Engine
 
         private void WritePodcastHeader(XmlWriter xml)
         {
-            xml.WriteElementString("pubDate", _feedMeta["pubdate"]);
-            xml.WriteElementString("title", _feedMeta["title"]);
-            xml.WriteElementString("itunes", "author", null, _feedMeta["author"]);
-            xml.WriteElementString("description", _feedMeta["description"]);
-            xml.WriteElementString("itunes", "summary", null, _feedMeta["description"]);
-            xml.WriteElementString("itunes", "subtitle", null, _feedMeta["subtitle"]);
-            xml.WriteElementString("lastBuildDate", _feedMeta["lastbuilddate"]);
+            xml.WriteElementString("pubDate", _feedMeta.PubDate);
+            xml.WriteElementString("title", _feedMeta.Title);
+            xml.WriteElementString("itunes", "author", null, _feedMeta.Author);
+            xml.WriteElementString("description", _feedMeta.Description);
+            xml.WriteElementString("itunes", "summary", null, _feedMeta.Description);
+            xml.WriteElementString("itunes", "subtitle", null, _feedMeta.Subtitle);
+            xml.WriteElementString("lastBuildDate", _feedMeta.LastBuildDate);
         }
 
         private void WritePodcast(XmlWriter xml, Podcast podcast)

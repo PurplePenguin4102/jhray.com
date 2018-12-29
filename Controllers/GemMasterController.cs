@@ -239,9 +239,10 @@ namespace jhray.com.Controllers
 
         [Authorize(Roles = "SuperGenius")]
         [HttpGet]
-        public async Task<IActionResult> SeedDB()
+        public IActionResult SeedDB()
         {
-            await SeedDatabase.Go(_context, _pathsOpt.Value, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+            //await SeedDatabase.Go(_context, _pathsOpt.Value, _userManager, _roleManager, "joseph.h.ray@gmail.com");
+            SeedDatabase.FillOutPodcastMeta(_context, _pathsOpt.Value);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 

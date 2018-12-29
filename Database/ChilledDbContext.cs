@@ -17,6 +17,7 @@ namespace jhray.com.Database
 
         }
 
+        public DbSet<RSSHeader> RSSHeaders { get; set; }
         public DbSet<Gem> Gems { get; set; }
         public DbSet<Podcast> Podcasts { get; set; }
         public DbSet<Picture> Pictures { get; set; }

@@ -154,9 +154,15 @@
     text-align:center;
 }
 
-.gemAudio, #gemAudioBig {
+.gemAudio {
     width: 100%;
     margin: 10px 0px;
+    border-radius: 80px;
+}
+
+#gemAudioBig {
+    width: 30%;
+    margin-left: 37%;
     border-radius: 80px;
 }
 
