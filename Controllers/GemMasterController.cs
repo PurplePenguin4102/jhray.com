@@ -17,7 +17,6 @@ using System.Threading;
 using jhray.com.Engine;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
-using System.IO;
 
 namespace jhray.com.Controllers
 {
