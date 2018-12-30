@@ -1,0 +1,43 @@
+﻿@using jhray.com.Models.Gems
+@model ChilledViewModel
+@{
+    ViewData["Title"] = "YowiePowerHour";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div id="lightbox_bkg">
+    <div class="gem_big">
+        <div>
+            <h2 id="gem_full_title"></h2>
+            <audio id="gemAudioBig" controls>
+                <source id="gem_full_audio_src" src="" type="audio/mpeg" />
+                Your browser does not support the audio element.
+            </audio>
+            <p id="gem_full_contents"></p>
+        </div>
+    </div>
+</div>
+<div style="height:100%; width:100%; min-height:100vh; background-attachment: fixed; background-image: linear-gradient(to right, #121212 , #121212, #606060, #121212, #121212);">
+    <div class="container body-content">
+        <div class="yowie_background">
+            <div class="GemTitle">
+                <h2>Yowie Power Hour <a href="/home/getrssfeed/1"><img id="feedIcon" src="~/images/feed-icon.svg" /></a></h2>
+            </div>
+            <div class="clearfix">
+                @{
+                    var podCastGems = Model.Gems.Where(g => g is PodcastGem);
+                    var pictureGems = Model.Gems.Where(g => g is PictureGem);
+                }
+                <div class="row">
+                    @foreach (var gem in podCastGems)
+                    {
+                        <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                            <div id="podcast_@gem.Id" class="gemContents ">
+                                @await Html.PartialAsync("PodcastGem", gem)
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

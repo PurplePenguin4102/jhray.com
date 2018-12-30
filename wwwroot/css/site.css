@@ -206,6 +206,14 @@
     padding: 20px
 }
 
+.yowie_background {
+    color: #a3a3a3;
+    background-color: #303030;
+    opacity: 0.90;
+    margin-top: 50px;
+    padding: 20px
+}
+
 .unselectable {
     -webkit-touch-callout: none;
     -webkit-user-select: none;

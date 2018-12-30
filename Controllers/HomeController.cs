@@ -40,6 +40,15 @@ namespace jhray.com.Controllers
             return View(vm);
         }
 
+        public IActionResult YowiePowerHour()
+        {
+            var vm = new ChilledViewModelBuilder()
+                .Configure
+                .AddPodcastToGemList(_context, 1)
+                .Build<ChilledViewModel>();
+            return View(vm);
+        }
+
         public IActionResult GetRssFeed(int id)
         {
             var feed = new RSSFeed(_pathsOpt.Value).ReadFromFolderContents(_context, id);

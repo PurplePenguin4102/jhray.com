@@ -26,23 +26,18 @@ function inspire() {
 function expando(endpoint, id) {
     var website = "/home/podcast/" + id;
     $.getJSON(website, function (data) {
-        var items = [];
-        $.each(data, function (key, val) {
-            items.push("" + key + ":" + val);
-        });
-        $("#lightbox_bkg").css({
-            "display": "block"
-        });
-        $("#lightbox_bkg").click(function () {
-            $("#lightbox_bkg").css({
-                "display": "none"
-            });
-        });
+        $("#lightbox_bkg").show();
         $("#gem_full_title").text(data["Title"]);
         $("#gem_full_contents").text(data["Text"]);
-        var audio = $("#gemAudioBig");  
         $("#gem_full_audio_src").attr("src", data["AudioLink"]);
+        var audio = $("#gemAudioBig");  
         audio[0].pause();
         audio[0].load();
     });
 }
+
+$(function () {
+    $("#lightbox_bkg").click(function () {
+        $("#lightbox_bkg").hide();
+    });
+});
