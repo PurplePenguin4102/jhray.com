@@ -16,26 +16,31 @@
         </div>
     </div>
 </div>
-<div style="height:100%; width:100%; min-height:100vh; background-attachment: fixed; background-image: linear-gradient(to right, #121212 , #121212, #606060, #121212, #121212);">
-    <div class="container body-content">
-        <div class="yowie_background">
-            <div class="GemTitle">
-                <h2>Yowie Power Hour <a href="/home/getrssfeed/1"><img id="feedIcon" src="~/images/feed-icon.svg" /></a></h2>
-            </div>
-            <div class="clearfix">
-                @{
-                    var podCastGems = Model.Gems.Where(g => g is PodcastGem);
-                    var pictureGems = Model.Gems.Where(g => g is PictureGem);
-                }
-                <div class="row">
-                    @foreach (var gem in podCastGems)
-                    {
-                        <div class="gemItem col-md-3 col-sm-6 col-xs-12">
-                            <div id="podcast_@gem.Id" class="gemContents ">
-                                @await Html.PartialAsync("PodcastGem", gem)
-                            </div>
-                        </div>
+
+<div style="background:url(http://jhray.com/static/BrickOldDirty0076_1_600.jpg);">
+    <div style="height:100%; width:100%; min-height:100vh; background-attachment: fixed; background-image: linear-gradient(to right, #121212CC , #121212, #606060, #121212, #121212CC);">
+        <div class="container body-content">
+            <div class="yowie_background">
+                <a href="/home/getrssfeed/1"><img src="http://jhray.com/static/yph.png" style="width:100%" /></a>
+                <div class="clearfix">
+                    @{
+                        var podCastGems = Model.Gems.Where(g => g is PodcastGem);
+                        var pictureGems = Model.Gems.Where(g => g is PictureGem);
                     }
+                    <div style="width:66%;">
+                        @foreach (var igem in podCastGems)
+                        {
+                            var gem = igem as PodcastGem;
+                            <div id="podcast_@gem.Id">
+                                <h3 class="gemHeader Podcast">@gem.Title</h3>
+                                <audio class="gemAudio" style="width:30%; margin-left:35%;" controls>
+                                    <source src="@gem.AudioLink" type="audio/mpeg" />
+                                    Your browser does not support the audio element.
+                                </audio>
+                                <p class="gemText">@gem.Text</p>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
         </div>
