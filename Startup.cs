@@ -156,6 +156,10 @@ namespace jhray.com
                     template: "chilled",
                     defaults: new { controller = "Home", action = "ChilledESports" });
                 routes.MapRoute(
+                    name: "yph",
+                    template: "yowies",
+                    defaults: new { controller = "Home", action = "YowiePowerHour" });
+                routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
