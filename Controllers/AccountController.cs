@@ -32,12 +32,6 @@ namespace jhray.com.Controllers
         }
 
         [AllowAnonymous]
-        public IActionResult Unauthorized()
-        {
-            return View();
-        }
-
-        [AllowAnonymous]
         public IActionResult Forbidden()
         {
             return View();
