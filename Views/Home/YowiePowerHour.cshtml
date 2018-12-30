@@ -30,7 +30,7 @@
                 <div class="row">
                     @foreach (var gem in podCastGems)
                     {
-                        <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                        <div class="gemItem col-md-3 col-sm-6 col-xs-12">
                             <div id="podcast_@gem.Id" class="gemContents ">
                                 @await Html.PartialAsync("PodcastGem", gem)
                             </div>
