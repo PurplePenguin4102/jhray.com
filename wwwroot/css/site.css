@@ -96,35 +96,35 @@
 }
 
 .greenGem {
-    background: url("/static/emerald.png") ;
+    background: url("//jhray.com/static/emerald.png");
 }
 
 .redGem {
-    background: url("/static/ruby.png");
+    background: url("//jhray.com/static/ruby.png");
 }
 
 .yellowGem {
-    background: url("/static/topaz.png");
+    background: url("//jhray.com/static/topaz.png");
 }
 
 .orangeGem {
-    background: url("/static/citrine.png");
+    background: url("//jhray.com/static/citrine.png");
 }
 
 .blueGem {
-    background: url("/static/sapphire.png");
+    background: url("//jhray.com/static/sapphire.png");
 }
 
 .blackGem {
-    background: url("/static/agate.png");
+    background: url("//jhray.com/static/agate.png");
 }
 
 .purpleGem {
-    background: url("/static/amethyst.png");
+    background: url("//jhray.com/static/amethyst.png");
 }
 
 .diamondGem {
-    background: url("/static/diamond.png");
+    background: url("//jhray.com/static/diamond.png");
 }
 
 #lightbox_bkg {

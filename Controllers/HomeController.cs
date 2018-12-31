@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
@@ -42,6 +43,10 @@ namespace jhray.com.Controllers
 
         public IActionResult YowiePowerHour()
         {
+            //using (var client = new HttpClient())
+            //{
+            //    var resp = await client.GetAsync("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2");
+            //}
             var vm = new ChilledViewModelBuilder()
                 .Configure
                 .AddPodcastToGemList(_context, 1)

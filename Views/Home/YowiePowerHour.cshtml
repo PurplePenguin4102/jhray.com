@@ -4,43 +4,35 @@
     ViewData["Title"] = "YowiePowerHour";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div id="lightbox_bkg">
-    <div class="gem_big">
-        <div>
-            <h2 id="gem_full_title"></h2>
-            <audio id="gemAudioBig" controls>
-                <source id="gem_full_audio_src" src="" type="audio/mpeg" />
-                Your browser does not support the audio element.
-            </audio>
-            <p id="gem_full_contents"></p>
-        </div>
-    </div>
-</div>
-
-<div style="background:url(http://jhray.com/static/BrickOldDirty0076_1_600.jpg);">
+<div style="background:url(//jhray.com/static/BrickOldDirty0076_1_600.jpg);">
     <div style="height:100%; width:100%; min-height:100vh; background-attachment: fixed; background-image: linear-gradient(to right, #121212CC , #121212, #606060, #121212, #121212CC);">
         <div class="container body-content">
             <div class="yowie_background">
-                <a href="/home/getrssfeed/1"><img src="http://jhray.com/static/yph.png" style="width:100%" /></a>
+                <a href="/home/getrssfeed/1"><img src="//jhray.com/static/yph.png" style="width:100%" /></a>
                 <div class="clearfix">
                     @{
                         var podCastGems = Model.Gems.Where(g => g is PodcastGem);
                         var pictureGems = Model.Gems.Where(g => g is PictureGem);
                     }
-                    <div style="width:66%;">
-                        @foreach (var igem in podCastGems)
-                        {
-                            var gem = igem as PodcastGem;
-                            <div id="podcast_@gem.Id">
-                                <h3 class="gemHeader Podcast">@gem.Title</h3>
-                                <audio class="gemAudio" style="width:30%; margin-left:35%;" controls>
-                                    <source src="@gem.AudioLink" type="audio/mpeg" />
-                                    Your browser does not support the audio element.
-                                </audio>
-                                <p class="gemText">@gem.Text</p>
-                            </div>
-                            <hr/>
-                        }
+                    <div class="row">
+                        <div class="col-sm-8">
+                            @foreach (var igem in podCastGems)
+                            {
+                                var gem = igem as PodcastGem;
+                                <div id="podcast_@gem.Id">
+                                    <h3 class="gemHeader Podcast">@gem.Title</h3>
+                                    <audio class="gemAudio" style="width:30%; margin-left:35%;" controls>
+                                        <source src="@gem.AudioLink" type="audio/mpeg" />
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <p class="gemText">@gem.Text</p>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                        <div class="col-sm-4">
+                            
+                        </div>
                     </div>
                 </div>
             </div>
