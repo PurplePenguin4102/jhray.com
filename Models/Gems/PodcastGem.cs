@@ -7,7 +7,21 @@ namespace jhray.com.Models.Gems
 {
     public class PodcastGem : IGem
     {
-        public string AudioLink { get; set; }
+        private string _audioLink;
+        public string AudioLink
+        {
+            get
+            {
+                return _audioLink.StartsWith("http://") ? _audioLink.Substring(5) : _audioLink;
+            }
+            set
+            {
+                if (_audioLink != value)
+                {
+                    _audioLink = value;
+                }
+            }
+        }
         public string Title { get; set; }
         public string Text { get; set; }
         public string DisplayText => Text.Substring(0, Math.Min(180, Text.Length));
