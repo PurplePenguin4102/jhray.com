@@ -44,7 +44,7 @@
                         <div class="row">
                             @foreach (var gem in podCastGems)
                             {
-                                <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                                <div class="@gem.Type.ToString() gemItem col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <div id="podcast_@gem.Id" class="gemContents ">
                                         @await Html.PartialAsync("PodcastGem", gem)
                                     </div>
@@ -59,7 +59,7 @@
                         <div class="row">
                             @foreach (var gem in pictureGems)
                             {
-                                <div class="@gem.Type.ToString() gemItem col-md-3 col-sm-6 col-xs-12">
+                                <div class="@gem.Type.ToString() gemItem col-lg-3 col-md-4 col-sm-6 col-xs-12">
                                     <div class="gemContents">
                                         @await Html.PartialAsync("PictureGem", gem)
                                     </div>

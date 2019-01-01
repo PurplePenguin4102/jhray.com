@@ -18,7 +18,7 @@ namespace jhray.com.Models.Gems
             {
                 if (_audioLink != value)
                 {
-                    _audioLink = value;
+                    _audioLink = value.StartsWith("http://") ? value.Substring(5) : value;
                 }
             }
         }
