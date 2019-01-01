@@ -1,16 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
 using jhray.com.Engine;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Owin.Security.OAuth;
 using jhray.com.Database;
 using jhray.com.Models.Gems;
+using System.Net.Http.Headers;
 
 namespace jhray.com.Controllers
 {
@@ -41,17 +45,38 @@ namespace jhray.com.Controllers
             return View(vm);
         }
 
-        public IActionResult YowiePowerHour()
+        public async Task<IActionResult> YowiePowerHour()
         {
-            //using (var client = new HttpClient())
-            //{
-            //    var resp = await client.GetAsync("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2");
-            //}
+            using (var client = new HttpClient())
+            {
+                //var token = await GetBase64EncodedCredential();
+
+                //client.BaseAddress = new Uri("https://api.twitter.com");
+                //client.DefaultRequestHeaders.UserAgent.Add(new ProductInfoHeaderValue(new ProductHeaderValue("JHRaySync", "1.0")));
+                //client.DefaultRequestHeaders.AcceptEncoding.Add(new StringWithQualityHeaderValue("gzip"));
+                //client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Basic", token);
+                //var httpRequest = new HttpRequestMessage(HttpMethod.Post, "/oauth2/token");
+                //httpRequest.Content = new FormUrlEncodedContent(new Dictionary<string, string> { { "grant_type", "client_credentials" } });
+                //var authResponse = await client.SendAsync(httpRequest);
+                
+                //var resp = await client.GetAsync("https://api.twitter.com/1.1/statuses/user_timeline.json?screen_name=twitterapi&count=2");
+            }
             var vm = new ChilledViewModelBuilder()
                 .Configure
                 .AddPodcastToGemList(_context, 1)
                 .Build<ChilledViewModel>();
             return View(vm);
+        }
+
+        public async Task<string> GetBase64EncodedCredential()
+        {
+            var keyFile = await System.IO.File.ReadAllLinesAsync(_pathsOpt.Value.CredsDirectory + "AccessKey.txt");
+            var accessToken = keyFile[0];
+            var accessTokenSecret = keyFile[1];
+            var consumerKey = Uri.EscapeUriString(keyFile[2]);
+            var consumerSecret = Uri.EscapeUriString(keyFile[3]);
+            var fullConsumerToken = consumerKey + ":" + consumerSecret;
+            return Convert.ToBase64String(Encoding.UTF8.GetBytes(fullConsumerToken));
         }
 
         public IActionResult GetRssFeed(int id)
