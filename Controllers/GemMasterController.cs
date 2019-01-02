@@ -151,21 +151,19 @@ namespace jhray.com.Controllers
         [Authorize(Roles = "RegularGenius")]
         public IActionResult PodcastGemManager()
         {
-            var vm = new ChilledViewModelBuilder()
+            return View(new ChilledViewModelBuilder()
                 .Configure
                 .AddPodcastToGemList(_context)
-                .Build<PodcastGemManagerViewModel>();
-            return View(vm);
+                .Build<PodcastGemManagerViewModel>());
         }
 
         [Authorize(Roles = "RegularGenius")]
         public IActionResult PictureGemManager()
         {
-            var vm = new ChilledViewModelBuilder()
+            return View(new ChilledViewModelBuilder()
                 .Configure
                 .AddPicturesToGemList(_context)
-                .Build<PictureGemManagerViewModel>();
-            return View(vm);
+                .Build<PictureGemManagerViewModel>());
         }
 
         [Authorize(Roles = "RegularGenius")]
@@ -273,6 +271,32 @@ namespace jhray.com.Controllers
                 System.IO.File.Delete(picture.GemData.FilePath);
             }
             return RedirectToAction("PictureGemManager");
+        }
+
+        [Authorize(Roles = "SuperGenius")]
+        [HttpGet]
+        public IActionResult AddPodcast()
+        {
+            return View(new AddPodcastViewModel
+            {
+                RSSHeaders = _context.RSSHeaders.ToList()
+            });
+        }
+
+        [Authorize(Roles = "SuperGenius")]
+        [HttpPost]
+        public IActionResult AddPodcast(AddPodcastViewModel vm)
+        {
+            if (ModelState.IsValid)
+            {
+                var newHeader = vm.NewHeader;
+                _context.RSSHeaders.Add(newHeader);
+                _context.SaveChanges();
+            }
+            return View(new AddPodcastViewModel
+            {
+                RSSHeaders = _context.RSSHeaders.ToList()
+            });
         }
     }
 }

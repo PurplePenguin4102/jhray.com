@@ -1,0 +1,194 @@
+﻿@model jhray.com.Models.GemMasterViewModels.AddPodcastViewModel;
+@{
+    ViewData["Title"] = "PictureGemManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="body-content">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="new-tab" data-toggle="tab" href="#new" role="tab" aria-controls="new" aria-selected="false">New</a>
+        </li>
+        @foreach (var header in Model.RSSHeaders)
+        {
+            <li class="nav-item">
+                <a class="nav-link" id="@header.Title.Replace(" ", "_")-tab" data-toggle="tab" href="#@header.Title.Replace(" ", "_")" role="tab" aria-controls="@header.Title.Replace(" ", "_")" aria-selected="true">@header.Title</a>
+            </li>
+        }
+    </ul>
+    <div class="tab-content" id="myTabContent">
+        <div class="tab-pane fade active in" id="new" role="tabpanel" aria-labelledby="new-tab">
+            @using (Html.BeginForm("AddPodcast", "GemMaster", FormMethod.Post))
+            {
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.RSSNumber, "RSS Number", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.RSSNumber, new { @class = "form-control col-form-label" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ChannelLink, "Channel Link", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ChannelLink, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.WebMaster, "Web Master", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.WebMaster, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ManagingEditor, "Managing Editor", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ManagingEditor, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.LogoTitle, "Logo Title", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.LogoTitle, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.LogoUrl, "Logo Url", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.LogoUrl, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.LogoLink, "Logo Link", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.LogoLink, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesName, "ITunes Name", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesName, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesEmail, "ITunes Email", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesEmail, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesCategory, "ITunes Category", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesCategory, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesSubCategory, "ITunes SubCategory", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesSubCategory, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesCategory2, "ITunes Category2", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesCategory2, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesSubCategory2, "ITunes SubCategory2", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesSubCategory2, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesKeywords, "ITunes Keywords", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesKeywords, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesExplicit, "ITunes Explicit", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesExplicit, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.ITunesImage, "ITunes Image", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.ITunesImage, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.AtomLink, "Atom Link", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.AtomLink, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.PubDate, "Pub Date", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.PubDate, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Title, "Title", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Author, "Author", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Description, "Description", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.Subtitle, "Subtitle", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.Subtitle, new { @class = "form-control" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    @Html.LabelFor(m => m.LastBuildDate, "Last Build Date", new { @class = "col-sm-2 col-form-label" })
+                    <div class="col-sm-10">
+                        @Html.TextBoxFor(m => m.LastBuildDate, new { @class = "form-control" })
+                    </div>
+                </div>
+                <input type="submit" class="btn-block loginButton" value="Craft!" />
+            }
+        </div>
+        @foreach (var h in Model.RSSHeaders)
+        {
+        <div class="tab-pane fade" id="@h.Title.Replace(" ", "_")" role="tabpanel" aria-labelledby="@h.Title.Replace(" ", "_")-tab">
+            <p>AtomLink : @h.AtomLink</p>
+            <p>Author : @h.Author</p>
+            <p>ChannelLink : @h.ChannelLink</p>
+            <p>Description : @h.Description</p>
+            <p>Id : @h.Id</p>
+            <p>ITunesCategory : @h.ITunesCategory</p>
+            <p>ITunesCategory2 : @h.ITunesCategory2</p>
+            <p>ITunesEmail : @h.ITunesEmail</p>
+            <p>ITunesExplicit : @h.ITunesExplicit</p>
+            <p>ITunesImage : @h.ITunesImage</p>
+            <p>ITunesKeywords : @h.ITunesKeywords</p>
+            <p>ITunesName : @h.ITunesName</p>
+            <p>ITunesSubCategory : @h.ITunesSubCategory</p>
+            <p>ITunesSubCategory2 : @h.ITunesSubCategory2</p>
+            <p>LastBuildDate : @h.LastBuildDate</p>
+            <p>LogoLink : @h.LogoLink</p>
+            <p>LogoTitle : @h.LogoTitle</p>
+            <p>LogoUrl : @h.LogoUrl</p>
+            <p>ManagingEditor : @h.ManagingEditor</p>
+            <p>PubDate : @h.PubDate</p>
+            <p>RSSNumber : @h.RSSNumber</p>
+            <p>Subtitle : @h.Subtitle</p>
+            <p>Title : @h.Title</p>
+            <p>WebMaster : @h.WebMaster</p>
+        </div>
+        }
+    </div>
+</div>
