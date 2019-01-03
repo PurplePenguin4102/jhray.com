@@ -11,7 +11,6 @@ using jhray.com.Models;
 using jhray.com.Engine;
 using Microsoft.Extensions.Options;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.Owin.Security.OAuth;
 using jhray.com.Database;
 using jhray.com.Models.Gems;
 using System.Net.Http.Headers;

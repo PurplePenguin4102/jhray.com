@@ -20,144 +20,29 @@
         <div class="tab-pane fade active in" id="new" role="tabpanel" aria-labelledby="new-tab">
             @using (Html.BeginForm("AddPodcast", "GemMaster", FormMethod.Post))
             {
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.RSSNumber, "RSS Number", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.RSSNumber, new { @class = "form-control col-form-label" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ChannelLink, "Channel Link", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ChannelLink, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.WebMaster, "Web Master", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.WebMaster, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ManagingEditor, "Managing Editor", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ManagingEditor, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.LogoTitle, "Logo Title", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.LogoTitle, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.LogoUrl, "Logo Url", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.LogoUrl, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.LogoLink, "Logo Link", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.LogoLink, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesName, "ITunes Name", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesName, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesEmail, "ITunes Email", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesEmail, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesCategory, "ITunes Category", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesCategory, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesSubCategory, "ITunes SubCategory", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesSubCategory, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesCategory2, "ITunes Category2", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesCategory2, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesSubCategory2, "ITunes SubCategory2", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesSubCategory2, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesKeywords, "ITunes Keywords", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesKeywords, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesExplicit, "ITunes Explicit", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesExplicit, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.ITunesImage, "ITunes Image", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.ITunesImage, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.AtomLink, "Atom Link", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.AtomLink, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.PubDate, "Pub Date", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.PubDate, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.Title, "Title", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.Author, "Author", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Author, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.Description, "Description", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Description, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.Subtitle, "Subtitle", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.Subtitle, new { @class = "form-control" })
-                    </div>
-                </div>
-                <div class="form-group row">
-                    @Html.LabelFor(m => m.LastBuildDate, "Last Build Date", new { @class = "col-sm-2 col-form-label" })
-                    <div class="col-sm-10">
-                        @Html.TextBoxFor(m => m.LastBuildDate, new { @class = "form-control" })
-                    </div>
-                </div>
+                @await Html.PartialAsync("FormHelper", nameof(Model.RSSNumber));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ChannelLink));
+                @await Html.PartialAsync("FormHelper", nameof(Model.WebMaster));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ManagingEditor));
+                @await Html.PartialAsync("FormHelper", nameof(Model.LogoTitle));
+                @await Html.PartialAsync("FormHelper", nameof(Model.LogoUrl));
+                @await Html.PartialAsync("FormHelper", nameof(Model.LogoLink));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesName));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesEmail));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesCategory));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesSubCategory));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesCategory2));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesSubCategory2));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesKeywords));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesExplicit));
+                @await Html.PartialAsync("FormHelper", nameof(Model.ITunesImage));
+                @await Html.PartialAsync("FormHelper", nameof(Model.AtomLink));
+                @await Html.PartialAsync("FormHelper", nameof(Model.PubDate));
+                @await Html.PartialAsync("FormHelper", nameof(Model.Title));
+                @await Html.PartialAsync("FormHelper", nameof(Model.Author));
+                @await Html.PartialAsync("FormHelper", nameof(Model.Description));
+                @await Html.PartialAsync("FormHelper", nameof(Model.Subtitle));
+                @await Html.PartialAsync("FormHelper", nameof(Model.LastBuildDate));
                 <input type="submit" class="btn-block loginButton" value="Craft!" />
             }
         </div>
