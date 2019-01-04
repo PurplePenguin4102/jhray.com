@@ -17,6 +17,7 @@ namespace jhray.com.Database.Entities
         public string HoverText { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        public List<PictureLink> BlogLinks { get; set; }
         public List<PictureTag> PictureTags { get; set; }
         public Gem GemData { get; set; }
     }

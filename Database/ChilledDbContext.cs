@@ -17,6 +17,8 @@ namespace jhray.com.Database
 
         }
 
+        public DbSet<BlogPost> BlogPosts { get; set; }
+        public DbSet<PictureLink> PictureLinks { get; set; }
         public DbSet<RSSHeader> RSSHeaders { get; set; }
         public DbSet<Gem> Gems { get; set; }
         public DbSet<Podcast> Podcasts { get; set; }
@@ -32,6 +34,9 @@ namespace jhray.com.Database
             builder.Entity<Gem>().HasOne(g => g.PodcastData).WithOne(p => p.GemData).HasForeignKey<Podcast>(p => p.Id);
             builder.Entity<Gem>().HasOne(g => g.PictureData).WithOne(p => p.GemData).HasForeignKey<Picture>(p => p.Id);
             builder.Entity<Picture>().HasMany(pic => pic.PictureTags).WithOne(pt => pt.PictureData);
+            builder.Entity<BlogPost>().HasMany(e => e.Pictures).WithOne(p => p.Blog);
+            builder.Entity<BlogPost>().HasOne(bp => bp.RSSHeader).WithMany(rss => rss.Blogs);
+            builder.Entity<Picture>().HasMany(p => p.BlogLinks).WithOne(p => p.Picture);
 
             // shadow properties
             //builder.Entity<User>().Property<DateTimeOffset>("UpdatedTimestamp");

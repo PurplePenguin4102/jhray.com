@@ -8,9 +8,12 @@ namespace jhray.com.Models.Gems
     public class BlogGem : IGem
     {
         public GemType Type => throw new NotImplementedException();
-
         public string Title => throw new NotImplementedException();
-
         public string Id => throw new NotImplementedException();
+        public string MarkdownContent => throw new NotImplementedException();
+        public List<Uri> Pictures => throw new NotImplementedException();
+        public DateTime Published => throw new NotImplementedException();
+        public string AuthorName => throw new NotImplementedException();
+        public List<string> Hashtags => throw new NotImplementedException();
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Collections.Generic;
 
 namespace jhray.com.Database.Entities
 {
@@ -30,5 +31,7 @@ namespace jhray.com.Database.Entities
         public string Description { get; set; }
         public string Subtitle { get; set; }
         public string LastBuildDate { get; set; }
+
+        public List<BlogPost> Blogs { get; set; }
     }
 }
