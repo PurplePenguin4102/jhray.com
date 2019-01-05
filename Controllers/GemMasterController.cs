@@ -50,7 +50,7 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult BlogGemManager()
         {
-            return View(new ChilledViewModelBuilder().Configure.AddBlogsToGemList(_context).Build<BlogGemManagerViewModel>());
+            return View(new ChilledViewModelBuilder().Configure.AddBlogsToGemList(_context, userId: _userManager.GetUserId(User)).Build<BlogGemManagerViewModel>());
         }
 
         [Authorize(Roles = "RegularGenius")]
@@ -111,13 +111,41 @@ namespace jhray.com.Controllers
         }
 
         [Authorize(Roles = "RegularGenius")]
+        [HttpPost]
+        public async Task<IActionResult> AddEditBlogPost(BlogGem blog)
+        {
+            var svc = new BlogService();
+            if (string.IsNullOrEmpty(blog.Id))
+            {
+                svc.AddNewBlogPost(blog, _context, await _userManager.GetUserAsync(User));
+            }
+            else
+            {
+                svc.EditBlogPost(blog, _context);
+            }
+            return RedirectToAction("BlogGemManager");
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        [HttpPost]
+        public IActionResult DeleteBlogPost(int id)
+        {
+            return RedirectToAction("BlogGemManager");
+        }
+
+        [Authorize(Roles = "RegularGenius")]
         [HttpGet]
-        public IActionResult EditBlogPost(int id)
+        public async Task<IActionResult> EditBlogPost(int id)
         {
             var blog = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
-            _context.Entry(blog).Reference(p => p.Pictures).Load();
+            _context.Entry(blog).Collection(p => p.Pictures).Load();
             _context.Entry(blog).Reference(p => p.Author).Load();
-            return View("BlogPostEditor", new BlogGem(blog));
+            var usr = await _userManager.GetUserAsync(User);
+            if (usr.Id == blog.Author.Id)
+            {
+                return View("BlogPostEditor", new BlogGem(blog));
+            }
+            return RedirectToAction("BlogGemManager");
         }
 
         [Authorize(Roles="RegularGenius")]
@@ -129,6 +157,7 @@ namespace jhray.com.Controllers
             if (podcast != null)
             {
                 _context.Podcasts.Remove(podcast);
+                _context.Gems.Remove(podcast.GemData);
                 _context.SaveChanges();
                 System.IO.File.Delete(podcast.GemData.FilePath);
             }
@@ -144,6 +173,7 @@ namespace jhray.com.Controllers
             if (picture != null)
             {
                 _context.Pictures.Remove(picture);
+                _context.Gems.Remove(picture.GemData);
                 _context.SaveChanges();
                 System.IO.File.Delete(picture.GemData.FilePath);
             }

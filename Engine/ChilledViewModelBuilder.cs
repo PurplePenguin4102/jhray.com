@@ -59,13 +59,16 @@ namespace jhray.com.Engine
                 return this;
             }
 
-            public Configuration AddBlogsToGemList(ChilledDbContext context, int id = int.MinValue)
+            public Configuration AddBlogsToGemList(ChilledDbContext context, int id = int.MinValue, string userId = "")
             {
                 foreach (var blog in context.BlogPosts.Where(p => (id == int.MinValue) ? true : p.RSSHeaderId == id).OrderByDescending(p => p.Published))
                 {
-                    context.Entry(blog).Reference(p => p.Pictures).Load();
+                    context.Entry(blog).Collection(p => p.Pictures).Load();
                     context.Entry(blog).Reference(p => p.Author).Load();
-                    Gems.Add(new BlogGem(blog));
+                    if (string.IsNullOrEmpty(userId) || userId == blog.Author.Id)
+                    {
+                        Gems.Add(new BlogGem(blog));
+                    }
                 }
                 return this;
             }

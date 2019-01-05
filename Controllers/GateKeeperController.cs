@@ -24,7 +24,6 @@ namespace jhray.com.Controllers
         private readonly SignInManager<ChilledUser> _signInManager;
         private readonly ILogger _logger;
         private readonly IEmailSender _emailSender;
-        
 
         public GateKeeperController(UserManager<ChilledUser> userManager, SignInManager<ChilledUser> signInManager, ILogger<GemMasterController> logger, IEmailSender emailSender)
         {

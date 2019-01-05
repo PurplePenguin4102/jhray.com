@@ -15,7 +15,7 @@
     <h2 class="text-center">Gem Editor</h2>
     <div class="row">
         <div class="col-sm-5">
-            @using (Html.BeginForm("AddPictureGem", "GemMaster", FormMethod.Post))
+            @using (Html.BeginForm("AddEditBlogPost", "GemMaster", FormMethod.Post))
             {
                 <div class="form-group">
                     @Html.LabelFor(m => m.AuthorName, "It's you buddy! (Author)")
@@ -57,6 +57,8 @@
                         </div>
                     </div>
                 </div>
+                @Html.HiddenFor(m => m.Id)
+                
                 <input type="submit" class="btn-block loginButton" value="Craft!" />
             }
                 </div>

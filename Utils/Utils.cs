@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
 using jhray.com.Services;
@@ -22,6 +23,11 @@ namespace jhray.com.Utils
         {
             return emailSender.SendEmailAsync(email, "Confirm your email",
                 $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
+        }
+
+        public static string ToString(this List<string> lst, char sep)
+        {
+            return string.Join(sep, lst.ToArray());
         }
     }
 }
