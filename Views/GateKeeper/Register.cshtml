@@ -1,4 +1,4 @@
-﻿@model jhray.com.Models.GemMasterViewModels.RegisterViewModel
+﻿@model jhray.com.Models.GateKeeperViewModels.RegisterViewModel
 @{
     ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -9,7 +9,7 @@
     <div class="page-header">
         <h2 class="panel-title text-center"> Sign up for Heroics</h2>
     </div>
-    @using (Html.BeginForm("Register", "GemMaster", FormMethod.Post, new { @class = "form-horizontal" }))
+    @using (Html.BeginForm("Register", "GateKeeper", FormMethod.Post, new { @class = "form-horizontal" }))
     {
 
         <div class="form-group">

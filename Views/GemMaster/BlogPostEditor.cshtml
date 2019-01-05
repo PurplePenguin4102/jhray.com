@@ -1,0 +1,71 @@
+﻿@model jhray.com.Models.Gems.BlogGem;
+@{
+    ViewData["Title"] = "BlogPostEditor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="float:left">
+    <ul class="nav nav-tabs nav-stacked">
+        <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Podcasts<span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-headphones"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="PictureGemManager">Images  <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-picture"></span></a></li>
+        <li class="active"><a asp-controller="GemMaster" asp-action="BlogGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
+    </ul>
+</div>
+
+<div class="body-content">
+    <h2 class="text-center">Gem Editor</h2>
+    <div class="row">
+        <div class="col-sm-5">
+            @using (Html.BeginForm("AddPictureGem", "GemMaster", FormMethod.Post))
+            {
+                <div class="form-group">
+                    @Html.LabelFor(m => m.AuthorName, "It's you buddy! (Author)")
+                    @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control" })
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Title, "Title")
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Subtitle, "SubTitle")
+                            @Html.TextBoxFor(m => m.Subtitle, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.MarkdownContent, "Content") <b><a href="https://www.markdownguide.org/cheat-sheet">(Markdown)</a></b>
+                    @Html.TextAreaFor(m => m.MarkdownContent, new { @class = "form-control", @style="height:300px"})
+                </div>
+                <div class="form-group">
+                    @Html.LabelFor(m => m.Hashtags, "HashTags (#woke,#Whatever,#MyHashTag,#Underscores_are_fine,#WhitespaceIsRemoved)")
+                    @Html.TextBoxFor(m => m.Hashtags, new { @class = "form-control" })
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.FeedId, "Feed Id (0, 1, 2)")
+                            @Html.TextBoxFor(m => m.FeedId, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="col-xs-6">
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.Published, "Published")
+                            @Html.TextBoxFor(m => m.Published, new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+                <input type="submit" class="btn-block loginButton" value="Craft!" />
+            }
+                </div>
+                <div class="col-sm-1">
+                    <button class="btn-block" style="margin-top:30vh;">&#8594;</button>
+                </div>
+                <div class="col-sm-5">
+                    <iframe style="width:100%; height:80vh;"></iframe>
+                </div>
+            </div>
+    
+</div>

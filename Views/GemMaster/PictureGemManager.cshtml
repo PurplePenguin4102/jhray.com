@@ -11,85 +11,87 @@
     <ul class="nav nav-tabs nav-stacked">
         <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Podcasts<span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-headphones"></span></a></li>
         <li class="active"><a asp-controller="GemMaster" asp-action="PictureGemManager">Images  <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-picture"></span></a></li>
-        <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="BlogGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
     </ul>
 </div>
 
 
 <div class="container body-content">
     <h2 class="text-center">Gem Manager</h2>
-    <div class="col-lg-8">
-        <h2>Your Gems</h2>
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>Your Gems</h2>
 
-        @if (!Model.Gems.Any())
-        {
-            <p class="text-muted">Nothin here boss!</p>
-        }
-        else
-        {
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">ArtistName</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">ArtistSource</th>
-                        <th scope="col">PictureLink</th>
-                        <th scope="col">Remove</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Gems.Count; i++)
-                    {
-                        var gem = Model.Gems[i] as jhray.com.Models.Gems.PictureGem;
+            @if (!Model.Gems.Any())
+            {
+                <p class="text-muted">Nothin here boss!</p>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>@gem.Id</td>
-                            <td>@gem.ArtistName</td>
-                            <td>@gem.Title</td>
-                            <td>@gem.ArtistSource</td>
-                            <td>@gem.PictureLink</td>
-                            <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
+                            <th scope="col">Id</th>
+                            <th scope="col">ArtistName</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">ArtistSource</th>
+                            <th scope="col">PictureLink</th>
+                            <th scope="col">Remove</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Gems.Count; i++)
+                        {
+                            var gem = Model.Gems[i] as jhray.com.Models.Gems.PictureGem;
+                            <tr>
+                                <td>@gem.Id</td>
+                                <td>@gem.ArtistName</td>
+                                <td>@gem.Title</td>
+                                <td>@gem.ArtistSource</td>
+                                <td>@gem.PictureLink</td>
+                                <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+
+        </div>
+        <div class="col-lg-4">
+
+            <h2>Add Picture</h2>
+
+            <div class="tab-content">
+                <div id="podcast" class="tab-pane fade in active">
+                    @using (Html.BeginForm("AddPictureGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.Title, "Gem Title")
+                            @Html.TextBoxFor(m => m.PictureMetadata.Title, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.SummaryText, "Summary")
+                            @Html.TextAreaFor(m => m.PictureMetadata.SummaryText, new { @class = "form-control", @value = "A nice picture" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.HoverText, "Hover Text")
+                            @Html.TextBoxFor(m => m.PictureMetadata.HoverText, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.ArtistName, "Artist Name")
+                            @Html.TextBoxFor(m => m.PictureMetadata.ArtistName, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.ArtistLink, "Artist Link (eg. Deviantart Page)")
+                            @Html.TextBoxFor(m => m.PictureMetadata.ArtistLink, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PictureMetadata.PictureFile, "Image File")
+                            <input type="file" name="PictureMetadata.PictureFile" />
+                        </div>
+                        <input type="submit" class="btn-block loginButton" value="Craft!" />
                     }
-                </tbody>
-            </table>
-        }
-
-    </div>
-    <div class="col-lg-4">
-
-        <h2>Add Picture</h2>
-
-        <div class="tab-content">
-            <div id="podcast" class="tab-pane fade in active">
-                @using (Html.BeginForm("AddPictureGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.Title, "Gem Title")
-                        @Html.TextBoxFor(m => m.PictureMetadata.Title, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.SummaryText, "Summary")
-                        @Html.TextAreaFor(m => m.PictureMetadata.SummaryText, new { @class = "form-control", @value = "A nice picture" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.HoverText, "Hover Text")
-                        @Html.TextBoxFor(m => m.PictureMetadata.HoverText, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.ArtistName, "Artist Name")
-                        @Html.TextBoxFor(m => m.PictureMetadata.ArtistName, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.ArtistLink, "Artist Link (eg. Deviantart Page)")
-                        @Html.TextBoxFor(m => m.PictureMetadata.ArtistLink, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PictureMetadata.PictureFile, "Image File")
-                        <input type="file" name="PictureMetadata.PictureFile" />
-                    </div>
-                    <input type="submit" class="btn-block loginButton" value="Craft!" />
-                }
+                </div>
             </div>
         </div>
     </div>

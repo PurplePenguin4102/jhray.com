@@ -1,0 +1,58 @@
+﻿@model jhray.com.Models.GemMasterViewModels.BlogGemManagerViewModel;
+@{
+    ViewData["Title"] = "BlogGemManager";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div style="float:left">
+    <ul class="nav nav-tabs nav-stacked">
+        <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Podcasts<span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-headphones"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="PictureGemManager">Images  <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-picture"></span></a></li>
+        <li class="active"><a asp-controller="GemMaster" asp-action="BlogGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
+    </ul>
+</div>
+
+<div class="container body-content">
+    <h2 class="text-center">Current Blogs</h2>
+    <a asp-controller="GemMaster" asp-action="NewBlogPost" class="btn-block loginButton hover_override text-center">Craft!</a>
+
+    @if (!Model.Gems.Any())
+    {
+        <p>Nothin here boss!</p>
+    }
+    else
+    {
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Id</th>
+                    <th scope="col">FeedId</th>
+                    <th scope="col">AuthorName</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Hashtags</th>
+                    <th scope="col">Published</th>
+                    <th scope="col">Content(short)</th>
+                    <th scope="col">Remove</th>
+                    <th scope="col">Edit</th>
+                </tr>
+            </thead>
+            <tbody>
+                @for (int i = 0; i < Model.Gems.Count; i++)
+                {
+                    var gem = Model.Gems[i] as jhray.com.Models.Gems.BlogGem;
+                <tr>
+                    <td>@gem.Id</td>
+                    <td>@gem.FeedId</td>
+                    <td>@gem.AuthorName</td>
+                    <td>@gem.Title</td>
+                    <td>@gem.Hashtags</td>
+                    <td>@gem.Published</td>
+                    <td>@gem.MarkdownContent.Substring(0, 200).Replace('\n', ' ')</td>
+                    <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
+                    <td><a asp-action="EditBlogPost" asp-controller="GemMaster" asp-route-id="@gem.Id">Edit</a></td>
+                </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

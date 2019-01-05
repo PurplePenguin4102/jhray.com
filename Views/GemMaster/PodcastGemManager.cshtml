@@ -11,87 +11,89 @@
     <ul class="nav nav-tabs nav-stacked">
         <li class="active"><a asp-controller="GemMaster" asp-action="PodcastGemManager">Podcasts<span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-headphones"></span></a></li>
         <li>               <a asp-controller="GemMaster" asp-action="PictureGemManager">Images  <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-picture"></span></a></li>
-        <li>               <a asp-controller="GemMaster" asp-action="PodcastGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
+        <li>               <a asp-controller="GemMaster" asp-action="BlogGemManager">Posts   <span style="font-size:16px; padding:0px 10px;" class="pull-right hidden-xs showopacity glyphicon glyphicon-align-left"></span></a></li>
     </ul>
 </div>
 
 
 <div class="container body-content">
     <h2 class="text-center">Gem Manager</h2>
-    <div class="col-lg-8">
-        <h2>Your Gems</h2>
+    <div class="row">
+        <div class="col-lg-8">
+            <h2>Your Gems</h2>
         
-        @if (!Model.Gems.Any())
-        {
-            <p class="text-muted">Nothin here boss!</p>
-        }
-        else
-        {
-            <table class="table table-bordered table-striped">
-                <thead>
-                    <tr>
-                        <th scope="col">Id</th>
-                        <th scope="col">AudioLink</th>
-                        <th scope="col">Title</th>
-                        <th scope="col">Text</th>
-                        <th scope="col">Remove</th>
-                        <th scope="col">FeedId</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Gems.Count; i++)
-                    {
-                        var gem = Model.Gems[i] as jhray.com.Models.Gems.PodcastGem;
+            @if (!Model.Gems.Any())
+            {
+                <p class="text-muted">Nothin here boss!</p>
+            }
+            else
+            {
+                <table class="table table-bordered table-striped">
+                    <thead>
                         <tr>
-                            <td>@gem.Id</td>
-                            <td>@gem.AudioLink</td>
-                            <td>@gem.Title</td>
-                            <td>@gem.Text</td>
-                            <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
-                            <td>@gem.FeedId</td>
+                            <th scope="col">Id</th>
+                            <th scope="col">AudioLink</th>
+                            <th scope="col">Title</th>
+                            <th scope="col">Text</th>
+                            <th scope="col">Remove</th>
+                            <th scope="col">FeedId</th>
                         </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Gems.Count; i++)
+                        {
+                            var gem = Model.Gems[i] as jhray.com.Models.Gems.PodcastGem;
+                            <tr>
+                                <td>@gem.Id</td>
+                                <td>@gem.AudioLink</td>
+                                <td>@gem.Title</td>
+                                <td>@gem.Text</td>
+                                <td><button class="btn-danger" onclick="doRemove('@gem.Id')">-</button></td>
+                                <td>@gem.FeedId</td>
+                            </tr>
 
+                        }
+                    </tbody>
+                </table>
+            }
+
+        </div>
+        <div class="col-lg-4">
+        
+            <h2>Add Podcast</h2>
+        
+            <div class="tab-content">
+                <div id="podcast" class="tab-pane fade in active">
+                    @using (Html.BeginForm("AddGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
+                    {
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.Title, "Gem Title")
+                            @Html.TextBoxFor(m => m.PodcastMetadata.Title, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.Description, "Description")
+                            @Html.TextAreaFor(m => m.PodcastMetadata.Description, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.ShortDescription, "Short Description (10-11 words)")
+                            @Html.TextBoxFor(m => m.PodcastMetadata.ShortDescription, new { @class = "form-control" })
+
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.ItunesDuration, "Itunes Duration (eg 1:46:31)")
+                            @Html.TextBoxFor(m => m.PodcastMetadata.ItunesDuration, new { @class = "form-control" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.FeedId, "FeedId (0 or 1)")
+                            @Html.TextBoxFor(m => m.PodcastMetadata.FeedId, new { @class = "form-control", @type = "number", @min = "0", @value = "0" })
+                        </div>
+                        <div class="form-group">
+                            @Html.LabelFor(m => m.PodcastMetadata.PodcastFile, "Podcast File")
+                            <input type="file" name="PodcastMetadata.PodcastFile" />
+                        </div>
+                        <input type="submit" class="btn-block loginButton" value="Craft!" />
                     }
-                </tbody>
-            </table>
-        }
-
-    </div>
-    <div class="col-lg-4">
-        
-        <h2>Add Podcast</h2>
-        
-        <div class="tab-content">
-            <div id="podcast" class="tab-pane fade in active">
-                @using (Html.BeginForm("AddGem", "GemMaster", FormMethod.Post, new { @enctype = "multipart/form-data" }))
-                {
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.Title, "Gem Title")
-                        @Html.TextBoxFor(m => m.PodcastMetadata.Title, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.Description, "Description")
-                        @Html.TextAreaFor(m => m.PodcastMetadata.Description, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.ShortDescription, "Short Description (10-11 words)")
-                        @Html.TextBoxFor(m => m.PodcastMetadata.ShortDescription, new { @class = "form-control" })
-
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.ItunesDuration, "Itunes Duration (eg 1:46:31)")
-                        @Html.TextBoxFor(m => m.PodcastMetadata.ItunesDuration, new { @class = "form-control" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.FeedId, "FeedId (0 or 1)")
-                        @Html.TextBoxFor(m => m.PodcastMetadata.FeedId, new { @class = "form-control", @type = "number", @min = "0", @value = "0" })
-                    </div>
-                    <div class="form-group">
-                        @Html.LabelFor(m => m.PodcastMetadata.PodcastFile, "Podcast File")
-                        <input type="file" name="PodcastMetadata.PodcastFile" />
-                    </div>
-                    <input type="submit" class="btn-block loginButton" value="Craft!" />
-                }
+                </div>
             </div>
         </div>
     </div>

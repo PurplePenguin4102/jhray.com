@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace jhray.com.Models.GemMasterViewModels
+namespace jhray.com.Models.GateKeeperViewModels
 {
     public class LoginViewModel
     {

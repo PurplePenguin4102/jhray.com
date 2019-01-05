@@ -10,7 +10,7 @@ namespace jhray.com.Database.Entities
     public class BlogPost
     {
         [Key]
-        public int id { get; set; }
+        public int Id { get; set; }
         public string Hashtags { get; set; }
         public string MarkdownContent { get; set; }
         public string Title { get; set; }

@@ -72,12 +72,12 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li><a href="#" style="cursor:default">Hail @User.Identity.Name!</a></li>
-                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Myself">Stat Sheet</a></li>
+                        <li><a asp-area="" asp-controller="GateKeeper" asp-action="Myself">Stat Sheet</a></li>
                     }
                     else
                     {
-                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Login">Login</a></li>
-                        <li><a asp-area="" asp-controller="GemMaster" asp-action="Register">New Hero</a></li>
+                        <li><a asp-area="" asp-controller="GateKeeper" asp-action="Login">Login</a></li>
+                        <li><a asp-area="" asp-controller="GateKeeper" asp-action="Register">New Hero</a></li>
                     }
                 </ul>
             </div>

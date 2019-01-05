@@ -59,6 +59,17 @@ namespace jhray.com.Engine
                 return this;
             }
 
+            public Configuration AddBlogsToGemList(ChilledDbContext context, int id = int.MinValue)
+            {
+                foreach (var blog in context.BlogPosts.Where(p => (id == int.MinValue) ? true : p.RSSHeaderId == id).OrderByDescending(p => p.Published))
+                {
+                    context.Entry(blog).Reference(p => p.Pictures).Load();
+                    context.Entry(blog).Reference(p => p.Author).Load();
+                    Gems.Add(new BlogGem(blog));
+                }
+                return this;
+            }
+
             public T Build<T>() where T : IContainsGemList, new()
             {
                 return new T { Gems = Gems };

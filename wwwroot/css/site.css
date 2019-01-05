@@ -11,6 +11,16 @@
     padding-right: 15px;
 }
 
+.hover_override {
+    text-decoration: none;
+    color: white;
+}
+
+.hover_override:hover {
+    text-decoration: none;
+    color: white;
+}
+
 .parallax {
     perspective: 1px;
     height: 100vh;

@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using jhray.com.Database;
@@ -9,9 +10,10 @@ using jhray.com.Database;
 namespace jhray.com.Migrations
 {
     [DbContext(typeof(ChilledDbContext))]
-    partial class ChilledDbContextModelSnapshot : ModelSnapshot
+    [Migration("20190105064344_Capitals")]
+    partial class Capitals
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
