@@ -61,20 +61,7 @@ namespace jhray.com.Engine
 
             public Configuration AddBlogsToGemList(ChilledDbContext context, int id = int.MinValue, string userId = "")
             {
-                var q = from b in context.BlogPosts
-                        where b.RSSHeader.RSSNumber == id
-                        orderby b.Published descending
-                        select b;
-
-                foreach (var thing in q)
-                {
-
-                }
-                foreach (var blog in context.BlogPosts
-                    .Where(p => (id == int.MinValue) ? 
-                        true : 
-                        p.RSSHeader.RSSNumber == id)
-                    .OrderByDescending(p => p.Published))
+                foreach (var blog in context.BlogPosts.Where(p => (id == int.MinValue) ? true : p.RSSHeader.RSSNumber == id).OrderByDescending(p => p.Published))
                 {
                     context.Entry(blog).Collection(p => p.Pictures).Load();
                     context.Entry(blog).Reference(p => p.Author).Load();
