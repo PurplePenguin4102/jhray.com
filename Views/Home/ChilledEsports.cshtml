@@ -26,6 +26,7 @@
                 @{
                     var podCastGems = Model.Gems.Where(g => g is PodcastGem);
                     var pictureGems = Model.Gems.Where(g => g is PictureGem);
+                    var blogGems = Model.Gems.Where(g => g is BlogGem);
                 }
 
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -53,7 +54,38 @@
                         </div>
                     </div>
                     <div class="tab-pane fade" id="blog" role="tabpanel" aria-labelledby="blog-tab">
-                        Hello this is a blog :^)
+                        @foreach (var gem in blogGems)
+                        {
+                            var blogGem = gem as BlogGem;
+                            <div>
+                                @if (string.IsNullOrEmpty(blogGem.Subtitle))
+                                {
+                                    <h2>@blogGem.Title</h2>
+                                }
+                                else
+                                {
+                                    <h2>@blogGem.Title - @blogGem.Subtitle</h2>
+                                }
+                                @if (!string.IsNullOrEmpty(blogGem.AuthorName))
+                                {
+                                    <h3><em>@blogGem.AuthorName</em></h3>
+                                }
+                                @Html.Raw(blogGem.HtmlContent)
+                                <div class="row">
+                                @foreach (var hashTag in blogGem.Hashtags)
+                                {
+                                    if (string.IsNullOrEmpty(hashTag) || !hashTag.StartsWith("#"))
+                                    {
+                                        continue;
+                                    }
+                                    <div class="col-xs-1">
+                                        <p>@hashTag</p>
+                                    </div>
+                                }
+                                </div>
+                            </div>
+                            <hr/>
+                        }
                     </div>
                     <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
                         <div class="row">

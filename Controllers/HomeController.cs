@@ -40,6 +40,7 @@ namespace jhray.com.Controllers
                 .Configure
                 .AddPodcastToGemList(_context, 0)
                 .AddPicturesToGemList(_context)
+                .AddBlogsToGemList(_context, 0)
                 .Build<ChilledViewModel>();
             return View(vm);
         }
