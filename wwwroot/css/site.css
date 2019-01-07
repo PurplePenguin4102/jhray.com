@@ -205,6 +205,11 @@
     text-align: center;
 }
 
+#view_area {
+    border: solid goldenrod 5px;
+    padding: 20px;
+}
+
 #gem_full_contents {
     padding: 16px;
 }

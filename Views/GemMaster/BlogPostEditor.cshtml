@@ -19,29 +19,29 @@
             {
                 <div class="form-group">
                     @Html.LabelFor(m => m.AuthorName, "It's you buddy! (Author)")
-                    @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.AuthorName, new { @class = "form-control", @id = "blog_author"})
                 </div>
                 <div class="row">
                     <div class="col-xs-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Title, "Title")
-                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Title, new { @class = "form-control", @id = "blog_title" })
                         </div>
                     </div>
                     <div class="col-xs-6">
                         <div class="form-group">
                             @Html.LabelFor(m => m.Subtitle, "SubTitle")
-                            @Html.TextBoxFor(m => m.Subtitle, new { @class = "form-control" })
+                            @Html.TextBoxFor(m => m.Subtitle, new { @class = "form-control", @id = "blog_subtitle" })
                         </div>
                     </div>
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.MarkdownContent, "Content") <b><a href="https://www.markdownguide.org/cheat-sheet">(Markdown)</a></b>
-                    @Html.TextAreaFor(m => m.MarkdownContent, new { @class = "form-control", @style="height:300px"})
+                    @Html.TextAreaFor(m => m.MarkdownContent, new { @class = "form-control", @style="height:300px", @id = "blog_markdown_content" })
                 </div>
                 <div class="form-group">
                     @Html.LabelFor(m => m.Hashtags, "HashTags (#woke,#Whatever,#MyHashTag,#Underscores_are_fine,#WhitespaceIsRemoved)")
-                    @Html.TextBoxFor(m => m.Hashtags, new { @class = "form-control" })
+                    @Html.TextBoxFor(m => m.Hashtags, new { @class = "form-control", @id = "blog_hashtags" })
                 </div>
                 <div class="row">
                     <div class="col-xs-6">
@@ -63,10 +63,10 @@
             }
                 </div>
                 <div class="col-sm-1">
-                    <button class="btn-block" style="margin-top:30vh;">&#8594;</button>
+                    <button class="btn-block" onclick="PopulateViewArea()" style="margin-top:30vh;">&#8594;</button>
                 </div>
                 <div class="col-sm-5">
-                    <iframe style="width:100%; height:80vh;"></iframe>
+                    <div id="view_area" style="width:100%; height:80vh;"></div>
                 </div>
             </div>
     

@@ -16,8 +16,10 @@ using jhray.com.Models.Gems;
 using System.Security.Claims;
 using System.Threading;
 using jhray.com.Engine;
+using Markdig;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
 
 namespace jhray.com.Controllers
 {
@@ -81,7 +83,7 @@ namespace jhray.com.Controllers
         [HttpPost]
         public async Task<IActionResult> AddPictureGem(PictureGemManagerViewModel gem)
         {
-            
+
             if (ModelState.IsValid && gem.PictureMetadata != null && gem.PictureMetadata.PictureFile.ContentType.StartsWith("image"))
             {
                 var svc = new PictureService();
@@ -148,7 +150,7 @@ namespace jhray.com.Controllers
             return RedirectToAction("BlogGemManager");
         }
 
-        [Authorize(Roles="RegularGenius")]
+        [Authorize(Roles = "RegularGenius")]
         [HttpGet]
         public IActionResult DeletePodcast(int id)
         {
@@ -169,7 +171,7 @@ namespace jhray.com.Controllers
         public IActionResult DeletePicture(int id)
         {
             var picture = _context.Pictures.FirstOrDefault(p => p.Id == id);
-            _context.Entry(picture).Reference(pic => pic.GemData).Load(); 
+            _context.Entry(picture).Reference(pic => pic.GemData).Load();
             if (picture != null)
             {
                 _context.Pictures.Remove(picture);
@@ -188,6 +190,19 @@ namespace jhray.com.Controllers
             {
                 RSSHeaders = _context.RSSHeaders.ToList()
             });
+        }
+
+        [Authorize(Roles = "RegularGenius")]
+        [HttpPost]
+        public async Task<IActionResult> ConvertMarkdownToHtml()
+        {
+            var formcllct = await Request.ReadFormAsync();
+            return Content(JsonConvert.SerializeObject(new MarkDownToHtmlResult() { converted = Markdown.ToHtml(formcllct["markdown"]) }), "application/json");
+        }
+
+        private class MarkDownToHtmlResult
+        {
+            public string converted { get; set; }
         }
 
         [Authorize(Roles = "SuperGenius")]

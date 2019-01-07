@@ -41,3 +41,26 @@ $(function () {
         $("#lightbox_bkg").hide();
     });
 });
+
+function PopulateViewArea() {
+    var area = $("#view_area");
+    area.empty();
+
+    var title = $("#blog_title");
+    var subtitle = $("#blog_subtitle");
+    if (subtitle.val() && title.val()) {
+        area.append("<h2>" + title.val() + " - " + subtitle.val() + "</h2>");
+    } else if (title.val()) {
+        area.append("<h2>" + title.val() + "</h2>");
+    }
+    var auth = $("#blog_author");
+    if (auth.val()) {
+        area.append("<h3><em>" + auth.val() + "</em></h3>");
+    }
+
+    var content = $("#blog_markdown_content");
+    $.post("/GemMaster/ConvertMarkdownToHtml", { markdown: content.val() }, function (data) {
+        area.append(data["converted"]);
+    });
+    var hashtags = $("#blog_hashtags");
+}
