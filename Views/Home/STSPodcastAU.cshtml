@@ -1,0 +1,43 @@
+﻿@using jhray.com.Models.Gems
+@model ChilledViewModel
+@{
+    ViewData["Title"] = "STSPodcastAU";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<div style="background:url(//jhray.com/static/AusFlag.jpg);">
+    <div style="height:100%; width:100%; min-height:100vh; background-attachment: fixed; background-image: linear-gradient(to right, #121212CC , #121212DD, #606060EE, #121212DD, #121212CC);">
+        <div class="container body-content">
+            <div class="yowie_background">
+                <div class="GemTitle" style="padding-top:10px">
+                    <h2>Shooting the Shit Down Under <a href="/home/getrssfeed/2"><img id="feedIcon" src="~/images/feed-icon.svg" /></a></h2>
+                </div>
+                <div class="clearfix">
+                    @{
+                        var podCastGems = Model.Gems.Where(g => g is PodcastGem);
+                        var pictureGems = Model.Gems.Where(g => g is PictureGem);
+                        var blogGems = Model.Gems.Where(g => g is BlogGem);
+                    }
+                    <div class="row">
+                        <div class="col-sm-8">
+                            @foreach (var igem in podCastGems)
+                            {
+                                var gem = igem as PodcastGem;
+                                <div id="podcast_@gem.Id">
+                                    <h3 class="gemHeader Podcast">@gem.Title</h3>
+                                    <audio class="gemAudio" style="width:30%; margin-left:35%;" controls>
+                                        <source src="@gem.AudioLink" type="audio/mpeg" />
+                                        Your browser does not support the audio element.
+                                    </audio>
+                                    <p class="gemText">@gem.Text</p>
+                                </div>
+                                <hr />
+                            }
+                        </div>
+                        <div class="col-sm-4">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

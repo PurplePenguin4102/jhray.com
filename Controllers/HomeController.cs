@@ -45,7 +45,17 @@ namespace jhray.com.Controllers
             return View(vm);
         }
 
-        public async Task<IActionResult> YowiePowerHour()
+        public IActionResult STSPodcastAU()
+        {
+            var vm = new ChilledViewModelBuilder()
+                .Configure
+                .AddPodcastToGemList(_context, 2)
+                .AddBlogsToGemList(_context, 2)
+                .Build<ChilledViewModel>();
+            return View(vm);
+        }
+
+        public IActionResult YowiePowerHour()
         {
             using (var client = new HttpClient())
             {
