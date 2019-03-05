@@ -18,7 +18,7 @@
                         var blogGems = Model.Gems.Where(g => g is BlogGem);
                     }
                     <div class="row">
-                        <div class="col-sm-8">
+                        <div class="col-sm-8 col-sm-offset-2">
                             @foreach (var igem in podCastGems)
                             {
                                 var gem = igem as PodcastGem;
@@ -32,8 +32,6 @@
                                 </div>
                                 <hr />
                             }
-                        </div>
-                        <div class="col-sm-4">
                         </div>
                     </div>
                 </div>
