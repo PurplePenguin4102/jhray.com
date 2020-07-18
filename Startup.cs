@@ -16,6 +16,7 @@ using System.IO.Compression;
 using jhray.com.Database;
 using jhray.com.Database.Entities;
 using jhray.com.Services;
+using Microsoft.AspNetCore.Mvc;
 
 namespace jhray.com
 {
@@ -44,15 +45,14 @@ namespace jhray.com
 
             var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
 
-            services.AddEntityFrameworkNpgsql().AddDbContext<ChilledDbContext>(options =>
-                options.UseNpgsql(
-                    sqlConnectionString,
-                    b => b.MigrationsAssembly("jhray.com")));
+            services.AddDbContext<ChilledDbContext>(options =>
+            {
+                options.UseNpgsql(sqlConnectionString, b => b.MigrationsAssembly("jhray.com"));
+            });
 
             services.AddIdentity<ChilledUser, IdentityRole>()
                 .AddEntityFrameworkStores<ChilledDbContext>()
                 .AddDefaultTokenProviders();
-
 
             services.Configure<IdentityOptions>(options =>
             {
@@ -100,6 +100,7 @@ namespace jhray.com
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
+            
         }
 
         private string GetPasswordFromFile(string direc)
@@ -113,7 +114,7 @@ namespace jhray.com
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.EnvironmentName =="Debug")
             {
@@ -124,7 +125,7 @@ namespace jhray.com
                 app.UseExceptionHandler("/Home/Error");
             }
             app.UseResponseCompression();
-
+            
             app.UseStaticFiles();
             var paths = Configuration.GetSection("Paths").Get<Paths>();
             app.UseStaticFiles(new StaticFileOptions
@@ -140,28 +141,30 @@ namespace jhray.com
             });
 
             app.UseAuthentication();
-
-            app.UseMvc(routes =>
+            app.UseRouting();
+            app.UseAuthorization();
+            app.UseEndpoints(endpoints =>
             {
-                routes.MapRoute(
+                endpoints.MapControllers();
+                endpoints.MapControllerRoute(
                     name: "chilledCast",
-                    template: "ChilledCast",
+                    pattern: "ChilledCast",
                     defaults: new { controller = "Home", action = "ChilledESports" });
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "chilledLong",
-                    template: "ChilledESports",
+                    pattern: "ChilledESports",
                     defaults: new { controller = "Home", action = "ChilledESports" });
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "chilledShort",
-                    template: "chilled",
+                    pattern: "chilled",
                     defaults: new { controller = "Home", action = "ChilledESports" });
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "yph",
-                    template: "yowies",
+                    pattern: "yowies",
                     defaults: new { controller = "Home", action = "YowiePowerHour" });
-                routes.MapRoute(
+                endpoints.MapControllerRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }

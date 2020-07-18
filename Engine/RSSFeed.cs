@@ -11,6 +11,7 @@ using static jhray.com.Utils.Utils;
 using System.Globalization;
 using jhray.com.Database;
 using jhray.com.Database.Entities;
+using Microsoft.EntityFrameworkCore;
 using System.Transactions;
 
 namespace jhray.com.Engine
@@ -93,9 +94,9 @@ namespace jhray.com.Engine
                 WriteAtomFeedInfo(xml);
                 WritePodcastHeader(xml);
 
-                foreach (var podcast in context.Podcasts.Where(pod => pod.FeedId == id).OrderByDescending(p => p.PubDate))
+                var podcasts = context.Podcasts.Include(p => p.GemData).Where(pod => pod.FeedId == id).OrderByDescending(p => p.PubDate);
+                foreach (var podcast in podcasts)
                 {
-                    context.Entry(podcast).Reference(p => p.GemData).Load();
                     WritePodcast(xml, podcast);
                 }
                 xml.WriteEndDocument();

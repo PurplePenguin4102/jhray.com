@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using jhray.com.Models.GemMasterViewModels;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -139,9 +140,8 @@ namespace jhray.com.Controllers
         [HttpGet]
         public async Task<IActionResult> EditBlogPost(int id)
         {
-            var blog = _context.BlogPosts.FirstOrDefault(b => b.Id == id);
-            _context.Entry(blog).Collection(p => p.Pictures).Load();
-            _context.Entry(blog).Reference(p => p.Author).Load();
+            var blog = _context.BlogPosts.Include(b => b.Pictures).Include(b => b.Author).FirstOrDefault(b => b.Id == id);
+
             var usr = await _userManager.GetUserAsync(User);
             if (usr.Id == blog.Author.Id)
             {
@@ -154,8 +154,7 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult DeletePodcast(int id)
         {
-            var podcast = _context.Podcasts.FirstOrDefault(p => p.Id == id);
-            _context.Entry(podcast).Reference(pod => pod.GemData).Load();
+            var podcast = _context.Podcasts.Include(p => p.GemData).FirstOrDefault(p => p.Id == id);
             if (podcast != null)
             {
                 _context.Podcasts.Remove(podcast);
@@ -170,8 +169,7 @@ namespace jhray.com.Controllers
         [HttpGet]
         public IActionResult DeletePicture(int id)
         {
-            var picture = _context.Pictures.FirstOrDefault(p => p.Id == id);
-            _context.Entry(picture).Reference(pic => pic.GemData).Load();
+            var picture = _context.Pictures.Include(p => p.GemData).FirstOrDefault(p => p.Id == id);
             if (picture != null)
             {
                 _context.Pictures.Remove(picture);

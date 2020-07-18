@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 using jhray.com.Models;
 using jhray.com.Engine;
 using Microsoft.Extensions.Options;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Authorization;
 using jhray.com.Database;
 using jhray.com.Models.Gems;
@@ -104,11 +105,10 @@ namespace jhray.com.Controllers
 
         public IActionResult Podcast(int Id)
         {
-            var pod = _context.Podcasts.FirstOrDefault(p => p.Id == Id);
+            var pod = _context.Podcasts.Include(p => p.GemData).FirstOrDefault(p => p.Id == Id);
             var retval = Content("", "application/json");
             if (pod != null)
             {
-                _context.Entry(pod).Reference(p => p.GemData).Load();
                 var gem = new PodcastGem
                 {
                     Id = pod.Id.ToString(),
