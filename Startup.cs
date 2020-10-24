@@ -17,6 +17,7 @@ using jhray.com.Database;
 using jhray.com.Database.Entities;
 using jhray.com.Services;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 
 namespace jhray.com
 {
@@ -33,9 +34,6 @@ namespace jhray.com
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<Paths>(Configuration.GetSection("Paths"));
-
-            var direc = Configuration.GetSection("Paths").GetValue<string>("CredsDirectory");
-
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = int.MaxValue;
@@ -43,7 +41,9 @@ namespace jhray.com
                 x.MultipartHeadersLengthLimit = int.MaxValue;
             });
 
-            var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), GetUsernameFromFile(direc), GetPasswordFromFile(direc));
+            var user = Configuration.GetSection("EnvModel").GetValue<string>("UserName");
+            var password = Configuration.GetSection("EnvModel").GetValue<string>("Password");
+            var sqlConnectionString = string.Format(Configuration.GetConnectionString("Postgres"), user, password);
 
             services.AddDbContext<ChilledDbContext>(options =>
             {
@@ -78,11 +78,7 @@ namespace jhray.com
                 // Cookie settings
                 options.Cookie.HttpOnly = true;
                 options.ExpireTimeSpan = TimeSpan.FromMinutes(30);
-                // If the LoginPath isn't set, ASP.NET Core defaults 
-                // the path to /Account/Login.
                 options.LoginPath = "/GateKeeper/Login";
-                // If the AccessDeniedPath isn't set, ASP.NET Core defaults 
-                // the path to /Account/AccessDenied.
                 options.AccessDeniedPath = "/Account/Forbidden";
                 options.SlidingExpiration = true;
             });
@@ -101,16 +97,6 @@ namespace jhray.com
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
             
-        }
-
-        private string GetPasswordFromFile(string direc)
-        {
-            return File.ReadAllText(Path.Combine(direc, @"Password.txt"));
-        }
-
-        private string GetUsernameFromFile(string direc)
-        {
-            return File.ReadAllText(Path.Combine(direc, @"UserName.txt"));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
