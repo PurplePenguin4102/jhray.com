@@ -2,8 +2,8 @@ language: csharp
 mono: none
 sudo: required
 solution: jhray.com.sln
-dist: bionic
-dotnet: 3.1
+dist: focal
+dotnet: 5.0
 addons:
  ssh_known_hosts: jhray.com
 before_install:
