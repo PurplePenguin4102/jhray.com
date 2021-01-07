@@ -18,6 +18,7 @@ using jhray.com.Database.Entities;
 using jhray.com.Services;
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
+using jhray.com.Services.GRPC;
 
 namespace jhray.com
 {
@@ -96,7 +97,8 @@ namespace jhray.com
                                  .Build();
                 config.Filters.Add(new AuthorizeFilter(policy));
             });
-            
+            services.AddGrpc();
+            services.AddGrpcReflection();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -131,6 +133,11 @@ namespace jhray.com
             app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapGrpcService<GreeterService>();
+                if (env.EnvironmentName == "Debug")
+                {
+                    endpoints.MapGrpcReflectionService();
+                }
                 endpoints.MapControllers();
                 endpoints.MapControllerRoute(
                     name: "chilledCast",
