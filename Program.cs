@@ -25,6 +25,10 @@ namespace jhray.com
                     {
                         listenOptions.Protocols = HttpProtocols.Http2;
                     });
+                    options.Listen(IPAddress.Loopback, 5000, listenOptions =>
+                    {
+                        listenOptions.Protocols = HttpProtocols.Http2;
+                    });
                 })
                 .UseStartup<Startup>()
                 .Build().Run();
